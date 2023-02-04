@@ -1,7 +1,9 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import { PATH } from "../path/path";
+import React from 'react'
+
+import { NavLink } from 'react-router-dom'
+
+import { PATH } from '../../path/path'
+import { HeaderComponent } from '../../style/styled-components'
 
 export const Header = () => {
   return (
@@ -12,16 +14,5 @@ export const Header = () => {
       <NavLink to={PATH.PROFILE}>PROFILE</NavLink>
       <NavLink to={PATH.NEW_PASSWORD}>NEW PASSWORD</NavLink>
     </HeaderComponent>
-  );
-};
-
-export const HeaderComponent = styled.header`
-  width: 100%;
-  height: 80px;
-
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-
-  background: #b31232;
-`;
+  )
+}
