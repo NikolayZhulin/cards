@@ -1,3 +1,29 @@
+import {createApi} from "@reduxjs/toolkit/query";
+
+
+const api = createApi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export type UserType = {
     _id: string
     email: string
