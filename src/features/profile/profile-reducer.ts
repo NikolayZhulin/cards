@@ -1,18 +1,20 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 
 const initialState = {
-  userName: '',
+    photo: 'photo',
+    userName: 'userName',
+    email: 'email',
 }
 
 const slice = createSlice({
-  name: 'profile',
-  initialState: initialState,
-  reducers: {
-    changeUserNameAC(state, action: PayloadAction<{ userName: string }>) {
-      state.userName = action.payload.userName
+    name: 'profile',
+    initialState: initialState,
+    reducers: {
+        changeUserNameAC(state, action: PayloadAction<{ userName: string }>) {
+            state.userName = action.payload.userName
+        },
     },
-  },
 })
 
 export const profileReducer = slice.reducer
-export const { changeUserNameAC } = slice.actions
+export const {changeUserNameAC} = slice.actions
