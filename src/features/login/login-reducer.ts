@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState = {
-  isLoggedIn: false,
+  isLoggedIn: true,
 }
 
 const slice = createSlice({
