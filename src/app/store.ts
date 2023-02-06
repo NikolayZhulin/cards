@@ -4,6 +4,7 @@ import thunkMiddleware from 'redux-thunk'
 import { loginReducer } from '../features/login'
 import { profileReducer } from '../features/profile'
 import { registrationReducer } from '../features/registration'
+import { registrationAPI } from '../features/registration/registrationAPI'
 
 import { appReducer } from './app-reducer'
 
@@ -13,8 +14,10 @@ export const store = configureStore({
     login: loginReducer,
     registration: registrationReducer,
     profile: profileReducer,
+    [registrationAPI.reducerPath]: registrationAPI.reducer,
   },
-  middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware),
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().prepend(thunkMiddleware).prepend(registrationAPI.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
