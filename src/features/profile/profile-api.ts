@@ -4,19 +4,27 @@ export const profileAPI = createApi({
   reducerPath: 'profileAPI',
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
+    credentials: 'include',
   }),
   endpoints: build => ({
     getUserProfile: build.mutation<UserType, {}>({
-      query: arg => ({
+      query: body => ({
         url: 'auth/me',
         method: 'POST',
-        arg,
+        body,
+      }),
+    }),
+    login: build.mutation<any, any>({
+      query: body => ({
+        url: 'auth/login',
+        method: 'POST',
+        body,
       }),
     }),
   }),
 })
 
-export const { useGetUserProfileMutation } = profileAPI
+export const { useGetUserProfileMutation, useLoginMutation } = profileAPI
 
 export type UserType = {
   _id: string

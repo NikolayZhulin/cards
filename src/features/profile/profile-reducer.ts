@@ -46,7 +46,7 @@ export const profileReducer = slice.reducer
 export const { changeUserAC, getUserProfileAC } = slice.actions
 
 // thunks
-export const fetchUserProfileTC = () => async (dispatch: AppDispatch) => {
-  try {
-  } catch (e) {}
-}
+// export const fetchUserProfileTC = () => async (dispatch: AppDispatch) => {
+//   try {
+//   } catch (e) {}
+// }

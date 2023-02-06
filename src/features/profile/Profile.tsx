@@ -4,12 +4,13 @@ import { Navigate } from 'react-router-dom'
 
 import { useAppSelector } from '../../app/hooks'
 
-import { useGetUserProfileMutation } from './profile-api'
+import { useGetUserProfileMutation, useLoginMutation } from './profile-api'
 
-import { EditableSpan } from './index'
+import { EditableSpan, getUserProfileAC } from './index'
 
 export const Profile = () => {
   const [getProfile, { isLoading, data, error }] = useGetUserProfileMutation<any>()
+  const [login, {}] = useLoginMutation<any>()
   const avatar = useAppSelector(state => state.profile.user.avatar)
   const name = useAppSelector(state => state.profile.user.name)
   const email = useAppSelector(state => state.profile.user.email)
@@ -23,7 +24,14 @@ export const Profile = () => {
   }
 
   useEffect(() => {
-    getProfile({})
+    // login({
+    //   email: 'nikitagaponov@yandex.ru',
+    //   password: 'pass-12345',
+    //   rememberMe: true,
+    // })
+    getProfile({}).then(() => {
+      getUserProfileAC(data)
+    })
   }, [])
 
   return !isLoggedIn ? (
