@@ -3,7 +3,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { PATH } from '../../path/path'
-import { HeaderComponent } from '../../style/styled-components'
+import { HeaderComponent } from '../../style/form-styles'
 
 export const Header = () => {
   return (
