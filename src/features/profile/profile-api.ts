@@ -21,10 +21,20 @@ export const profileAPI = createApi({
         body,
       }),
     }),
+    changeUser: build.mutation<
+      { updatedUser: UserType; error?: string },
+      { name?: string; avatar?: string }
+    >({
+      query: body => ({
+        url: 'auth/me',
+        method: 'PUT',
+        body,
+      }),
+    }),
   }),
 })
 
-export const { useGetUserProfileMutation, useLoginMutation } = profileAPI
+export const { useGetUserProfileMutation, useLoginMutation, useChangeUserMutation } = profileAPI
 
 export type UserType = {
   _id: string

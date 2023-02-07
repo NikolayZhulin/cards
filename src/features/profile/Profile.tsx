@@ -2,25 +2,28 @@ import React, { useEffect } from 'react'
 
 import { Navigate } from 'react-router-dom'
 
-import { useAppSelector } from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 
-import { useGetUserProfileMutation, useLoginMutation } from './profile-api'
+import { useChangeUserMutation, useGetUserProfileMutation, useLoginMutation } from './profile-api'
 
-import { EditableSpan, getUserProfileAC } from './index'
+import { changeUserAC, EditableSpan, setUserProfileAC } from './index'
 
 export const Profile = () => {
-  const [getProfile, { isLoading, data, error }] = useGetUserProfileMutation<any>()
+  const [getProfile, { data: profile, isSuccess: profileHasLoad, isLoading }] =
+    useGetUserProfileMutation<any>()
   const [login, {}] = useLoginMutation<any>()
+  const [changeUser, { data, error, isSuccess }] = useChangeUserMutation<any>()
   const avatar = useAppSelector(state => state.profile.user.avatar)
   const name = useAppSelector(state => state.profile.user.name)
   const email = useAppSelector(state => state.profile.user.email)
+  const dispatch = useAppDispatch()
 
   const isLoggedIn = useAppSelector(state => state.login.isLoggedIn)
   const onClickHandler = () => {
     console.log('Log out')
   }
-  const onChangeHandler = () => {
-    console.log('Name has been changed')
+  const onChangeHandler = (value: string) => {
+    changeUser({ name: value })
   }
 
   useEffect(() => {
@@ -29,10 +32,17 @@ export const Profile = () => {
     //   password: 'pass-12345',
     //   rememberMe: true,
     // })
-    getProfile({}).then(() => {
-      getUserProfileAC(data)
-    })
+    getProfile({})
   }, [])
+  useEffect(() => {
+    isSuccess &&
+      dispatch(changeUserAC({ name: data.updatedUser.name, avatar: data.updatedUser.avatar }))
+  }, [isSuccess])
+  useEffect(() => {
+    profileHasLoad && dispatch(setUserProfileAC(profile))
+  }, [profileHasLoad])
+
+  if (isLoading) return <div>loading...</div>
 
   return !isLoggedIn ? (
     <Navigate to={'/login'} />
@@ -42,7 +52,7 @@ export const Profile = () => {
     >
       <div>Personal Information</div>
       <div>
-        <img src={avatar} alt="photo" />
+        <img src={avatar} alt="photo" style={{ height: '100px' }} />
       </div>
       <EditableSpan value={name} onChange={onChangeHandler} />
       <div>{email}</div>
