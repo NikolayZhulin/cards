@@ -1,12 +1,12 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
-import thunkMiddleware from 'redux-thunk'
+import {configureStore, ThunkAction, Action} from '@reduxjs/toolkit'
 
-import { loginReducer } from '../features/login'
-import { profileReducer } from '../features/profile'
-import { registrationReducer } from '../features/registration'
+import {loginReducer} from '../features/login'
+import {profileReducer} from '../features/profile'
+import {registrationReducer} from '../features/registration'
 import { registrationAPI } from '../features/registration/registrationAPI'
 
-import { appReducer } from './app-reducer'
+import {appReducer} from './app-reducer'
+import {profileAPI} from "../features/profile/profile-api";
 
 export const store = configureStore({
   reducer: {
@@ -15,17 +15,18 @@ export const store = configureStore({
     registration: registrationReducer,
     profile: profileReducer,
     [registrationAPI.reducerPath]: registrationAPI.reducer,
+    [profileAPI.reducerPath]: profileAPI.reducer
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().prepend(thunkMiddleware).prepend(registrationAPI.middleware),
-})
+    getDefaultMiddleware().prepend(thunkMiddleware).prepend(registrationAPI.middleware).prepend(profileAPI.middleware),
+ })
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
+    ReturnType,
+    RootState,
+    unknown,
+    Action<string>
 >
 
 // @ts-ignore
