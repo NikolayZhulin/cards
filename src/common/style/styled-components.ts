@@ -1,3 +1,4 @@
+import Card from 'antd/es/card/Card'
 import styled from 'styled-components'
 
 export const HeaderComponent = styled.header`
@@ -17,4 +18,15 @@ export const FormLabel = styled.label`
   color: #000000;
 
   opacity: 0.5;
+`
+export const StyledCard = styled(Card)`
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 5px 5px 20px 0 rgba(115, 109, 115, 1);
+`
+export const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `

@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { ResponseLoginType } from './loginApi'
-
 const initialState = {
   isLoggedIn: false,
   profile: null as null | ResponseLoginType,
