@@ -1,10 +1,4 @@
-import {
-  BaseQueryFn,
-  createApi,
-  FetchArgs,
-  fetchBaseQuery,
-  FetchBaseQueryError,
-} from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const registrationAPI = createApi({
   reducerPath: 'registration/api',
@@ -12,7 +6,7 @@ export const registrationAPI = createApi({
     baseUrl: 'http://localhost:7542/2.0',
   }),
   endpoints: build => ({
-    registration: build.mutation<AddedUser, RequestRegisterType>({
+    registration: build.mutation<AddedUser | ErrorType, RequestRegisterType>({
       query: data => ({
         url: 'auth/register',
         method: 'POST',
@@ -24,10 +18,12 @@ export const registrationAPI = createApi({
 
 export const { useRegistrationMutation } = registrationAPI
 
-type CustomError = {
-  error?: {
-    status: any
-    data: any
+export type ErrorType = {
+  status: number
+  data: {
+    error: string
+    email: string
+    in: string
   }
 }
 
@@ -47,10 +43,4 @@ export interface AddedUser {
   created: Date
   updated: Date
   __v: number
-}
-
-export interface ResponseRegistrationType {
-  data: AddedUser
-  status: number
-  error?: FetchBaseQueryError
 }

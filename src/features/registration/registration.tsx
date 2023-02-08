@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 
 import { LoadingOutlined } from '@ant-design/icons'
-import { Alert, App, Spin } from 'antd'
+import { Alert, Spin } from 'antd'
 import { useForm } from 'react-hook-form'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { useAppSelector } from '../../app/hooks'
 import { FormField } from '../../common/components/FormField/FormField'
 import {
   Form,
@@ -17,15 +17,13 @@ import {
   CardWrapper,
 } from '../../common/style'
 
-import { addRegistrationAC } from './registration-reducer'
 import { useRegistrationMutation } from './registrationAPI'
 
 export const Registration: React.FC = () => {
-  const [registration, { isLoading, data, error, isError }] = useRegistrationMutation<any>()
-  const { message } = App.useApp()
+  const [registration, { isLoading }] = useRegistrationMutation()
 
   const registered = useAppSelector<boolean>(state => state.registration.registered)
-  const dispatch = useAppDispatch()
+  const error = useAppSelector<string | null>(state => state.registration.error)
   const {
     formState: { errors },
     handleSubmit,
@@ -34,17 +32,11 @@ export const Registration: React.FC = () => {
     watch,
   } = useForm({ mode: 'onBlur' })
 
-  useEffect(() => {
-    if (data?.addedUser) {
-      dispatch(addRegistrationAC({ registered: true }))
-      reset()
-    }
-  }, [data])
-
-  const onSubmit = handleSubmit(requestData => {
+  const onSubmit = handleSubmit(async requestData => {
     const { email, password } = requestData
 
-    registration({ email, password })
+    await registration({ email, password })
+    reset()
   })
 
   const antIcon = <LoadingOutlined style={{ fontSize: 150 }} spin />
@@ -58,8 +50,6 @@ export const Registration: React.FC = () => {
   if (registered) {
     return <Navigate to={'/login'} />
   }
-
-  let a = true
 
   return (
     <>
@@ -114,12 +104,12 @@ export const Registration: React.FC = () => {
             <Spin indicator={antIcon} style={{ width: '100%', display: 'block' }} />
           )}
         </StyledCard>
-        {isError && (
+        {error && (
           <Alert
-            message={error.data.error}
+            style={{ position: 'absolute', bottom: '3%' }}
+            message={error}
             type="error"
             closable
-            style={{ position: 'absolute', top: '73px', left: '42%' }}
           />
         )}
       </CardWrapper>
