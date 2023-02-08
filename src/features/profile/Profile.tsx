@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { FormContainer, StyledCard } from '../../common/style/styled-components'
 
 import { useChangeUserMutation, useGetUserProfileMutation, useLoginMutation } from './profile-api'
 
@@ -47,10 +48,8 @@ export const Profile = () => {
   return !isLoggedIn ? (
     <Navigate to={'/login'} />
   ) : (
-    <div
-      style={{ width: '200px', height: '200px', border: '1px solid black', textAlign: 'center' }}
-    >
-      <div>Personal Information</div>
+    <StyledCard>
+      <FormContainer>Personal Information</FormContainer>
       <div>
         <img src={avatar} alt="photo" style={{ height: '100px' }} />
       </div>
@@ -59,6 +58,6 @@ export const Profile = () => {
       <div>
         <button onClick={onClickHandler}>Log out</button>
       </div>
-    </div>
+    </StyledCard>
   )
 }
