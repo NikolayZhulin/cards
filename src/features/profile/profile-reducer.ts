@@ -30,7 +30,11 @@ const initialState: {
 const slice = createSlice({
   name: 'profile',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setIsLoggedIn: (state, action: PayloadAction<{ value: boolean }>) => {
+      state.isLoggedIn = action.payload.value
+    },
+  },
   extraReducers: builder => {
     builder.addMatcher(profileAPI.endpoints.getUserProfile.matchFulfilled, (state, { payload }) => {
       state.user = payload
@@ -59,4 +63,4 @@ const slice = createSlice({
 })
 
 export const profileReducer = slice.reducer
-export const {} = slice.actions
+export const { setIsLoggedIn } = slice.actions

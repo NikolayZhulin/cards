@@ -11,9 +11,8 @@ import styled from 'styled-components'
 
 import { useAppDispatch } from '../../app/hooks'
 import { useAppSelector } from '../../common/hooks/hooks'
-import { FormContainer, StyledCard, FormLabel } from '../../common/style'
+import { FormContainer, StyledCard, FormLabel, CardWrapper } from '../../common/style'
 
-import { setIsLoggedInAC, setProfileData } from './login-reducer'
 import { useLoginMutation } from './loginApi'
 
 const EMAIL_REGEXP =
@@ -22,12 +21,10 @@ const EMAIL_REGEXP =
 export const Login = () => {
   const [login, { isLoading, data, error, isError, isSuccess }] = useLoginMutation<any>()
 
-  console.log(error)
-  const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector(state => state.login.isLoggedIn)
+  // const isAuthorised = useAppSelector(state => state.profile.isLoggedIn)
   const navigate = useNavigate()
 
-  console.log(isError)
   const {
     control,
     handleSubmit,
@@ -35,22 +32,14 @@ export const Login = () => {
     formState: { errors, isValid },
   } = useForm({ mode: 'onBlur' })
 
-  const onSubmit = handleSubmit(data => {
+  const onSubmit = handleSubmit(async data => {
     const { email, password, rememberMe } = data
 
-    login({ email, password, rememberMe })
+    await login({ email, password, rememberMe })
     reset()
   })
 
-  isSuccess && navigate('/profile')
-
-  // useEffect(() => {
-  //   if (data) {
-  //     // dispatch(setIsLoggedInAC({ value: true }))
-  //     // dispatch(setProfileData({ profile: data }))
-  //     // navigate('/profile')
-  //   }
-  // }, [])
+  // isSuccess && navigate('/profile')
 
   if (isLoggedIn) {
     return <Navigate to={'/profile'} />
@@ -58,12 +47,7 @@ export const Login = () => {
 
   return (
     <LoginPageStyle>
-      <Space
-        align={'center'}
-        style={{
-          height: 'calc(100vh - 60px)',
-        }}
-      >
+      <CardWrapper>
         <StyledCard>
           <div className={'wrapper'}>
             <h3 className={'title'}>Log In</h3>
@@ -125,8 +109,8 @@ export const Login = () => {
             <Link to={'/registration'}>Sign Up</Link>
           </div>
         </StyledCard>
-        {isError && <Alert message={error.data.error} type="error" closable />}
-      </Space>
+      </CardWrapper>
+      {isError && <Alert message={error.data.error} type="error" closable />}
     </LoginPageStyle>
   )
 }
@@ -139,7 +123,6 @@ const LoginPageStyle = styled.div`
     flex-direction: column;
     justify-content: space-around;
   }
-
   .wrapper {
     height: 450px;
     display: flex;
@@ -147,7 +130,6 @@ const LoginPageStyle = styled.div`
     flex-direction: column;
     align-items: center;
   }
-
   .title {
     margin-top: 0;
     font-weight: 700;
@@ -160,14 +142,16 @@ const LoginPageStyle = styled.div`
     display: flex;
     justify-content: center;
   }
-
   .ant-alert.ant-alert-error.ant-alert-no-icon.css-dev-only-do-not-override-ixblex {
     position: absolute;
     top: 73px;
     left: 42%;
   }
-
   .error {
     color: red;
+  }
+  .ant-card.ant-card-bordered.sc-kDvujY.ibBuSd.css-dev-only-do-not-override-j0nf2s {
+    max-width: 80%;
+    width: 400px;
   }
 `
