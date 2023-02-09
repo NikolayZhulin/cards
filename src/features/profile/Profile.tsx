@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 
+import { LogoutOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import Space from 'antd/es/space'
 import { Navigate } from 'react-router-dom'
@@ -37,16 +38,7 @@ export const Profile = () => {
   if (!isLoggedIn) return <Navigate to={'/login'} />
 
   return (
-    <Space
-      align="center"
-      style={{
-        width: '100%',
-        height: `calc(100vh - 60px)`,
-        margin: '0 auto',
-        display: 'flex',
-        justifyContent: 'center',
-      }}
-    >
+    <div>
       <StyledCard>
         <div
           style={{
@@ -67,6 +59,7 @@ export const Profile = () => {
           <div>{email}</div>
           <div>
             <Button
+              icon={<LogoutOutlined />}
               onClick={onClickLogOutHandler}
               type={'default'}
               htmlType={'button'}
@@ -77,6 +70,6 @@ export const Profile = () => {
           </div>
         </div>
       </StyledCard>
-    </Space>
+    </div>
   )
 }
