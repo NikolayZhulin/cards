@@ -2,11 +2,10 @@ import React, { useEffect } from 'react'
 
 import { LogoutOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
-import Space from 'antd/es/space'
 import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { FormContainer, StyledCard } from '../../common/style'
+import { CardWrapper, FormTitle, FormWrapper, StyledCard } from '../../common/style'
 
 import { useChangeUserMutation, useGetUserProfileMutation, useLogOutMutation } from './profile-api'
 
@@ -38,20 +37,10 @@ export const Profile = () => {
   if (!isLoggedIn) return <Navigate to={'/login'} />
 
   return (
-    <div>
-      <StyledCard>
-        <div
-          style={{
-            height: '450px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <h3 style={{ marginTop: '0', fontWeight: '700', fontSize: '26px' }}>
-            Personal information
-          </h3>
+    <CardWrapper>
+      <StyledCard style={{ width: '400px' }}>
+        <FormWrapper>
+          <FormTitle>Personal information</FormTitle>
           <div>
             <img src={avatar} alt="photo" style={{ height: '100px', borderRadius: '50%' }} />
           </div>
@@ -68,8 +57,8 @@ export const Profile = () => {
               Log out
             </Button>
           </div>
-        </div>
+        </FormWrapper>
       </StyledCard>
-    </div>
+    </CardWrapper>
   )
 }

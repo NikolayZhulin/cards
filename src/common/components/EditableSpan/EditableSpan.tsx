@@ -1,5 +1,7 @@
 import React, { ChangeEvent, useState } from 'react'
-// import {TextField} from "@mui/material";
+
+import { EditOutlined } from '@ant-design/icons'
+import Input from 'antd/es/input/Input'
 
 type EditableSpanPropsType = {
   value: string
@@ -28,11 +30,19 @@ export const EditableSpan = React.memo(
 
     return editMode ? (
       <div>
-        <input value={title} onChange={changeTitle} autoFocus />
-        <button onClick={activateViewMode}>save</button>
+        <Input
+          value={title}
+          onBlur={activateViewMode}
+          onPressEnter={activateViewMode}
+          onChange={changeTitle}
+          autoFocus
+        />
       </div>
     ) : (
-      <span onDoubleClick={activateEditMode}>{value}</span>
+      <div>
+        <span onDoubleClick={activateEditMode}>{value}</span>
+        <EditOutlined />
+      </div>
     )
   }
 )

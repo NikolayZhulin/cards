@@ -9,6 +9,7 @@ import { ForgotPassword } from '../features/forgot-password'
 import { Login } from '../features/login'
 import { Profile } from '../features/profile'
 import { Registration } from '../features/registration'
+import { SetNewPassword } from '../features/set-new-password/SetNewPassword'
 
 export const App = () => {
   return (
@@ -18,6 +19,7 @@ export const App = () => {
         <Route path={'/login'} element={<Login />} />
         <Route path={'/profile'} element={<Profile />} />
         <Route path={'/forgot-password'} element={<ForgotPassword />} />
+        <Route path={'/set-new-password/:token'} element={<SetNewPassword />} />
         <Route path={'/*'} element={<Error404 />} />
       </Route>
     </Routes>

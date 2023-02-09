@@ -3,5 +3,5 @@ export const PATH = {
   REGISTRATION: '/registration',
   PROFILE: '/profile',
   RECOVERY_PASSWORD: '/recovery_password',
-  NEW_PASSWORD: '/new_password',
+  NEW_PASSWORD: '/set-new-password/:token',
 }
