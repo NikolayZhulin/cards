@@ -10,6 +10,7 @@ export const HeaderComponent = styled.header`
   background: #b31232;
 `
 export const FormContainer = styled.div`
+  margin-bottom: 35px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -24,7 +25,7 @@ export const Form = styled.form`
 `
 
 export const FormWrapper = styled.div`
-  height: 450px;
+  //height: 450px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -32,7 +33,7 @@ export const FormWrapper = styled.div`
 `
 
 export const FormTitle = styled.h3`
-  margin: 0;
+  margin: 0 0 20px;
   font-weight: 700;
   font-size: 26px;
 `
@@ -51,12 +52,19 @@ export const PrimaryButton = styled(Button).attrs({
 })`
   width: 100%;
   height: 40px;
-  margin-top: 10px;
+  margin-bottom: 20px;
 `
 
 export const FormInformationText = styled.div`
   color: black;
   opacity: 0.5;
+  font-size: 14px;
+  font-weight: bold;
+`
+export const FieldInformationText = styled.div`
+  margin-bottom: 50px;
+  color: black;
+  opacity: 0.7;
   font-size: 14px;
 `
 
@@ -78,8 +86,8 @@ export const CardWrapper = styled.div`
 `
 
 export const StyledCard = styled(Card)`
-  width: 350px;
-  min-height: 500px;
+  //width: 350px;
+  //min-height: 500px;
   max-height: 500px;
   display: flex;
   flex-direction: column;

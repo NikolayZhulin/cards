@@ -41,7 +41,7 @@ export const FormField: React.FC<FormFieldPropsType> = ({
             {...field}
             placeholder={fieldPlaceholder}
             type={inputType}
-            style={{ height: '40px' }}
+            style={{ height: '40px', width: '350px' }}
           />
         )}
       />
