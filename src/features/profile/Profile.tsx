@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 
+import { Button } from 'antd'
+import Space from 'antd/es/space'
 import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
@@ -35,16 +37,46 @@ export const Profile = () => {
   if (!isLoggedIn) return <Navigate to={'/login'} />
 
   return (
-    <StyledCard>
-      <FormContainer>Personal Information</FormContainer>
-      <div>
-        <img src={avatar} alt="photo" style={{ height: '100px' }} />
-      </div>
-      <EditableSpan value={name} onChange={onChangeHandler} />
-      <div>{email}</div>
-      <div>
-        <button onClick={onClickLogOutHandler}>Log Out</button>
-      </div>
-    </StyledCard>
+    <Space
+      align="center"
+      style={{
+        width: '100%',
+        height: `calc(100vh - 60px)`,
+        margin: '0 auto',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      <StyledCard>
+        <div
+          style={{
+            height: '450px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <h3 style={{ marginTop: '0', fontWeight: '700', fontSize: '26px' }}>
+            Personal information
+          </h3>
+          <div>
+            <img src={avatar} alt="photo" style={{ height: '100px', borderRadius: '50%' }} />
+          </div>
+          <EditableSpan value={name} onChange={onChangeHandler} />
+          <div>{email}</div>
+          <div>
+            <Button
+              onClick={onClickLogOutHandler}
+              type={'default'}
+              htmlType={'button'}
+              style={{ width: '100%' }}
+            >
+              Log out
+            </Button>
+          </div>
+        </div>
+      </StyledCard>
+    </Space>
   )
 }

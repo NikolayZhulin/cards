@@ -67,7 +67,7 @@ export const Login = () => {
       >
         <StyledCard>
           <div className={'wrapper'}>
-            <h3 className={'title'}>Sign up</h3>
+            <h3 className={'title'}>Log In</h3>
             <form className="form" onSubmit={onSubmit}>
               <FormContainer>
                 <FormLabel>Email:</FormLabel>
@@ -122,7 +122,7 @@ export const Login = () => {
                 Submit
               </Button>
             </form>
-            <div>Already have an account?</div>
+            <div>Dont have an account yet?</div>
             <Link to={'/registration'}>Sign Up</Link>
           </div>
         </StyledCard>
