@@ -25,7 +25,7 @@ export type ResponseLoginType = {
 export const loginApi = createApi({
   reducerPath: 'loginApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
+    baseUrl: process.env.REACT_APP_BACK_URL || 'https://neko-back.herokuapp.com/2.0',
     credentials: 'include',
   }),
   endpoints: builder => ({
@@ -34,6 +34,7 @@ export const loginApi = createApi({
         url: 'auth/login',
         method: 'POST',
         body: formData,
+        credentials: 'include',
       }),
     }),
   }),

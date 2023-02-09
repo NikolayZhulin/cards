@@ -18,6 +18,8 @@ export const App = () => {
         <Route path={'/login'} element={<Login />} />
         <Route path={'/profile'} element={<Profile />} />
         <Route path={'/forgot-password'} element={<ForgotPassword />} />
+        <Route path={'/set-new-password'} element={<div>set new pass</div>} />
+        <Route path={'//check-email'} element={<div>/check-email</div>} />
         <Route path={'/*'} element={<Error404 />} />
       </Route>
     </Routes>
