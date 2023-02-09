@@ -7,6 +7,7 @@ import { profileReducer } from '../features/profile'
 import { profileAPI } from '../features/profile/profile-api'
 import { registrationReducer } from '../features/registration'
 import { registrationAPI } from '../features/registration/registrationAPI'
+import { newPasswordAPI } from '../features/set-new-password/newPasswordAPI'
 
 import { appReducer } from './app-reducer'
 
@@ -19,13 +20,15 @@ export const store = configureStore({
     [loginApi.reducerPath]: loginApi.reducer,
     [registrationAPI.reducerPath]: registrationAPI.reducer,
     [profileAPI.reducerPath]: profileAPI.reducer,
+    [newPasswordAPI.reducerPath]: newPasswordAPI.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware()
       .prepend(thunkMiddleware)
       .prepend(registrationAPI.middleware)
       .prepend(profileAPI.middleware)
-      .prepend(loginApi.middleware),
+      .prepend(loginApi.middleware)
+      .prepend(newPasswordAPI.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
