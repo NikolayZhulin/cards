@@ -21,7 +21,7 @@ const EMAIL_REGEXP =
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu
 
 export const Login = () => {
-  const [login, { isLoading, data, error, isError }] = useLoginMutation<any>()
+  const [login, { isLoading, data, error, isError, isSuccess }] = useLoginMutation<any>()
 
   console.log(error)
   const dispatch = useAppDispatch()
@@ -43,13 +43,15 @@ export const Login = () => {
     reset()
   })
 
-  useEffect(() => {
-    if (data) {
-      dispatch(setIsLoggedInAC({ value: true }))
-      dispatch(setProfileData({ profile: data }))
-      navigate('/profile')
-    }
-  }, [data])
+  isSuccess && navigate('/profile')
+
+  // useEffect(() => {
+  //   if (data) {
+  //     // dispatch(setIsLoggedInAC({ value: true }))
+  //     // dispatch(setProfileData({ profile: data }))
+  //     // navigate('/profile')
+  //   }
+  // }, [])
 
   if (isLoggedIn) {
     return <Navigate to={'/profile'} />

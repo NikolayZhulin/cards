@@ -14,13 +14,6 @@ export const profileAPI = createApi({
         body,
       }),
     }),
-    login: build.mutation<any, any>({
-      query: body => ({
-        url: 'auth/login',
-        method: 'POST',
-        body,
-      }),
-    }),
     changeUser: build.mutation<
       { updatedUser: UserType; error?: string },
       { name?: string; avatar?: string }
@@ -31,10 +24,17 @@ export const profileAPI = createApi({
         body,
       }),
     }),
+    logOut: build.mutation<any, {}>({
+      query: body => ({
+        url: 'auth/me',
+        method: 'DELETE',
+        body,
+      }),
+    }),
   }),
 })
 
-export const { useGetUserProfileMutation, useLoginMutation, useChangeUserMutation } = profileAPI
+export const { useGetUserProfileMutation, useChangeUserMutation, useLogOutMutation } = profileAPI
 
 export type UserType = {
   _id: string
@@ -49,5 +49,7 @@ export type UserType = {
   verified: boolean // подтвердил ли почту
   rememberMe: boolean
 
-  error?: string
+  __v: number
+  token: string
+  tokenDeathTime: number | null
 }

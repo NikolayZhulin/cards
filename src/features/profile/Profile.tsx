@@ -5,49 +5,36 @@ import { Navigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { FormContainer, StyledCard } from '../../common/style/styled-components'
 
-import { useChangeUserMutation, useGetUserProfileMutation, useLoginMutation } from './profile-api'
+import { useChangeUserMutation, useGetUserProfileMutation, useLogOutMutation } from './profile-api'
 
-import { changeUserAC, EditableSpan, setUserProfileAC } from './index'
+import { EditableSpan } from './index'
 
 export const Profile = () => {
-  const [getProfile, { data: profile, isSuccess: profileHasLoad, isLoading }] =
-    useGetUserProfileMutation<any>()
-  const [login, {}] = useLoginMutation<any>()
-  const [changeUser, { data, error, isSuccess }] = useChangeUserMutation<any>()
+  const [getProfile, {}] = useGetUserProfileMutation<any>()
+  const [changeUser, {}] = useChangeUserMutation<any>()
+  const [logOut, {}] = useLogOutMutation<any>()
   const avatar = useAppSelector(state => state.profile.user.avatar)
   const name = useAppSelector(state => state.profile.user.name)
   const email = useAppSelector(state => state.profile.user.email)
+  const isLoading = useAppSelector(state => state.profile.isLoading)
+  const isLoggedIn = useAppSelector(state => state.profile.isLoggedIn)
   const dispatch = useAppDispatch()
 
-  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn)
-  const onClickHandler = () => {
-    console.log('Log out')
+  const onClickLogOutHandler = () => {
+    logOut({})
   }
   const onChangeHandler = (value: string) => {
     changeUser({ name: value })
   }
 
   useEffect(() => {
-    // login({
-    //   email: 'nikitagaponov@yandex.ru',
-    //   password: 'pass-12345',
-    //   rememberMe: true,
-    // })
     getProfile({})
   }, [])
-  useEffect(() => {
-    isSuccess &&
-      dispatch(changeUserAC({ name: data.updatedUser.name, avatar: data.updatedUser.avatar }))
-  }, [isSuccess])
-  useEffect(() => {
-    profileHasLoad && dispatch(setUserProfileAC(profile))
-  }, [profileHasLoad])
 
   if (isLoading) return <div>loading...</div>
+  if (!isLoggedIn) return <Navigate to={'/login'} />
 
-  return !isLoggedIn ? (
-    <Navigate to={'/login'} />
-  ) : (
+  return (
     <StyledCard>
       <FormContainer>Personal Information</FormContainer>
       <div>
@@ -56,7 +43,7 @@ export const Profile = () => {
       <EditableSpan value={name} onChange={onChangeHandler} />
       <div>{email}</div>
       <div>
-        <button onClick={onClickHandler}>Log out</button>
+        <button onClick={onClickLogOutHandler}>Log Out</button>
       </div>
     </StyledCard>
   )

@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { AppDispatch } from '../../common/hooks/hooks'
-
-import { UserType } from './profile-api'
+import { profileAPI, UserType } from './profile-api'
 
 const initialState: {
   user: UserType
+  isLoading: boolean
+  isLoggedIn: boolean
 } = {
   user: {
     _id: '',
@@ -19,30 +19,44 @@ const initialState: {
     isAdmin: false,
     verified: true, // подтвердил ли почту
     rememberMe: true,
-
-    error: '',
+    __v: 0,
+    token: '',
+    tokenDeathTime: null,
   },
+  isLoading: false,
+  isLoggedIn: true,
 }
 
 const slice = createSlice({
   name: 'profile',
   initialState: initialState,
-  reducers: {
-    changeUserAC(state, action: PayloadAction<{ name?: string; avatar?: string }>) {
-      if (action.payload.name) state.user.name = action.payload.name
-      if (action.payload.avatar) state.user.avatar = action.payload.avatar
-    },
-    setUserProfileAC(state, action: PayloadAction<UserType>) {
-      state.user = action.payload
-    },
+  reducers: {},
+  extraReducers: builder => {
+    builder.addMatcher(profileAPI.endpoints.getUserProfile.matchFulfilled, (state, { payload }) => {
+      state.user = payload
+      state.isLoading = false
+      state.isLoggedIn = true
+    }),
+      builder.addMatcher(profileAPI.endpoints.getUserProfile.matchPending, state => {
+        state.isLoading = true
+      }),
+      builder.addMatcher(profileAPI.endpoints.getUserProfile.matchRejected, state => {
+        state.isLoading = false
+        state.isLoggedIn = false
+      }),
+      builder.addMatcher(profileAPI.endpoints.changeUser.matchFulfilled, (state, { payload }) => {
+        state.user.name = payload.updatedUser.name
+        state.user.avatar = payload.updatedUser.avatar
+      }),
+      builder.addMatcher(profileAPI.endpoints.logOut.matchFulfilled, (state, { payload }) => {
+        state.isLoggedIn = false
+        state.isLoading = false
+      }),
+      builder.addMatcher(profileAPI.endpoints.logOut.matchPending, (state, { payload }) => {
+        state.isLoading = true
+      })
   },
 })
 
 export const profileReducer = slice.reducer
-export const { changeUserAC, setUserProfileAC } = slice.actions
-
-// thunks
-// export const fetchUserProfileTC = () => async (dispatch: AppDispatch) => {
-//   try {
-//   } catch (e) {}
-// }
+export const {} = slice.actions
