@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+import { authAPI } from '../auth/authAPI'
+
 import { profileAPI, UserType } from './profile-api'
 
 const initialState: {
@@ -36,15 +38,15 @@ const slice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addMatcher(profileAPI.endpoints.getUserProfile.matchFulfilled, (state, { payload }) => {
+    builder.addMatcher(authAPI.endpoints.me.matchFulfilled, (state, { payload }) => {
       state.user = payload
       state.isLoading = false
       state.isLoggedIn = true
     }),
-      builder.addMatcher(profileAPI.endpoints.getUserProfile.matchPending, state => {
+      builder.addMatcher(authAPI.endpoints.me.matchPending, state => {
         state.isLoading = true
       }),
-      builder.addMatcher(profileAPI.endpoints.getUserProfile.matchRejected, state => {
+      builder.addMatcher(authAPI.endpoints.me.matchRejected, state => {
         state.isLoading = false
         state.isLoggedIn = false
       }),
@@ -52,11 +54,11 @@ const slice = createSlice({
         state.user.name = payload.updatedUser.name
         state.user.avatar = payload.updatedUser.avatar
       }),
-      builder.addMatcher(profileAPI.endpoints.logOut.matchFulfilled, (state, { payload }) => {
+      builder.addMatcher(authAPI.endpoints.logOut.matchFulfilled, (state, { payload }) => {
         state.isLoggedIn = false
         state.isLoading = false
       }),
-      builder.addMatcher(profileAPI.endpoints.logOut.matchPending, (state, { payload }) => {
+      builder.addMatcher(authAPI.endpoints.logOut.matchPending, (state, { payload }) => {
         state.isLoading = true
       })
   },

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { EyeInvisibleOutlined, EyeTwoTone, LoadingOutlined } from '@ant-design/icons'
+import { LoadingOutlined } from '@ant-design/icons'
 import { Alert, Button, Input, Spin } from 'antd'
 import { Navigate, useParams } from 'react-router-dom'
 
@@ -10,9 +10,8 @@ import {
   FormTitle,
   FormWrapper,
   StyledCard,
-} from '../../common/style'
-
-import { useSetNewPasswordMutation } from './newPasswordAPI'
+} from '../../../common/style'
+import { useSetNewPasswordMutation } from '../authAPI'
 
 export const SetNewPassword: React.FC = () => {
   const [setPass, { isSuccess }] = useSetNewPasswordMutation()

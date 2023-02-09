@@ -9,11 +9,9 @@ import { Controller, useForm } from 'react-hook-form'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { useAppDispatch } from '../../app/hooks'
-import { useAppSelector } from '../../common/hooks/hooks'
-import { FormContainer, StyledCard, FormLabel, CardWrapper } from '../../common/style'
-
-import { useLoginMutation } from './loginApi'
+import { useAppSelector } from '../../../app/hooks'
+import { FormContainer, StyledCard, FormLabel, CardWrapper } from '../../../common/style'
+import { useLoginMutation } from '../authAPI'
 
 const EMAIL_REGEXP =
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu

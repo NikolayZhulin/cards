@@ -2,7 +2,7 @@ import React from 'react'
 
 import { NavLink } from 'react-router-dom'
 
-import email from '../../assets/pictures/Email.png'
+import email from '../../../assets/pictures/Email.png'
 import {
   FormInformationText,
   FormTitle,
@@ -10,7 +10,7 @@ import {
   PrimaryButton,
   StyledCard,
   CardWrapper,
-} from '../../common/style'
+} from '../../../common/style'
 
 export const CheckEmail: React.FC = () => {
   return (

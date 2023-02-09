@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { newPasswordAPI } from './newPasswordAPI'
+import { authAPI } from '../authAPI'
 
 const initialState = {}
 
@@ -9,10 +9,7 @@ const slice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: builder => {
-    builder.addMatcher(
-      newPasswordAPI.endpoints.setNewPassword.matchFulfilled,
-      (state, { payload }) => {}
-    )
+    builder.addMatcher(authAPI.endpoints.setNewPassword.matchFulfilled, (state, { payload }) => {})
   },
 })
 

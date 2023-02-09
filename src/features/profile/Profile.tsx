@@ -6,13 +6,14 @@ import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { CardWrapper, FormTitle, FormWrapper, StyledCard } from '../../common/style'
+import { useLogOutMutation, useMeMutation } from '../auth/authAPI'
 
-import { useChangeUserMutation, useGetUserProfileMutation, useLogOutMutation } from './profile-api'
+import { useChangeUserMutation } from './profile-api'
 
 import { EditableSpan } from './index'
 
 export const Profile = () => {
-  const [getProfile, {}] = useGetUserProfileMutation<any>()
+  const [getProfile, {}] = useMeMutation<any>()
   const [changeUser, {}] = useChangeUserMutation<any>()
   const [logOut, {}] = useLogOutMutation<any>()
   const avatar = useAppSelector(state => state.profile.user.avatar)

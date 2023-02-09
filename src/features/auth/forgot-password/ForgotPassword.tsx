@@ -5,8 +5,8 @@ import { Alert, Spin } from 'antd'
 import { useForm } from 'react-hook-form'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { FormField } from '../../common/components/FormField/FormField'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
+import { FormField } from '../../../common/components/FormField/FormField'
 import {
   Form,
   FormInformationText,
@@ -16,9 +16,9 @@ import {
   StyledCard,
   CardWrapper,
   FieldInformationText,
-} from '../../common/style'
+} from '../../../common/style'
+import { useForgotPasswordMutation } from '../authAPI'
 import { isSentRecoveryLetterAC } from '../registration'
-import { useForgotPasswordMutation } from '../registration/registrationAPI'
 
 export const ForgotPassword: React.FC = () => {
   const [forgotPassword, { isLoading, isError }] = useForgotPasswordMutation()

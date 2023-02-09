@@ -5,8 +5,8 @@ import { Alert, Spin } from 'antd'
 import { useForm } from 'react-hook-form'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { useAppSelector } from '../../app/hooks'
-import { FormField } from '../../common/components/FormField/FormField'
+import { useAppSelector } from '../../../app/hooks'
+import { FormField } from '../../../common/components/FormField/FormField'
 import {
   Form,
   FormInformationText,
@@ -15,9 +15,8 @@ import {
   PrimaryButton,
   StyledCard,
   CardWrapper,
-} from '../../common/style'
-
-import { useRegistrationMutation } from './registrationAPI'
+} from '../../../common/style'
+import { useRegistrationMutation } from '../authAPI'
 
 export const Registration: React.FC = () => {
   const [registration, { isLoading }] = useRegistrationMutation()

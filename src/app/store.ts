@@ -1,13 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import thunkMiddleware from 'redux-thunk'
 
-import { loginReducer } from '../features/login'
-import { loginApi } from '../features/login/loginApi'
+import { authAPI } from '../features/auth/authAPI'
+import { loginReducer } from '../features/auth/login'
+import { registrationReducer } from '../features/auth/registration'
 import { profileReducer } from '../features/profile'
 import { profileAPI } from '../features/profile/profile-api'
-import { registrationReducer } from '../features/registration'
-import { registrationAPI } from '../features/registration/registrationAPI'
-import { newPasswordAPI } from '../features/set-new-password/newPasswordAPI'
 
 import { appReducer } from './app-reducer'
 
@@ -17,18 +15,14 @@ export const store = configureStore({
     login: loginReducer,
     registration: registrationReducer,
     profile: profileReducer,
-    [loginApi.reducerPath]: loginApi.reducer,
-    [registrationAPI.reducerPath]: registrationAPI.reducer,
+    [authAPI.reducerPath]: authAPI.reducer,
     [profileAPI.reducerPath]: profileAPI.reducer,
-    [newPasswordAPI.reducerPath]: newPasswordAPI.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware()
       .prepend(thunkMiddleware)
-      .prepend(registrationAPI.middleware)
-      .prepend(profileAPI.middleware)
-      .prepend(loginApi.middleware)
-      .prepend(newPasswordAPI.middleware),
+      .prepend(authAPI.middleware)
+      .prepend(profileAPI.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

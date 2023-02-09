@@ -7,13 +7,6 @@ export const profileAPI = createApi({
     credentials: 'include',
   }),
   endpoints: build => ({
-    getUserProfile: build.mutation<UserType, {}>({
-      query: body => ({
-        url: 'auth/me',
-        method: 'POST',
-        body,
-      }),
-    }),
     changeUser: build.mutation<
       { updatedUser: UserType; error?: string },
       { name?: string; avatar?: string }
@@ -24,17 +17,10 @@ export const profileAPI = createApi({
         body,
       }),
     }),
-    logOut: build.mutation<any, {}>({
-      query: body => ({
-        url: 'auth/me',
-        method: 'DELETE',
-        body,
-      }),
-    }),
   }),
 })
 
-export const { useGetUserProfileMutation, useChangeUserMutation, useLogOutMutation } = profileAPI
+export const { useChangeUserMutation } = profileAPI
 
 export type UserType = {
   _id: string
