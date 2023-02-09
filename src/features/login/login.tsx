@@ -11,8 +11,7 @@ import styled from 'styled-components'
 
 import { useAppDispatch } from '../../app/hooks'
 import { useAppSelector } from '../../common/hooks/hooks'
-import { FormLabel } from '../../common/style/styled-components'
-import { FormContainer, StyledCard } from '../registration'
+import { FormContainer, StyledCard, FormLabel } from '../../common/style'
 
 import { setIsLoggedInAC, setProfileData } from './login-reducer'
 import { useLoginMutation } from './loginApi'
@@ -140,6 +139,7 @@ const LoginPageStyle = styled.div`
     flex-direction: column;
     justify-content: space-around;
   }
+
   .wrapper {
     height: 450px;
     display: flex;
@@ -147,22 +147,26 @@ const LoginPageStyle = styled.div`
     flex-direction: column;
     align-items: center;
   }
+
   .title {
     margin-top: 0;
     font-weight: 700;
     font-size: 26px;
   }
+
   .ant-space.css-dev-only-do-not-override-ixblex.ant-space-horizontal.ant-space-align-center {
     width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: center;
   }
+
   .ant-alert.ant-alert-error.ant-alert-no-icon.css-dev-only-do-not-override-ixblex {
     position: absolute;
     top: 73px;
     left: 42%;
   }
+
   .error {
     color: red;
   }

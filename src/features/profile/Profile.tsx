@@ -6,7 +6,7 @@ import Space from 'antd/es/space'
 import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { FormContainer, StyledCard } from '../../common/style/styled-components'
+import { FormContainer, StyledCard } from '../../common/style'
 
 import { useChangeUserMutation, useGetUserProfileMutation, useLogOutMutation } from './profile-api'
 
