@@ -21,8 +21,8 @@ import { useRegistrationMutation } from '../authAPI'
 export const Registration: React.FC = () => {
   const [registration, { isLoading }] = useRegistrationMutation()
 
-  const registered = useAppSelector<boolean>(state => state.registration.registered)
-  const error = useAppSelector<string | null>(state => state.registration.error)
+  const registered = useAppSelector<boolean>(state => state.auth.registered)
+  const error = useAppSelector<string | null>(state => state.auth.error)
   const {
     formState: { errors },
     handleSubmit,

@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { ErrorMessage } from '@hookform/error-message'
-import { Alert, Space } from 'antd'
+import { Alert } from 'antd'
 import Button from 'antd/es/button/button'
 import Checkbox from 'antd/es/checkbox/Checkbox'
 import Input from 'antd/es/input/Input'
 import { Controller, useForm } from 'react-hook-form'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { useAppSelector } from '../../../app/hooks'
@@ -17,11 +17,9 @@ const EMAIL_REGEXP =
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu
 
 export const Login = () => {
-  const [login, { isLoading, data, error, isError, isSuccess }] = useLoginMutation<any>()
+  const [login, { error, isError }] = useLoginMutation()
 
-  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn)
-  // const isAuthorised = useAppSelector(state => state.profile.isLoggedIn)
-  const navigate = useNavigate()
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
   const {
     control,
@@ -36,8 +34,6 @@ export const Login = () => {
     await login({ email, password, rememberMe })
     reset()
   })
-
-  // isSuccess && navigate('/profile')
 
   if (isLoggedIn) {
     return <Navigate to={'/profile'} />
@@ -108,7 +104,7 @@ export const Login = () => {
           </div>
         </StyledCard>
       </CardWrapper>
-      {isError && <Alert message={error.data.error} type="error" closable />}
+      {isError && <Alert message={'error.data.error'} type="error" closable />}
     </LoginPageStyle>
   )
 }

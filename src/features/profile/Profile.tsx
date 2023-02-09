@@ -20,7 +20,7 @@ export const Profile = () => {
   const name = useAppSelector(state => state.profile.user.name)
   const email = useAppSelector(state => state.profile.user.email)
   const isLoading = useAppSelector(state => state.profile.isLoading)
-  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn)
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const dispatch = useAppDispatch()
 
   const onClickLogOutHandler = () => {

@@ -17,16 +17,14 @@ import {
   CardWrapper,
   FieldInformationText,
 } from '../../../common/style'
+import { isSentRecoveryLetterAC } from '../auth-reducer'
 import { useForgotPasswordMutation } from '../authAPI'
-import { isSentRecoveryLetterAC } from '../registration'
 
 export const ForgotPassword: React.FC = () => {
   const [forgotPassword, { isLoading, isError }] = useForgotPasswordMutation()
 
-  const isLetterRecoverySent = useAppSelector<boolean>(
-    state => state.registration.isRecoveryLetterSent
-  )
-  const error = useAppSelector<string | null>(state => state.registration.error)
+  const isLetterRecoverySent = useAppSelector<boolean>(state => state.auth.isRecoveryLetterSent)
+  const error = useAppSelector<string | null>(state => state.auth.error)
   const dispatch = useAppDispatch()
 
   useEffect(() => {

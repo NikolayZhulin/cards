@@ -1,16 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { isErrorWithMessage, isFetchBaseQueryError } from '../../../common/services/helpers'
-import { authAPI } from '../authAPI'
+import { isErrorWithMessage, isFetchBaseQueryError } from '../../common/services/helpers'
+import { setIsLoggedIn } from '../profile'
+
+import { authAPI } from './authAPI'
 
 const initialState = {
   registered: false,
   error: null as null | string,
   isRecoveryLetterSent: false,
+  isLoggedIn: false,
 }
 
 const slice = createSlice({
-  name: 'registration',
+  name: 'auth',
   initialState: initialState,
   reducers: {
     addRegistrationAC(state, action: PayloadAction<{ registered: boolean }>) {
@@ -22,6 +25,9 @@ const slice = createSlice({
     },
   },
   extraReducers: builder => {
+    builder.addCase(setIsLoggedIn, (state, { payload }) => {
+      state.isLoggedIn = payload.value
+    })
     builder.addMatcher(authAPI.endpoints.registration.matchFulfilled, (state, { payload }) => {
       state.registered = true
     })
@@ -47,8 +53,23 @@ const slice = createSlice({
           console.warn('Unknown Error')
         }
       })
+    builder.addMatcher(authAPI.endpoints.login.matchFulfilled, (state, { payload }) => {
+      state.isLoggedIn = true
+    })
+    builder.addMatcher(authAPI.endpoints.login.matchRejected, (state, { payload }) => {
+      if (isFetchBaseQueryError(payload)) {
+        const errMsg = 'error' in payload ? payload.error : JSON.stringify(payload.data)
+
+        state.error = JSON.parse(errMsg).error
+      } else if (isErrorWithMessage(payload)) {
+        console.warn('Unknown Error')
+      }
+    })
+    builder.addMatcher(authAPI.endpoints.logOut.matchFulfilled, state => {
+      state.isLoggedIn = false
+    })
   },
 })
 
-export const registrationReducer = slice.reducer
-export const { isSentRecoveryLetterAC } = slice.actions
+export const authReducer = slice.reducer
+export const { isSentRecoveryLetterAC, addRegistrationAC } = slice.actions

@@ -1,9 +1,8 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import thunkMiddleware from 'redux-thunk'
 
+import { authReducer } from '../features/auth/auth-reducer'
 import { authAPI } from '../features/auth/authAPI'
-import { loginReducer } from '../features/auth/login'
-import { registrationReducer } from '../features/auth/registration'
 import { profileReducer } from '../features/profile'
 import { profileAPI } from '../features/profile/profile-api'
 
@@ -12,8 +11,7 @@ import { appReducer } from './app-reducer'
 export const store = configureStore({
   reducer: {
     app: appReducer,
-    login: loginReducer,
-    registration: registrationReducer,
+    auth: authReducer,
     profile: profileReducer,
     [authAPI.reducerPath]: authAPI.reducer,
     [profileAPI.reducerPath]: profileAPI.reducer,

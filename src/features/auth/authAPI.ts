@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const authAPI = createApi({
   reducerPath: 'registration/api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:7542/2.0/',
+    baseUrl: 'https://neko-back.herokuapp.com/2.0',
     credentials: 'include',
   }),
   endpoints: build => ({
@@ -16,7 +16,7 @@ export const authAPI = createApi({
     }),
     forgotPassword: build.mutation<ForgotSuccessType, ForgotRequestType>({
       query: data => ({
-        url: 'http://localhost:7542/2.0//auth/forgot',
+        url: '/auth/forgot',
         method: 'POST',
         body: {
           email: data,
