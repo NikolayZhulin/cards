@@ -81,12 +81,10 @@ export type ForgotRequestType = {
   from: string
   message: Element
 }
-
 type RequestRegisterType = {
   email: string
   password: string
 }
-
 export interface AddedUser {
   addedUser: {
     _id: string
@@ -101,7 +99,6 @@ export interface AddedUser {
     __v: number
   }
 }
-
 export type RequestLoginType = {
   email: string
   password: string
