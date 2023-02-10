@@ -13,7 +13,6 @@ export const Header = () => {
       <NavLink to={PATH.PROFILE}>PROFILE</NavLink>
       <NavLink to={PATH.NEW_PASSWORD}>NEW PASSWORD</NavLink>
       <NavLink to={PATH.FORGOT_PASSWORD}>FORGOT PASSWORD</NavLink>
-      <NavLink to={PATH.SET_NEW_PASSWORD}>SET NEW PASSWORD</NavLink>
       <NavLink to={PATH.CHECK_EMAIL}>/check-email</NavLink>
     </HeaderComponent>
   )
