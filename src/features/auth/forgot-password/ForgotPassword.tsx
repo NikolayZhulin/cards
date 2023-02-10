@@ -22,7 +22,7 @@ import { isSentRecoveryLetterAC } from '../auth-reducer'
 import { useForgotPasswordMutation } from '../authAPI'
 
 export const ForgotPassword: React.FC = () => {
-  const [forgotPassword, { isLoading, isError, data }] = useForgotPasswordMutation()
+  const [forgotPassword, { isLoading, isError }] = useForgotPasswordMutation()
 
   const isLetterRecoverySent = useAppSelector<boolean>(state => state.auth.isRecoveryLetterSent)
   const error = useAppSelector<string | null>(state => state.auth.error)
@@ -46,10 +46,7 @@ export const ForgotPassword: React.FC = () => {
   })
 
   if (isLetterRecoverySent) {
-    console.log(data)
-    let a = getValues()
-
-    console.log(a)
+    let email = getValues()
 
     return <Navigate to={'/check-email'} />
   }
