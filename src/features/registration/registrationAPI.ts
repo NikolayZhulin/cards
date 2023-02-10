@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const registrationAPI = createApi({
   reducerPath: 'registration/api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:7542/2.0',
+    baseUrl: 'https://neko-back.herokuapp.com/2.0',
   }),
   endpoints: build => ({
     registration: build.mutation<AddedUser | ErrorType, RequestRegisterType>({
@@ -13,10 +13,38 @@ export const registrationAPI = createApi({
         body: data,
       }),
     }),
+    forgotPassword: build.mutation<ForgotSuccessType, ForgotRequestType>({
+      query: data => ({
+        url: 'https://neko-back.herokuapp.com/2.0/auth/forgot',
+        method: 'POST',
+        body: {
+          email: data,
+          from: 'test-front-admin <ai73a@yandex.by>',
+          message: `<div style="background-color: lime; padding: 15px">
+password recovery link: 
+<a href='http://localhost:3000/#/set-new-password/$token$'>
+link</a>
+</div>`,
+        },
+      }),
+    }),
   }),
 })
 
-export const { useRegistrationMutation } = registrationAPI
+export const { useRegistrationMutation, useForgotPasswordMutation } = registrationAPI
+
+export type ForgotSuccessType = {
+  info: string
+  success: boolean
+  answer: boolean
+  html: any
+}
+
+export type ForgotRequestType = {
+  email: string
+  from: string
+  message: Element
+}
 
 export type ErrorType = {
   status: number

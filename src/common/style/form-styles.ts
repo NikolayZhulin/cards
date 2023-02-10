@@ -1,5 +1,5 @@
 import { Button, Card } from 'antd'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const HeaderComponent = styled.header`
   width: 100%;
@@ -9,6 +9,7 @@ export const HeaderComponent = styled.header`
   align-items: center;
   background: #b31232;
 `
+
 export const FormContainer = styled.div`
   margin-bottom: 35px;
   display: flex;
@@ -50,7 +51,7 @@ export const PrimaryButton = styled(Button).attrs({
   type: 'primary',
   htmlType: 'submit',
 })`
-  width: 100%;
+  width: 350px;
   height: 40px;
   margin-bottom: 20px;
 `
@@ -61,11 +62,17 @@ export const FormInformationText = styled.div`
   font-size: 14px;
   font-weight: bold;
 `
+
 export const FieldInformationText = styled.div`
-  margin-bottom: 50px;
+  width: 350px;
+  margin-bottom: 40px;
   color: black;
   opacity: 0.7;
   font-size: 14px;
+`
+
+export const FieldInformationText1 = styled(FieldInformationText)`
+  margin-bottom: 20px;
 `
 
 export const ValidationErrorSpan = styled.span`

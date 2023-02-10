@@ -50,6 +50,7 @@ export const Registration: React.FC = () => {
   if (registered) {
     return <Navigate to={'/login'} />
   }
+  console.log(error)
 
   return (
     <>
