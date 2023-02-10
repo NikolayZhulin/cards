@@ -11,8 +11,13 @@ import {
   StyledCard,
   CardWrapper,
 } from '../../../common/style'
+import { useForgotPasswordMutation } from '../authAPI'
 
 export const CheckEmail: React.FC = () => {
+  const [forgotPassword, { data }] = useForgotPasswordMutation()
+
+  console.log(data)
+
   return (
     <>
       <CardWrapper>

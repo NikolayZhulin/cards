@@ -7,7 +7,7 @@ export const authAPI = createApi({
     credentials: 'include',
   }),
   endpoints: build => ({
-    registration: build.mutation<AddedUser | ErrorType, RequestRegisterType>({
+    registration: build.mutation<AddedUser, RequestRegisterType>({
       query: data => ({
         url: 'auth/register',
         method: 'POST',
@@ -81,30 +81,25 @@ export type ForgotRequestType = {
   from: string
   message: Element
 }
-export type ErrorType = {
-  status: number
-  data: {
-    error: string
-    email: string
-    in: string
-  }
-}
+
 type RequestRegisterType = {
   email: string
   password: string
 }
 
 export interface AddedUser {
-  _id: string
-  email: string
-  rememberMe: boolean
-  isAdmin: boolean
-  name: string
-  verified: boolean
-  publicCardPacksCount: number
-  created: Date
-  updated: Date
-  __v: number
+  addedUser: {
+    _id: string
+    email: string
+    rememberMe: boolean
+    isAdmin: boolean
+    name: string
+    verified: boolean
+    publicCardPacksCount: number
+    created: Date
+    updated: Date
+    __v: number
+  }
 }
 
 export type RequestLoginType = {

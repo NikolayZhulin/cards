@@ -7,6 +7,7 @@ import { Navigate, NavLink } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { FormField } from '../../../common/components/FormField/FormField'
+import { Preloader } from '../../../common/components/preloader/Preloader'
 import {
   Form,
   FormInformationText,
@@ -21,7 +22,7 @@ import { isSentRecoveryLetterAC } from '../auth-reducer'
 import { useForgotPasswordMutation } from '../authAPI'
 
 export const ForgotPassword: React.FC = () => {
-  const [forgotPassword, { isLoading, isError }] = useForgotPasswordMutation()
+  const [forgotPassword, { isLoading, isError, data }] = useForgotPasswordMutation()
 
   const isLetterRecoverySent = useAppSelector<boolean>(state => state.auth.isRecoveryLetterSent)
   const error = useAppSelector<string | null>(state => state.auth.error)
@@ -35,6 +36,7 @@ export const ForgotPassword: React.FC = () => {
     formState: { errors },
     handleSubmit,
     control,
+    getValues,
   } = useForm({ mode: 'onBlur' })
 
   const onSubmit = handleSubmit(requestData => {
@@ -43,14 +45,14 @@ export const ForgotPassword: React.FC = () => {
     forgotPassword(email)
   })
 
-  const antIcon = <LoadingOutlined style={{ fontSize: 150 }} spin />
-
   if (isLetterRecoverySent) {
-    debugger
+    console.log(data)
+    let a = getValues()
+
+    console.log(a)
 
     return <Navigate to={'/check-email'} />
   }
-  console.log(isLetterRecoverySent)
 
   return (
     <>
@@ -70,6 +72,7 @@ export const ForgotPassword: React.FC = () => {
                   }}
                   fieldPlaceholder={'Email'}
                   fieldName={'email'}
+                  isPasswordType={false}
                 />
                 <FieldInformationText>
                   Enter your email and we will send you further instructions
@@ -80,7 +83,7 @@ export const ForgotPassword: React.FC = () => {
               <NavLink to={'/login'}>Try logging in</NavLink>
             </FormWrapper>
           ) : (
-            <Spin indicator={antIcon} style={{ width: '100%', display: 'block' }} />
+            <Preloader />
           )}
         </StyledCard>
         {isError && (

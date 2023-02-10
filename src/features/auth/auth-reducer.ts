@@ -16,9 +16,6 @@ const slice = createSlice({
   name: 'auth',
   initialState: initialState,
   reducers: {
-    addRegistrationAC(state, action: PayloadAction<{ registered: boolean }>) {
-      state.registered = action.payload.registered
-    },
     isSentRecoveryLetterAC(state, action: PayloadAction<{ isRecoveryLetterSent: boolean }>) {
       state.isRecoveryLetterSent = action.payload.isRecoveryLetterSent
       console.log(state.isRecoveryLetterSent)
@@ -72,4 +69,4 @@ const slice = createSlice({
 })
 
 export const authReducer = slice.reducer
-export const { isSentRecoveryLetterAC, addRegistrationAC } = slice.actions
+export const { isSentRecoveryLetterAC } = slice.actions

@@ -1,27 +1,26 @@
-import React from 'react'
+import React, { memo } from 'react'
 
-import { LoadingOutlined } from '@ant-design/icons'
-import { Alert, Spin } from 'antd'
+import { Alert } from 'antd'
 import { useForm } from 'react-hook-form'
 import { Navigate, NavLink } from 'react-router-dom'
 
 import { useAppSelector } from '../../../app/hooks'
 import { FormField } from '../../../common/components/FormField/FormField'
+import { Preloader } from '../../../common/components/preloader/Preloader'
 import {
+  CardWrapper,
   Form,
   FormInformationText,
   FormTitle,
   FormWrapper,
   PrimaryButton,
   StyledCard,
-  CardWrapper,
 } from '../../../common/style'
 import { useRegistrationMutation } from '../authAPI'
 
-export const Registration: React.FC = () => {
-  const [registration, { isLoading }] = useRegistrationMutation()
+export const Registration: React.FC = memo(() => {
+  const [registration, { isLoading, data }] = useRegistrationMutation()
 
-  const registered = useAppSelector<boolean>(state => state.auth.registered)
   const error = useAppSelector<string | null>(state => state.auth.error)
   const {
     formState: { errors },
@@ -38,18 +37,15 @@ export const Registration: React.FC = () => {
     reset()
   })
 
-  const antIcon = <LoadingOutlined style={{ fontSize: 150 }} spin />
-
   const confirmPasswordValidate = (value: string) => {
     if (watch('password') != value) {
       return 'Your passwords do no match'
     }
   }
 
-  if (registered) {
+  if (data?.addedUser) {
     return <Navigate to={'/login'} />
   }
-  console.log(error)
 
   return (
     <>
@@ -69,6 +65,7 @@ export const Registration: React.FC = () => {
                   }}
                   fieldPlaceholder={'Email'}
                   fieldName={'email'}
+                  isPasswordType={false}
                 />
                 <FormField
                   control={control}
@@ -81,6 +78,7 @@ export const Registration: React.FC = () => {
                   fieldPlaceholder={'Password'}
                   fieldName={'password'}
                   inputType={'password'}
+                  isPasswordType={true}
                 />
                 <FormField
                   control={control}
@@ -94,6 +92,7 @@ export const Registration: React.FC = () => {
                   fieldPlaceholder={'Confirm password'}
                   fieldName={'confirmPassword'}
                   inputType={'password'}
+                  isPasswordType={true}
                 />
                 <PrimaryButton>Submit</PrimaryButton>
               </Form>
@@ -101,7 +100,7 @@ export const Registration: React.FC = () => {
               <NavLink to={'/login'}>Sign in</NavLink>
             </FormWrapper>
           ) : (
-            <Spin indicator={antIcon} style={{ width: '100%', display: 'block' }} />
+            <Preloader />
           )}
         </StyledCard>
         {error && (
@@ -115,4 +114,4 @@ export const Registration: React.FC = () => {
       </CardWrapper>
     </>
   )
-}
+})

@@ -10,6 +10,7 @@ import { Link, Navigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { useAppSelector } from '../../../app/hooks'
+import { FormField } from '../../../common/components/FormField/FormField'
 import { FormContainer, StyledCard, FormLabel, CardWrapper } from '../../../common/style'
 import { useLoginMutation } from '../authAPI'
 
@@ -46,43 +47,68 @@ export const Login = () => {
           <div className={'wrapper'}>
             <h3 className={'title'}>Log In</h3>
             <form className="form" onSubmit={onSubmit}>
-              <FormContainer>
-                <FormLabel>Email:</FormLabel>
-                <Controller
-                  control={control}
-                  name="email"
-                  rules={{
-                    pattern: EMAIL_REGEXP,
-                    required: 'Field is required!',
-                    minLength: { value: 3, message: 'Email should be longer then 3 symbols' },
-                  }}
-                  render={({ field }) => <Input {...field} />}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name={'email'}
-                  render={({ message }) => (
-                    <div className={'error'}>{message || "Email insn't valid"}</div>
-                  )}
-                />
-              </FormContainer>
-              <FormContainer>
-                <FormLabel>Password:</FormLabel>
-                <Controller
-                  control={control}
-                  name="password"
-                  rules={{
-                    required: 'Field is required!',
-                    minLength: { value: 5, message: 'Password should be longer then 5 symbols' },
-                  }}
-                  render={({ field }) => <Input {...field} />}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name={'password'}
-                  render={({ message }) => <div className={'error'}>{message || 'Error'}</div>}
-                />
-              </FormContainer>
+              {/*<FormContainer>*/}
+              {/*<FormLabel>Email:</FormLabel>*/}
+              {/*<Controller*/}
+              {/*  control={control}*/}
+              {/*  name="email"*/}
+              {/*  rules={{*/}
+              {/*    pattern: EMAIL_REGEXP,*/}
+              {/*    required: 'Field is required!',*/}
+              {/*    minLength: { value: 3, message: 'Email should be longer then 3 symbols' },*/}
+              {/*  }}*/}
+              {/*  render={({ field }) => <Input {...field} />}*/}
+              {/*/>*/}
+              {/*<ErrorMessage*/}
+              {/*  errors={errors}*/}
+              {/*  name={'email'}*/}
+              {/*  render={({ message }) => (*/}
+              {/*    <div className={'error'}>{message || "Email insn't valid"}</div>*/}
+              {/*  )}*/}
+              {/*/>*/}
+              <FormField
+                control={control}
+                formLabel={'Email:'}
+                errors={errors}
+                rules={{
+                  pattern: EMAIL_REGEXP,
+                  required: 'Field is required!',
+                  minLength: { value: 3, message: 'Email should be longer then 3 symbols' },
+                }}
+                fieldPlaceholder={'Email'}
+                fieldName={'email'}
+                isPasswordType={false}
+              />
+              <FormField
+                control={control}
+                formLabel={'Password:'}
+                errors={errors}
+                rules={{
+                  required: 'Field is required!',
+                  minLength: { value: 5, message: 'Password should be longer then 5 symbols' },
+                }}
+                fieldPlaceholder={'Password'}
+                fieldName={'password'}
+                isPasswordType={true}
+              />
+              {/*</FormContainer>*/}
+              {/*<FormContainer>*/}
+              {/*  <FormLabel>Password:</FormLabel>*/}
+              {/*  <Controller*/}
+              {/*    control={control}*/}
+              {/*    name="password"*/}
+              {/*    rules={{*/}
+              {/*      required: 'Field is required!',*/}
+              {/*      minLength: { value: 5, message: 'Password should be longer then 5 symbols' },*/}
+              {/*    }}*/}
+              {/*    render={({ field }) => <Input {...field} />}*/}
+              {/*  />*/}
+              {/*  <ErrorMessage*/}
+              {/*    errors={errors}*/}
+              {/*    name={'password'}*/}
+              {/*    render={({ message }) => <div className={'error'}>{message || 'Error'}</div>}*/}
+              {/*  />*/}
+              {/*</FormContainer>*/}
               <Controller
                 control={control}
                 name="rememberMe"
@@ -117,6 +143,7 @@ const LoginPageStyle = styled.div`
     flex-direction: column;
     justify-content: space-around;
   }
+
   .wrapper {
     height: 450px;
     display: flex;
@@ -124,6 +151,7 @@ const LoginPageStyle = styled.div`
     flex-direction: column;
     align-items: center;
   }
+
   .title {
     margin-top: 0;
     font-weight: 700;
@@ -136,14 +164,17 @@ const LoginPageStyle = styled.div`
     display: flex;
     justify-content: center;
   }
+
   .ant-alert.ant-alert-error.ant-alert-no-icon.css-dev-only-do-not-override-ixblex {
     position: absolute;
     top: 73px;
     left: 42%;
   }
+
   .error {
     color: red;
   }
+
   .ant-card.ant-card-bordered.sc-kDvujY.ibBuSd.css-dev-only-do-not-override-j0nf2s {
     max-width: 80%;
     width: 400px;
