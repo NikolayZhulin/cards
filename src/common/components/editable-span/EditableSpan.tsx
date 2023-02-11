@@ -1,63 +1,59 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { ChangeEvent, memo, useEffect, useState } from 'react'
 
 import { EditOutlined } from '@ant-design/icons'
-import { useForm } from 'react-hook-form'
-
-import { Form } from '../../style'
-import { FormField } from '../FormField/FormField'
+import Input from 'antd/es/input/Input'
 
 type EditableSpanPropsType = {
   value: string
   onChange: (newValue: string) => void
-  disabled?: boolean
-  isSuccess: any
+  isSuccess: boolean
 }
 
-export const EditableSpan = memo(
-  ({ value, onChange, disabled = false, isSuccess }: EditableSpanPropsType) => {
-    let [editMode, setEditMode] = useState(false)
-    const {
-      formState: { errors },
-      handleSubmit,
-      control,
-      getValues,
-    } = useForm({ mode: 'onBlur' })
+export const EditableSpan = memo(({ value, onChange, isSuccess }: EditableSpanPropsType) => {
+  const [editMode, setEditMode] = useState<boolean>(false)
+  const [title, setTitle] = useState<string>(value)
+  const [disabled, setDisabled] = useState<boolean>(false)
+  const error = title === ''
+  const errorMessage = 'Field is required!'
 
-    useEffect(() => {
-      isSuccess && setEditMode(false)
-    }, [isSuccess])
-
-    const activateEditMode = () => {
-      if (!disabled) {
-        setEditMode(true)
-      }
+  useEffect(() => {
+    if (isSuccess) {
+      setEditMode(false)
+      setDisabled(false)
     }
-    const activateViewMode = handleSubmit(data => {
-      onChange(data.title)
-    })
+  }, [isSuccess])
 
-    return editMode ? (
-      <div>
-        <Form onSubmit={activateViewMode}>
-          <FormField
-            control={control}
-            formLabel={''}
-            errors={errors}
-            rules={{
-              required: 'Field required',
-              minLength: { value: 1, message: 'Min length 1 characters' },
-            }}
-            fieldPlaceholder={value}
-            fieldName={'title'}
-            isPasswordType={false}
-          />
-        </Form>
-      </div>
-    ) : (
-      <div>
-        <span>{value}</span>
-        <EditOutlined onClick={activateEditMode} />
-      </div>
-    )
+  const activateEditMode = () => {
+    setEditMode(true)
+    setTitle(value)
   }
-)
+  const activateViewMode = () => {
+    if (!error) {
+      onChange(title)
+      setDisabled(true)
+    }
+  }
+  const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.currentTarget.value)
+  }
+
+  return editMode ? (
+    <div>
+      <Input
+        value={title}
+        status={error ? 'error' : ''}
+        placeholder={error ? errorMessage : ''}
+        onBlur={activateViewMode}
+        onPressEnter={activateViewMode}
+        onChange={changeTitle}
+        disabled={disabled}
+        autoFocus
+      />
+    </div>
+  ) : (
+    <div>
+      <span>{value}</span>
+      <EditOutlined onClick={activateEditMode} />
+    </div>
+  )
+})

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import { LogoutOutlined } from '@ant-design/icons'
-import { Button } from 'antd'
+import { Alert, Button } from 'antd'
 import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
@@ -16,7 +16,7 @@ import { EditableSpan } from './index'
 
 export const Profile = () => {
   const [getProfile, {}] = useMeMutation<any>()
-  const [changeUser, { isSuccess }] = useChangeUserMutation<any>()
+  const [changeUser, { isSuccess, isError, error }] = useChangeUserMutation<any>()
   const [logOut, {}] = useLogOutMutation<any>()
   const avatar = useAppSelector(state => state.profile.user.avatar)
   const name = useAppSelector(state => state.profile.user.name)
@@ -71,6 +71,14 @@ export const Profile = () => {
           )}
         </FormWrapper>
       </StyledCard>
+      {isError && (
+        <Alert
+          style={{ position: 'absolute', bottom: '3%' }}
+          message={error}
+          type="error"
+          closable
+        />
+      )}
     </CardWrapper>
   )
 }
