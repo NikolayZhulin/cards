@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { isErrorWithMessage, isFetchBaseQueryError } from '../../common/services/helpers'
-import { setIsLoggedIn } from '../profile'
 
 import { authAPI } from './authAPI'
 
@@ -22,10 +21,7 @@ const slice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(setIsLoggedIn, (state, { payload }) => {
-      state.isLoggedIn = payload.value
-    })
-    builder.addMatcher(authAPI.endpoints.registration.matchFulfilled, (state, { payload }) => {
+    builder.addMatcher(authAPI.endpoints.registration.matchFulfilled, (state, {}) => {
       state.registered = true
     })
     builder.addMatcher(authAPI.endpoints.registration.matchRejected, (state, { payload }) => {
