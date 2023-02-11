@@ -61,6 +61,9 @@ const slice = createSlice({
     builder.addMatcher(authAPI.endpoints.logOut.matchFulfilled, state => {
       state.isLoggedIn = false
     })
+    builder.addMatcher(authAPI.endpoints.me.matchFulfilled, state => {
+      state.isLoggedIn = true
+    }) // it is important!
   },
 })
 

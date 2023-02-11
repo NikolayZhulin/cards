@@ -74,7 +74,7 @@ export const Profile = () => {
       {isError && (
         <Alert
           style={{ position: 'absolute', bottom: '3%' }}
-          message={error}
+          message={error.data.error}
           type="error"
           closable
         />
