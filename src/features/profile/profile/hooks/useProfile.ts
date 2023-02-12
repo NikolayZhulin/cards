@@ -19,7 +19,7 @@ export const useProfile = () => {
     }
   }, [isLoggedIn])
 
-  const LogOutHandler = () => {
+  const logOutHandler = () => {
     logOut({})
   }
 
@@ -27,5 +27,5 @@ export const useProfile = () => {
     await changeUser({ name: value })
   }
 
-  return { data, isLoading, isLoggedIn, isSuccess, LogOutHandler, onChangeHandler }
+  return { data, isLoading, isLoggedIn, isSuccess, logOutHandler, onChangeHandler }
 }

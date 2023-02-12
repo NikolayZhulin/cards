@@ -9,7 +9,7 @@ import { FormTitle, FormWrapper } from '../../../../common/style'
 import { useProfile } from '../hooks/useProfile'
 
 export const ProfileForm = () => {
-  const { data, isLoading, LogOutHandler, onChangeHandler, isSuccess } = useProfile()
+  const { data, isLoading, logOutHandler, onChangeHandler, isSuccess } = useProfile()
 
   if (isLoading) return <Preloader />
 
@@ -32,7 +32,7 @@ export const ProfileForm = () => {
       <div>
         <Button
           icon={<LogoutOutlined />}
-          onClick={LogOutHandler}
+          onClick={logOutHandler}
           type={'default'}
           htmlType={'button'}
           style={{ width: '100%' }}

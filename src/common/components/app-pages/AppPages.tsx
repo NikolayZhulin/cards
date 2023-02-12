@@ -12,7 +12,7 @@ import {
 import { Profile } from '../../../features/profile'
 import { PATH } from '../../path/path'
 import { Error404 } from '../error404/Error404'
-import { PrivateRoutes } from '../PrivateRoutes/PrivateRoutes'
+import { PrivateRoutes } from '../private-routes/PrivateRoutes'
 
 const AppPages = () => {
   return (
