@@ -3,9 +3,8 @@ export const PATH = {
   REGISTRATION: '/registration',
   PROFILE: '/profile',
   RECOVERY_PASSWORD: '/recovery_password',
-  // NEW_PASSWORD: '/new_password',
   FORGOT_PASSWORD: '/forgot-password',
-  SET_NEW_PASSWORD: '/set-new-password',
+  SET_NEW_PASSWORD: '/set-new-password/:token',
   CHECK_EMAIL: '/check-email',
   NEW_PASSWORD: '/set-new-password/:token',
-}
+} as const

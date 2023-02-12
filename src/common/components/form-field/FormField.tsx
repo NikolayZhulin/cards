@@ -16,27 +16,18 @@ type FormFieldPropsType = {
   control: Control
   formLabel: string
   errors: FieldErrors
-  rules: {
-    pattern?: any
-    required: string
-    minLength: { value: number; message: string }
-    validate?: (value: any) => string | undefined
-  }
   fieldPlaceholder: string
   fieldName: string
-  inputType?: string
-  isPasswordType: boolean
+  inputType?: 'password' | 'text' | 'email' | 'number'
 }
 
 export const FormField: React.FC<FormFieldPropsType> = ({
   control,
   formLabel,
   errors,
-  rules,
   fieldPlaceholder,
   fieldName,
   inputType,
-  isPasswordType,
 }) => {
   return (
     <FormContainer>
@@ -44,21 +35,20 @@ export const FormField: React.FC<FormFieldPropsType> = ({
       <Controller
         control={control}
         name={fieldName}
-        rules={rules}
         render={({ field }) =>
-          !isPasswordType ? (
+          !(inputType === 'password') ? (
             <Input
               {...field}
               placeholder={fieldPlaceholder}
               type={inputType}
-              style={{ height: '40px', width: '350px' }}
+              style={{ height: '40px', width: '320px' }}
             />
           ) : (
             <Input.Password
               {...field}
               placeholder={fieldPlaceholder}
               type={inputType}
-              style={{ height: '40px', width: '350px' }}
+              style={{ height: '40px', width: '320px' }}
             />
           )
         }
@@ -73,17 +63,3 @@ export const FormField: React.FC<FormFieldPropsType> = ({
     </FormContainer>
   )
 }
-
-// type InpPropsType = {
-//   passwordType: boolean
-//   placeholder: string
-//   type: string | undefined
-//   style: any
-// }
-//
-// export const Inp: React.FC<InpPropsType & ControllerRenderProps<FieldValues, string>> = ({
-//   passwordType,
-//   ...restProps
-// }) => {
-//   return passwordType ? <Input.Password {...restProps} /> : <Input {...restProps} />
-// }

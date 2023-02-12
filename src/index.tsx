@@ -14,11 +14,11 @@ const container = document.getElementById('root')!
 const root = createRoot(container)
 
 root.render(
-  <HashRouter>
-    <Provider store={store}>
+  <Provider store={store}>
+    <HashRouter>
       <App />
-    </Provider>
-  </HashRouter>
+    </HashRouter>
+  </Provider>
 )
 
 // If you want to start measuring performance in your app, pass a function

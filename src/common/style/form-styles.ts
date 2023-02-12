@@ -1,13 +1,23 @@
 import { Button, Card } from 'antd'
-import styled, { css } from 'styled-components'
+import Checkbox from 'antd/es/checkbox/Checkbox'
+import styled from 'styled-components'
 
 export const HeaderComponent = styled.header`
   width: 100%;
   height: 60px;
+  z-index: 4;
+  position: relative;
+  padding: 0 60px;
+  box-sizing: border-box;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  background: #b31232;
+  background: white;
+  box-shadow: 5px 5px 20px 0 rgba(115, 109, 115, 1);
+`
+
+export const HeaderImg = styled.img`
+  width: 150px;
 `
 
 export const FormContainer = styled.div`
@@ -26,7 +36,6 @@ export const Form = styled.form`
 `
 
 export const FormWrapper = styled.div`
-  //height: 450px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -34,7 +43,10 @@ export const FormWrapper = styled.div`
 `
 
 export const FormTitle = styled.h3`
+  width: 320px;
   margin: 0 0 20px;
+  display: flex;
+  justify-content: center;
   font-weight: 700;
   font-size: 26px;
 `
@@ -50,13 +62,15 @@ export const FormLabel = styled.label`
 export const PrimaryButton = styled(Button).attrs({
   type: 'primary',
   htmlType: 'submit',
-})`
-  width: 350px;
+})<{ width?: string }>`
+  width: ${p => p.width || '320px'};
   height: 40px;
-  margin-bottom: 20px;
+  margin-bottom: ${p => (p.width ? '0' : '20px')};
 `
 
 export const FormInformationText = styled.div`
+  max-width: 320px;
+  margin-bottom: 20px;
   color: black;
   opacity: 0.5;
   font-size: 14px;
@@ -64,15 +78,11 @@ export const FormInformationText = styled.div`
 `
 
 export const FieldInformationText = styled.div`
-  width: 350px;
+  width: 320px;
   margin-bottom: 40px;
   color: black;
   opacity: 0.7;
   font-size: 14px;
-`
-
-export const FieldInformationText1 = styled(FieldInformationText)`
-  margin-bottom: 20px;
 `
 
 export const ValidationErrorSpan = styled.span`
@@ -93,11 +103,13 @@ export const CardWrapper = styled.div`
 `
 
 export const StyledCard = styled(Card)`
-  //width: 350px;
-  //min-height: 500px;
   max-height: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   box-shadow: 5px 5px 20px 0 rgba(115, 109, 115, 1);
+`
+
+export const StyledCheckBox = styled(Checkbox)`
+  margin: 20px 0;
 `
