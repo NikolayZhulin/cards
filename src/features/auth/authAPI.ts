@@ -141,7 +141,7 @@ export type UserType = {
   created: string
   updated: string
   isAdmin: boolean
-  verified: boolean // подтвердил ли почту
+  verified: boolean
   rememberMe: boolean
 
   __v: number

@@ -35,6 +35,12 @@ const slice = createSlice({
       .addMatcher(authAPI.endpoints.login.matchRejected, (state, { payload }) => {
         state.error = errorHandler(payload)
       })
+      .addMatcher(authAPI.endpoints.me.matchFulfilled, (state, {}) => {
+        state.isInitialized = true
+      })
+      .addMatcher(authAPI.endpoints.me.matchRejected, (state, {}) => {
+        state.isInitialized = true
+      })
   },
 })
 
