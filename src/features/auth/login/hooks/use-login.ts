@@ -10,7 +10,7 @@ import { schemaLogin } from '../../../../common/validation'
 import { useLoginMutation } from '../../authAPI'
 
 export const useLogin = () => {
-  const [login, { isLoading, data }] = useLoginMutation()
+  const [login, { isLoading }] = useLoginMutation()
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const navigate = useNavigate()
 

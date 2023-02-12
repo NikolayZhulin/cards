@@ -1,8 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import thunkMiddleware from 'redux-thunk'
 
-import { authReducer } from '../features/auth/auth-reducer'
-import { authAPI } from '../features/auth/authAPI'
+import { authAPI, authReducer } from '../features/auth'
 import { profileReducer } from '../features/profile'
 
 import { appReducer } from './app-reducer'

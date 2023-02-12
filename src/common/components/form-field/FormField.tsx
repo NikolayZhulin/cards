@@ -1,16 +1,10 @@
-import React, { useRef } from 'react'
+import React from 'react'
 
 import { ErrorMessage } from '@hookform/error-message'
 import { Input } from 'antd'
-import {
-  Control,
-  Controller,
-  ControllerRenderProps,
-  FieldErrors,
-  FieldValues,
-} from 'react-hook-form'
+import { Control, Controller, FieldErrors } from 'react-hook-form'
 
-import { FormLabel, ValidationErrorSpan, FormContainer } from '../../style'
+import { FormContainer, FormLabel, ValidationErrorSpan } from '../../style'
 
 type FormFieldPropsType = {
   control: Control

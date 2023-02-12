@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { isErrorWithMessage, isFetchBaseQueryError } from '../../common/services/helpers'
-
 import { authAPI } from './authAPI'
 
 const initialState = {
