@@ -3,8 +3,8 @@ import thunkMiddleware from 'redux-thunk'
 
 import { authReducer } from '../features/auth/auth-reducer'
 import { authAPI } from '../features/auth/authAPI'
-import { packsAPI } from '../features/packs/packs-api'
-import { packsReducer } from '../features/packs/packs-reducer'
+import { paginationApi } from '../features/packs/pagination-api'
+import { paginationReducer } from '../features/packs/pagination-reducer'
 import { profileReducer } from '../features/profile'
 import { profileAPI } from '../features/profile/profile-api'
 
@@ -15,17 +15,17 @@ export const store = configureStore({
     app: appReducer,
     auth: authReducer,
     profile: profileReducer,
-    packs: packsReducer,
+    pagination: paginationReducer,
     [authAPI.reducerPath]: authAPI.reducer,
     [profileAPI.reducerPath]: profileAPI.reducer,
-    [packsAPI.reducerPath]: packsAPI.reducer,
+    [paginationApi.reducerPath]: paginationApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware()
       .prepend(thunkMiddleware)
       .prepend(authAPI.middleware)
       .prepend(profileAPI.middleware)
-      .prepend(packsAPI.middleware),
+      .prepend(paginationApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

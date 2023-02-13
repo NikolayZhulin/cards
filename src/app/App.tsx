@@ -10,6 +10,7 @@ import { ForgotPassword } from '../features/auth/forgot-password'
 import { Login } from '../features/auth/login'
 import { Registration } from '../features/auth/registration'
 import { SetNewPassword } from '../features/auth/set-new-password/SetNewPassword'
+import { PaginationFC } from '../features/packs'
 import { Profile } from '../features/profile'
 
 export const App = () => {
@@ -21,6 +22,7 @@ export const App = () => {
         <Route path={'/profile'} element={<Profile />} />
         <Route path={'/forgot-password'} element={<ForgotPassword />} />
         <Route path={'/check-email'} element={<CheckEmail />} />
+        <Route path={'/pagination'} element={<PaginationFC />} />
         <Route path={'/set-new-password/:token'} element={<SetNewPassword />} />
         <Route path={'/*'} element={<Error404 />} />
       </Route>

@@ -63,7 +63,7 @@ const slice = createSlice({
     })
     builder.addMatcher(authAPI.endpoints.me.matchFulfilled, state => {
       state.isLoggedIn = true
-    }) // it is important!
+    })
   },
 })
 
