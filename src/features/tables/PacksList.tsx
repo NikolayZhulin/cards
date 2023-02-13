@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 
+import { DeleteTwoTone, EditTwoTone, FolderOpenTwoTone } from '@ant-design/icons'
 import { Radio, Table } from 'antd'
 import Input from 'antd/es/input/Input'
 import type { ColumnsType } from 'antd/es/table'
+import { NavLink } from 'react-router-dom'
 
 import deleteIcon from '../../assets/pictures/deleteIcon.png'
 import editIcon from '../../assets/pictures/editIcon.png'
 import learnIcon from '../../assets/pictures/learnIcon.png'
+import { useAppSelector } from '../../common/hooks/hooks'
 import { FormTitle } from '../../common/style'
 
 import {
@@ -24,15 +27,22 @@ import {
   ToggleOwnerButton,
   TopSection,
 } from './style'
-import { FetchCardsPacksRequestType, useFetchCardsPackQuery } from './tablesApi'
+import {
+  FetchCardsPacksRequestType,
+  useAddPackMutation,
+  useDeletePackMutation,
+  useFetchCardsPackQuery,
+  useLazyFetchCardsPackQuery,
+  useUpdatePackMutation,
+} from './tablesApi'
 
 type DataType = {
   key: React.Key
-  name: string
+  name: ReactElement<any, any>
   cards: number
   updated: string
   created: string
-  actions: string
+  actions: ReactElement<any, any>
 }
 
 const columns: ColumnsType<DataType> = [
@@ -68,13 +78,13 @@ const columns: ColumnsType<DataType> = [
     key: 'actions',
     fixed: 'right',
     width: 150,
-    render: () => (
-      <>
-        <StyledIcon onClick={() => console.log('learn icon')} src={learnIcon} alt={'learn icon'} />
-        <StyledIcon src={editIcon} alt={'edit icon'} />
-        <StyledIcon src={deleteIcon} alt={'delete icon'} />
-      </>
-    ),
+    // render: () => (
+    //   <>
+    //     <StyledIcon onClick={() => console.log('learn icon')} src={learnIcon} alt={'learn icon'} />
+    //     <StyledIcon src={editIcon} alt={'edit icon'} />
+    //     <StyledIcon src={deleteIcon} alt={'delete icon'} />
+    //   </>
+    // ),
   },
 ]
 
@@ -84,17 +94,6 @@ const initialRows: DataType[] = []
 //   email: "nya-admin@nya.nya"
 //   password: "1qazxcvBG"
 //   rememberMe: false }
-
-const params: FetchCardsPacksRequestType = {
-  packName: '',
-  min: 20,
-  max: 110,
-  sortPacks: 0,
-  page: 1,
-  pageCount: 10,
-  user_id: '',
-  block: false,
-}
 
 export const setLeadingZero = (num: number) => {
   return num < 10 ? `0${num}` : num
@@ -109,34 +108,83 @@ export const formatDate = (str: string) => {
 }
 
 export const PacksList = () => {
+  const [params, setParams] = useState<FetchCardsPacksRequestType>({
+    packName: '',
+    min: 0,
+    max: 110,
+    sortPacks: '0created',
+    page: 1,
+    pageCount: 10,
+    user_id: '',
+    block: false,
+  })
+  const userId = useAppSelector(state => state.auth.userId)
   const [rows, setRows] = useState(initialRows)
-  const { data } = useFetchCardsPackQuery(params)
+  // const { data } = useFetchCardsPackQuery(params)
+  const [addPack, {}] = useAddPackMutation()
+  const [updatePack, {}] = useUpdatePackMutation()
+  const [deletePack, {}] = useDeletePackMutation()
+  const [trigger, response] = useLazyFetchCardsPackQuery()
 
   useEffect(() => {
-    if (data) {
-      const { cardPacks } = data
+    trigger(params)
+  }, [params])
+
+  useEffect(() => {
+    if (response && response.data) {
+      const { cardPacks } = response.data
       let rows: DataType[] = []
 
       cardPacks.forEach(p => {
+        const isMyPack = userId === p.user_id
+
         rows.push({
           key: p._id,
-          name: `${p.name} ${p._id}`,
+          name: <NavLink to={'/full-pack/' + p._id}>{p.name}</NavLink>,
           cards: p.cardsCount,
           updated: formatDate(p.updated),
           created: formatDate(p.created),
-          actions: 'action',
+          actions: (
+            <div style={{ display: 'flex', justifyContent: 'start' }}>
+              <FolderOpenTwoTone style={{ fontSize: '20px', margin: '5px' }} />
+              {isMyPack && (
+                <EditTwoTone
+                  onClick={() => updatePack(p._id)}
+                  style={{ fontSize: '20px', margin: '5px' }}
+                />
+              )}
+              {isMyPack && (
+                <DeleteTwoTone
+                  onClick={() => deletePack(p._id)}
+                  style={{ fontSize: '20px', margin: '5px' }}
+                />
+              )}
+            </div>
+          ),
         })
       })
-      // console.log(rows)
       setRows(rows)
     }
-  }, [data])
+  }, [response])
+
+  const addNewPack = () => {
+    addPack({})
+  }
+
+  const getMyPacks = () => {
+    setParams({ ...params, user_id: userId })
+  }
+  const getAllPacks = () => {
+    setParams({ ...params, user_id: '' })
+  }
 
   return (
     <TablePageStyle>
       <TopSection>
         <FormTitle>Pack list</FormTitle>
-        <AddNewItemButton type="primary">Add new pack</AddNewItemButton>
+        <AddNewItemButton type="primary" onClick={addNewPack}>
+          Add new pack
+        </AddNewItemButton>
       </TopSection>
       <MiddleSection>
         <SearchBlock>
@@ -146,8 +194,8 @@ export const PacksList = () => {
         <ToggleAuthorsBlock>
           <Title>Show packs cards</Title>
           <Radio.Group>
-            <ToggleOwnerButton>Large</ToggleOwnerButton>
-            <ToggleOwnerButton>Large</ToggleOwnerButton>
+            <ToggleOwnerButton onClick={getMyPacks}>My</ToggleOwnerButton>
+            <ToggleOwnerButton onClick={getAllPacks}>All</ToggleOwnerButton>
           </Radio.Group>
         </ToggleAuthorsBlock>
         <SliderBlock>

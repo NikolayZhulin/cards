@@ -3,10 +3,11 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const tablesApi = createApi({
   reducerPath: 'tables/api',
   baseQuery: fetchBaseQuery({
-    // baseUrl: 'http://localhost:7542/2.0/',
-    baseUrl: 'https://neko-back.herokuapp.com/2.0/',
+    baseUrl: 'http://localhost:7542/2.0/',
+    // baseUrl: 'https://neko-back.herokuapp.com/2.0/',
     credentials: 'include',
   }),
+  tagTypes: ['getCards', 'getCard'],
   endpoints: build => ({
     fetchCardsPack: build.query<FetchCardsPacksResponseType, FetchCardsPacksRequestType>({
       query: ({ packName, min, max, sortPacks, page, pageCount, user_id, block }) => ({
@@ -23,6 +24,7 @@ export const tablesApi = createApi({
           block,
         },
       }),
+      providesTags: ['getCards'],
     }),
     fetchCards: build.query<FetchCardsResponseType, FetchCardsRequestType>({
       query: ({
@@ -48,20 +50,97 @@ export const tablesApi = createApi({
           pageCount,
         },
       }),
+      providesTags: ['getCard'],
+    }),
+    addPack: build.mutation<any, any>({
+      query: data => ({
+        url: '/cards/pack',
+        method: 'POST',
+        body: {
+          cardsPack: {
+            name: 'NEW CARD5555555',
+          },
+        },
+      }),
+      invalidatesTags: ['getCards'],
+    }),
+    updatePack: build.mutation<any, any>({
+      query: data => ({
+        url: '/cards/pack',
+        method: 'PUT',
+        body: {
+          cardsPack: {
+            _id: data,
+            name: 'NEW_NAME',
+          },
+        },
+      }),
+      invalidatesTags: ['getCards'],
+    }),
+    deletePack: build.mutation<any, any>({
+      query: data => ({
+        url: `/cards/pack?id=${data}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['getCards'],
+    }),
+    addCard: build.mutation<any, any>({
+      query: data => ({
+        url: '/cards/card',
+        method: 'POST',
+        body: {
+          card: {
+            cardsPack_id: data,
+            question: 'NEW QUESTION5555555',
+            answer: 'NEW ANSWER5555555',
+          },
+        },
+      }),
+      invalidatesTags: ['getCard'],
+    }),
+    updateCard: build.mutation<any, any>({
+      query: data => ({
+        url: '/cards/card',
+        method: 'PUT',
+        body: {
+          card: {
+            _id: data,
+            question: 'NE',
+          },
+        },
+      }),
+      invalidatesTags: ['getCard'],
+    }),
+    deleteCard: build.mutation<any, any>({
+      query: data => ({
+        url: `/cards/card?id=${data}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['getCard'],
     }),
   }),
 })
 
-export const { useFetchCardsPackQuery, useFetchCardsQuery } = tablesApi
+export const {
+  useFetchCardsPackQuery,
+  useFetchCardsQuery,
+  useAddPackMutation,
+  useUpdatePackMutation,
+  useDeletePackMutation,
+  useAddCardMutation,
+  useDeleteCardMutation,
+  useUpdateCardMutation,
+  useLazyFetchCardsPackQuery,
+} = tablesApi
 
 export type FetchCardsPacksRequestType = {
   packName: string
   min: number
   max: number
-  sortPacks: number
+  sortPacks: string
   page: number
   pageCount: number
-  user_id: string
+  user_id: string | null
   block: boolean
 }
 
@@ -85,6 +164,7 @@ export type FetchCardsPacksResponseType = {
   maxCardsCount: number
   token: string
   tokenDeathTime: number
+  user_id: string
 }
 
 export type CardPack = {

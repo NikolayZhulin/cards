@@ -23,7 +23,7 @@ export const store = configureStore({
     getDefaultMiddleware()
       .prepend(thunkMiddleware)
       .prepend(authAPI.middleware)
-      .prepend(tablesApi.middleware),
+      .prepend(tablesApi.middleware)
       .prepend(packsAPI.middleware),
 })
 

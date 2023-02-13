@@ -6,6 +6,7 @@ const initialState = {
   registered: false,
   isRecoveryLetterSent: false,
   isLoggedIn: false,
+  userId: null as string | null,
 }
 
 const slice = createSlice({
@@ -25,14 +26,16 @@ const slice = createSlice({
       .addMatcher(authAPI.endpoints.forgotPassword.matchFulfilled, (state, { payload }) => {
         state.isRecoveryLetterSent = true
       })
-      .addMatcher(authAPI.endpoints.login.matchFulfilled, (state, {}) => {
+      .addMatcher(authAPI.endpoints.login.matchFulfilled, state => {
         state.isLoggedIn = true
       })
       .addMatcher(authAPI.endpoints.logOut.matchFulfilled, state => {
         state.isLoggedIn = false
+        state.userId = null
       })
-      .addMatcher(authAPI.endpoints.me.matchFulfilled, state => {
+      .addMatcher(authAPI.endpoints.me.matchFulfilled, (state, { payload }) => {
         state.isLoggedIn = true
+        state.userId = payload._id
       })
   },
 })

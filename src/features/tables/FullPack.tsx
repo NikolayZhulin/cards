@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 
+import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons'
 import ArrowLeftOutlined from '@ant-design/icons/lib/icons/ArrowLeftOutlined'
 import { Table } from 'antd'
 import Input from 'antd/es/input/Input'
 import { ColumnsType } from 'antd/es/table'
+import { useParams } from 'react-router-dom'
 
 import emptyStar from '../../assets/pictures/emptyStar.png'
 import fullStar from '../../assets/pictures/fullStar.png'
 import halfStar from '../../assets/pictures/halfStar.png'
+import { useAppSelector } from '../../common/hooks/hooks'
 import { PATH } from '../../common/path/path'
 import { FormTitle } from '../../common/style'
 
@@ -23,7 +26,13 @@ import {
   TopSection,
   WideSearchBlock,
 } from './style'
-import { FetchCardsRequestType, useFetchCardsQuery } from './tablesApi'
+import {
+  FetchCardsRequestType,
+  useAddCardMutation,
+  useDeleteCardMutation,
+  useFetchCardsQuery,
+  useUpdateCardMutation,
+} from './tablesApi'
 
 type DataType = {
   key: React.Key
@@ -31,6 +40,7 @@ type DataType = {
   answer: string
   updated: string
   grade: number
+  actions?: ReactElement
 }
 
 const columns: ColumnsType<DataType> = [
@@ -76,25 +86,36 @@ const columns: ColumnsType<DataType> = [
       </>
     ),
   },
+  {
+    title: '',
+    dataIndex: 'actions',
+    key: 'actions',
+    fixed: 'right',
+    width: 150,
+  },
 ]
 
 const initialRows: DataType[] = []
 
-const params: FetchCardsRequestType = {
-  cardAnswer: '',
-  cardQuestion: '',
-  cardsPack_id: '6311bf4b1ced5d2bb4e1fa4d',
-  min: 1,
-  max: 4,
-  sortCards: '0grade',
-  page: 1,
-  pageCount: 7,
-}
-
 export const FullPack = () => {
+  const param = useParams()
+  const params: FetchCardsRequestType = {
+    cardAnswer: '',
+    cardQuestion: '',
+    cardsPack_id: param.id ? param.id : '',
+    min: 0,
+    max: 10,
+    sortCards: '0updated',
+    page: 1,
+    pageCount: 10,
+  }
+
+  const userID = useAppSelector(state => state.auth.userId)
   const [rows, setRows] = useState(initialRows)
-  const [isMy, setIsMy] = useState(true)
   const { data } = useFetchCardsQuery(params)
+  const [addCard, {}] = useAddCardMutation()
+  const [updateCard, {}] = useUpdateCardMutation()
+  const [deleteCard, {}] = useDeleteCardMutation()
 
   useEffect(() => {
     if (data) {
@@ -103,16 +124,26 @@ export const FullPack = () => {
       let rows: DataType[] = []
 
       cards.forEach(c => {
+        const isMyPack = c.user_id === userID
+
         rows.push({
           key: c._id,
           question: c.question,
           answer: c.answer,
           updated: formatDate(c.updated),
           grade: c.grade,
+          actions: (
+            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+              {isMyPack && (
+                <>
+                  <EditTwoTone onClick={() => updateCard(c._id)} style={{ fontSize: '20px' }} />
+                  <DeleteTwoTone onClick={() => deleteCard(c._id)} style={{ fontSize: '20px' }} />
+                </>
+              )}
+            </div>
+          ),
         })
       })
-      // console.log(rows)
-      // console.log(data)
       setRows(rows)
     }
   }, [data])
@@ -126,8 +157,10 @@ export const FullPack = () => {
         </StyledLink>
       </LinkBackWrapper>
       <TopSection>
-        <FormTitle>{`${isMy ? 'My' : "Friends's"} Pack`}</FormTitle>
-        <AddNewItemButton type="primary">Add new pack</AddNewItemButton>
+        <FormTitle>{` Pack`}</FormTitle>
+        <AddNewItemButton type="primary" onClick={() => addCard(param.id)}>
+          Add new pack
+        </AddNewItemButton>
       </TopSection>
       <MiddleSection>
         <WideSearchBlock>

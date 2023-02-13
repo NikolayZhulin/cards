@@ -8,6 +8,6 @@ export const PATH = {
   CHECK_EMAIL: '/check-email',
   NEW_PASSWORD: '/set-new-password/:token',
   PACKS_LIST: '/packs-list',
-  FULL_PACK: '/full-pack',
+  FULL_PACK: '/full-pack/:id?',
   EMPTY_PACK: '/empty-pack',
 } as const
