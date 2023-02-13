@@ -42,6 +42,7 @@ const columns: ColumnsType<DataType> = [
     dataIndex: 'name',
     key: 'name',
     fixed: 'left',
+    ellipsis: true,
   },
   {
     title: 'Cards',
