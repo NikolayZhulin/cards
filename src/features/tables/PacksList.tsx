@@ -77,11 +77,11 @@ const initialRows: DataType[] = []
 
 const params: FetchCardsPacksRequestType = {
   packName: '',
-  min: 1,
+  min: 20,
   max: 110,
   sortPacks: 0,
   page: 1,
-  pageCount: 50,
+  pageCount: 10,
   user_id: '',
   block: false,
 }
@@ -98,13 +98,14 @@ export const PacksList = () => {
       cardPacks.forEach(p => {
         rows.push({
           key: p._id,
-          name: p.name,
+          name: `${p.name} ${p._id}`,
           cards: p.cardsCount,
           updated: p.updated,
           created: p.created,
           actions: 'action',
         })
       })
+      console.log(rows)
       setRows(rows)
     }
   }, [data])

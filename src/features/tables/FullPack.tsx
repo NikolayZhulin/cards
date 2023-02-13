@@ -70,7 +70,7 @@ const initialRows: DataType[] = []
 const params: FetchCardsRequestType = {
   cardAnswer: '',
   cardQuestion: '',
-  cardsPack_id: '6311bf4b1ced5d2bb4e1fa4d',
+  cardsPack_id: '63c454f0a91c120ee8946b86',
   min: 1,
   max: 4,
   sortCards: '0grade',
@@ -99,6 +99,7 @@ export const FullPack = () => {
         })
       })
       console.log(rows)
+      console.log(data)
       setRows(rows)
     }
   }, [data])
