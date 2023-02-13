@@ -135,3 +135,10 @@ export const StyledLink = styled(Link)`
   text-decoration: none;
   color: black;
 `
+
+export const StyledIcon = styled.img`
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  margin: 0 3px;
+`

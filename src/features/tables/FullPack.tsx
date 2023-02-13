@@ -5,6 +5,9 @@ import { Table } from 'antd'
 import Input from 'antd/es/input/Input'
 import { ColumnsType } from 'antd/es/table'
 
+import emptyStar from '../../assets/pictures/emptyStar.png'
+import fullStar from '../../assets/pictures/fullStar.png'
+import halfStar from '../../assets/pictures/halfStar.png'
 import { PATH } from '../../common/path/path'
 import { FormTitle } from '../../common/style'
 
@@ -13,6 +16,7 @@ import {
   AddNewItemButton,
   LinkBackWrapper,
   MiddleSection,
+  StyledIcon,
   StyledLink,
   TablePageStyle,
   Title,
@@ -62,7 +66,15 @@ const columns: ColumnsType<DataType> = [
     key: 'grade',
     fixed: 'right',
     width: 150,
-    render: () => <a>grade</a>,
+    render: () => (
+      <>
+        <StyledIcon src={fullStar} alt={'full star'} />
+        <StyledIcon src={fullStar} alt={'full star'} />
+        <StyledIcon src={fullStar} alt={'full star'} />
+        <StyledIcon src={halfStar} alt={'half star'} />
+        <StyledIcon src={emptyStar} alt={'empty star'} />
+      </>
+    ),
   },
 ]
 
@@ -99,8 +111,8 @@ export const FullPack = () => {
           grade: c.grade,
         })
       })
-      console.log(rows)
-      console.log(data)
+      // console.log(rows)
+      // console.log(data)
       setRows(rows)
     }
   }, [data])

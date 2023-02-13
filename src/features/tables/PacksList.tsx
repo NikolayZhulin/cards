@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { Radio, Table } from 'antd'
 import Input from 'antd/es/input/Input'
 import type { ColumnsType } from 'antd/es/table'
-import styled from 'styled-components'
 
 import deleteIcon from '../../assets/pictures/deleteIcon.png'
 import editIcon from '../../assets/pictures/editIcon.png'
@@ -17,6 +16,7 @@ import {
   SliderBlock,
   SliderInput,
   SliderWrapper,
+  StyledIcon,
   StyledSlider,
   TablePageStyle,
   Title,
@@ -164,10 +164,3 @@ export const PacksList = () => {
     </TablePageStyle>
   )
 }
-
-const StyledIcon = styled.img`
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-  margin: 0 3px;
-`
