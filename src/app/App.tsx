@@ -1,31 +1,27 @@
 import React from 'react'
 
 import './App.css'
-import { Route, Routes } from 'react-router-dom'
 
-import { Error404 } from '../common/components/error404/error404'
-import Layout from '../common/components/layout/layout'
-import { CheckEmail } from '../features/auth/check-email'
-import { ForgotPassword } from '../features/auth/forgot-password'
-import { Login } from '../features/auth/login'
-import { Registration } from '../features/auth/registration'
-import { SetNewPassword } from '../features/auth/set-new-password/SetNewPassword'
-import { Profile } from '../features/profile'
+import { ErrorSnackBar, InitialPreloader, LinkAppBar } from '../common/components'
+import { AppHeader } from '../common/components/app-header'
+import AppPages from '../common/components/app-pages/AppPages'
+import { useAppSelector } from '../common/hooks/hooks'
+import { useMeQuery } from '../features/auth'
 
 export const App = () => {
+  const initialized = useAppSelector(state => state.app.isInitialized)
+  const {} = useMeQuery()
+
+  if (!initialized) {
+    return <InitialPreloader />
+  }
+
   return (
-    <Routes>
-      <Route path={'/'} element={<Layout />}>
-        <Route path={'/registration'} element={<Registration />} />
-        <Route path={'/login'} element={<Login />} />
-        <Route path={'/profile'} element={<Profile />} />
-        <Route path={'/forgot-password'} element={<ForgotPassword />} />
-        <Route path={'/check-email'} element={<CheckEmail />} />
-        <Route path={'/set-new-password/:token'} element={<SetNewPassword />} />
-        <Route path={'/*'} element={<Error404 />} />
-      </Route>
-    </Routes>
+    <>
+      <AppHeader />
+      <AppPages />
+      <LinkAppBar />
+      <ErrorSnackBar />
+    </>
   )
 }
-
-//https://github.com/PasterZOOM/cards

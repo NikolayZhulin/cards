@@ -1,10 +1,8 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import thunkMiddleware from 'redux-thunk'
 
-import { authReducer } from '../features/auth/auth-reducer'
-import { authAPI } from '../features/auth/authAPI'
+import { authAPI, authReducer } from '../features/auth'
 import { profileReducer } from '../features/profile'
-import { profileAPI } from '../features/profile/profile-api'
 
 import { appReducer } from './app-reducer'
 
@@ -14,13 +12,9 @@ export const store = configureStore({
     auth: authReducer,
     profile: profileReducer,
     [authAPI.reducerPath]: authAPI.reducer,
-    [profileAPI.reducerPath]: profileAPI.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware()
-      .prepend(thunkMiddleware)
-      .prepend(authAPI.middleware)
-      .prepend(profileAPI.middleware),
+    getDefaultMiddleware().prepend(thunkMiddleware).prepend(authAPI.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
