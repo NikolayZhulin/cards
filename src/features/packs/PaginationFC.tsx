@@ -33,8 +33,8 @@ export const PaginationFC = () => {
 
   const onChangePaginationHandler = async (page: number, pageCount: number) => {
     setParams({ page, pageCount })
-    await setSearchParams({ page: page.toString(), pageCount: pageCount.toString() })
-    trigger(params)
+    setSearchParams({ page: page.toString(), pageCount: pageCount.toString() })
+    trigger({ page, pageCount })
   }
 
   console.log(result)
