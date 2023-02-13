@@ -5,8 +5,8 @@ import { authReducer } from '../features/auth/auth-reducer'
 import { authAPI } from '../features/auth/authAPI'
 import { paginationApi } from '../features/packs/pagination-api'
 import { paginationReducer } from '../features/packs/pagination-reducer'
+import { authAPI, authReducer } from '../features/auth'
 import { profileReducer } from '../features/profile'
-import { profileAPI } from '../features/profile/profile-api'
 
 import { appReducer } from './app-reducer'
 
@@ -26,6 +26,7 @@ export const store = configureStore({
       .prepend(authAPI.middleware)
       .prepend(profileAPI.middleware)
       .prepend(paginationApi.middleware),
+    getDefaultMiddleware().prepend(thunkMiddleware).prepend(authAPI.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

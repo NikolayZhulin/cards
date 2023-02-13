@@ -1,11 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+import { letter } from '../../common/utils'
+
 export const authAPI = createApi({
   reducerPath: 'registration/api',
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:7542/2.0/',
     credentials: 'include',
   }),
+  tagTypes: ['me'],
   endpoints: build => ({
     registration: build.mutation<AddedUser, RequestRegisterType>({
       query: data => ({
@@ -21,11 +24,7 @@ export const authAPI = createApi({
         body: {
           email: data,
           from: 'test-front-admin <ai73a@yandex.by>',
-          message: `<div style="background-color: lime; padding: 15px">
-password recovery link: 
-<a href='http://localhost:3000/#/set-new-password/$token$'>
-link</a>
-</div>`,
+          message: letter,
         },
       }),
     }),
@@ -37,14 +36,26 @@ link</a>
         credentials: 'include',
       }),
     }),
-    me: build.mutation<UserType, {}>({
+    me: build.query<UserType, void>({
       query: body => ({
         url: 'auth/me',
         method: 'POST',
         body,
       }),
+      providesTags: ['me'],
     }),
-    logOut: build.mutation<any, {}>({
+    changeUser: build.mutation<
+      { updatedUser: UserType; error?: string },
+      { name?: string; avatar?: string }
+    >({
+      query: body => ({
+        url: 'auth/me',
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['me'],
+    }),
+    logOut: build.mutation<void, {}>({
       query: body => ({
         url: 'auth/me',
         method: 'DELETE',
@@ -66,8 +77,9 @@ export const {
   useRegistrationMutation,
   useForgotPasswordMutation,
   useLogOutMutation,
-  useMeMutation,
+  useMeQuery,
   useSetNewPasswordMutation,
+  useChangeUserMutation,
 } = authAPI
 
 export type ForgotSuccessType = {
@@ -124,12 +136,12 @@ export type UserType = {
   email: string
   name: string
   avatar?: string
-  publicCardPacksCount: number // количество колод
+  publicCardPacksCount: number
 
   created: string
   updated: string
   isAdmin: boolean
-  verified: boolean // подтвердил ли почту
+  verified: boolean
   rememberMe: boolean
 
   __v: number

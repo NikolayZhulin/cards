@@ -1,12 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { isErrorWithMessage, isFetchBaseQueryError } from '../../common/services/helpers'
-
 import { authAPI } from './authAPI'
 
 const initialState = {
   registered: false,
-  error: null as null | string,
   isRecoveryLetterSent: false,
   isLoggedIn: false,
 }
@@ -21,49 +18,22 @@ const slice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addMatcher(authAPI.endpoints.registration.matchFulfilled, (state, {}) => {
-      state.registered = true
-    })
-    builder.addMatcher(authAPI.endpoints.registration.matchRejected, (state, { payload }) => {
-      if (isFetchBaseQueryError(payload)) {
-        const errMsg = 'error' in payload ? payload.error : JSON.stringify(payload.data)
-
-        state.error = JSON.parse(errMsg).error
-      } else if (isErrorWithMessage(payload)) {
-        console.warn('Unknown Error')
-      }
-    })
     builder
+      .addMatcher(authAPI.endpoints.registration.matchFulfilled, (state, {}) => {
+        state.registered = true
+      })
       .addMatcher(authAPI.endpoints.forgotPassword.matchFulfilled, (state, { payload }) => {
         state.isRecoveryLetterSent = true
       })
-      .addMatcher(authAPI.endpoints.forgotPassword.matchRejected, (state, { payload }) => {
-        if (isFetchBaseQueryError(payload)) {
-          const errMsg = 'error' in payload ? payload.error : JSON.stringify(payload.data)
-
-          state.error = JSON.parse(errMsg).error
-        } else if (isErrorWithMessage(payload)) {
-          console.warn('Unknown Error')
-        }
+      .addMatcher(authAPI.endpoints.login.matchFulfilled, (state, {}) => {
+        state.isLoggedIn = true
       })
-    builder.addMatcher(authAPI.endpoints.login.matchFulfilled, (state, { payload }) => {
-      state.isLoggedIn = true
-    })
-    builder.addMatcher(authAPI.endpoints.login.matchRejected, (state, { payload }) => {
-      if (isFetchBaseQueryError(payload)) {
-        const errMsg = 'error' in payload ? payload.error : JSON.stringify(payload.data)
-
-        state.error = JSON.parse(errMsg).error
-      } else if (isErrorWithMessage(payload)) {
-        console.warn('Unknown Error')
-      }
-    })
-    builder.addMatcher(authAPI.endpoints.logOut.matchFulfilled, state => {
-      state.isLoggedIn = false
-    })
-    builder.addMatcher(authAPI.endpoints.me.matchFulfilled, state => {
-      state.isLoggedIn = true
-    })
+      .addMatcher(authAPI.endpoints.logOut.matchFulfilled, state => {
+        state.isLoggedIn = false
+      })
+      .addMatcher(authAPI.endpoints.me.matchFulfilled, state => {
+        state.isLoggedIn = true
+      })
   },
 })
 
