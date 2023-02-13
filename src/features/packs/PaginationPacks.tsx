@@ -7,14 +7,16 @@ import { InitialPreloader } from '../../common/components'
 import { useAppSelector } from '../../common/hooks/hooks'
 import { Login } from '../auth'
 
-type PropsType = {
-  data: any
-  getData: any
-}
-export const PaginationFC = (props: PropsType) => {
-  const [params, setParams] = useState({ page: 1, pageCount: 4 })
+import { RequestURIPackType, useLazyGetPacksQuery } from './pagination-api'
+import { PaginationFC } from './PaginationFC'
+
+export const PaginationPacks = () => {
+  const [params, setParams] = useState<RequestURIPackType>({ page: 1, pageCount: 4 })
   const [searchParams, setSearchParams] = useSearchParams()
+  const [trigger, result, lastPromiseInfo] = useLazyGetPacksQuery()
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const data = result.data
+  const getData = trigger
 
   useLayoutEffect(() => {
     const params = Object.fromEntries(searchParams)
@@ -26,28 +28,18 @@ export const PaginationFC = (props: PropsType) => {
     }
 
     fetchData().then(() => {
-      props.getData(params)
+      trigger(params)
     })
   }, [])
 
   const onChangePaginationHandler = (page: number, pageCount: number) => {
     setParams({ page, pageCount })
     setSearchParams({ page: page.toString(), pageCount: pageCount.toString() })
-    props.getData({ page, pageCount })
+    trigger({ page, pageCount })
   }
 
   if (!isLoggedIn) return <Login />
-  if (props.data.isLoading) return <InitialPreloader />
+  if (result.isLoading) return <InitialPreloader />
 
-  return (
-    <div style={{ padding: '20px' }}>
-      <Pagination
-        onChange={onChangePaginationHandler}
-        total={props.data?.cardPacksTotalCount || 100}
-        current={props.data?.page || 1}
-        pageSize={props.data?.pageCount || 4}
-        pageSizeOptions={[10, 20, 30, 40, 50]}
-      />
-    </div>
-  )
+  return <PaginationFC data={data} getData={getData} />
 }

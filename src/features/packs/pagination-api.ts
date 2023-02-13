@@ -14,6 +14,13 @@ export const paginationApi = createApi({
         params,
       }),
     }),
+    getCards: build.query<CardsType, {}>({
+      query: params => ({
+        url: `cards/card`,
+        method: 'GET',
+        params,
+      }),
+    }),
   }),
 })
 
@@ -49,7 +56,7 @@ type CardPacksType = {
   tokenDeathTime: number
 }
 
-export type RequestURIType = {
+export type RequestURIPackType = {
   packName?: string
   min?: number
   max?: number
@@ -58,4 +65,43 @@ export type RequestURIType = {
   pageCount?: number
   user_id?: string
   block?: boolean
+}
+
+export type CardsType = {
+  cards: CardType[]
+  packUserId: string
+  packName: string
+  packPrivate: boolean
+  packDeckCover?: any
+  packCreated: string
+  packUpdated: string
+  page: number
+  pageCount: number
+  cardsTotalCount: number
+  minGrade: number
+  maxGrade: number
+  token: string
+  tokenDeathTime: number
+}
+type CardType = {
+  answer: string
+  question: string
+  cardsPack_id: string
+  grade: number
+  shots: number
+  user_id: string
+  created: string
+  updated: string
+  _id: string
+}
+
+type RequestURICardType = {
+  cardAnswer?: string
+  cardQuestion?: string
+  cardsPack_id: string
+  min?: number
+  max?: number
+  sortCards?: '0grade' | '1grade'
+  page?: number
+  pageCount?: number
 }
