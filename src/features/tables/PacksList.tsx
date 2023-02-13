@@ -3,7 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { Radio, Table } from 'antd'
 import Input from 'antd/es/input/Input'
 import type { ColumnsType } from 'antd/es/table'
+import styled from 'styled-components'
 
+import deleteIcon from '../../assets/pictures/deleteIcon.png'
+import editIcon from '../../assets/pictures/editIcon.png'
+import learnIcon from '../../assets/pictures/learnIcon.png'
 import { FormTitle } from '../../common/style'
 
 import {
@@ -64,7 +68,13 @@ const columns: ColumnsType<DataType> = [
     key: 'actions',
     fixed: 'right',
     width: 150,
-    render: () => <a>action</a>,
+    render: () => (
+      <>
+        <StyledIcon onClick={() => console.log('learn icon')} src={learnIcon} alt={'learn icon'} />
+        <StyledIcon src={editIcon} alt={'edit icon'} />
+        <StyledIcon src={deleteIcon} alt={'delete icon'} />
+      </>
+    ),
   },
 ]
 
@@ -117,7 +127,7 @@ export const PacksList = () => {
           actions: 'action',
         })
       })
-      console.log(rows)
+      // console.log(rows)
       setRows(rows)
     }
   }, [data])
@@ -154,3 +164,10 @@ export const PacksList = () => {
     </TablePageStyle>
   )
 }
+
+const StyledIcon = styled.img`
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  margin: 0 3px;
+`
