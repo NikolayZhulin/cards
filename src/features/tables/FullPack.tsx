@@ -8,6 +8,7 @@ import { ColumnsType } from 'antd/es/table'
 import { PATH } from '../../common/path/path'
 import { FormTitle } from '../../common/style'
 
+import { formatDate } from './PacksList'
 import {
   AddNewItemButton,
   LinkBackWrapper,
@@ -94,7 +95,7 @@ export const FullPack = () => {
           key: c._id,
           question: c.question,
           answer: c.answer,
-          updated: c.updated,
+          updated: formatDate(c.updated),
           grade: c.grade,
         })
       })

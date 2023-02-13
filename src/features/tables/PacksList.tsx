@@ -86,6 +86,18 @@ const params: FetchCardsPacksRequestType = {
   block: false,
 }
 
+export const setLeadingZero = (num: number) => {
+  return num < 10 ? `0${num}` : num
+}
+
+export const formatDate = (str: string) => {
+  let date = new Date(str)
+
+  return `${setLeadingZero(date.getUTCDate())}.${setLeadingZero(
+    date.getUTCMonth() + 1
+  )}.${setLeadingZero(date.getUTCFullYear())}`
+}
+
 export const PacksList = () => {
   const [rows, setRows] = useState(initialRows)
   const { data } = useFetchCardsPackQuery(params)
@@ -100,8 +112,8 @@ export const PacksList = () => {
           key: p._id,
           name: `${p.name} ${p._id}`,
           cards: p.cardsCount,
-          updated: p.updated,
-          created: p.created,
+          updated: formatDate(p.updated),
+          created: formatDate(p.created),
           actions: 'action',
         })
       })
