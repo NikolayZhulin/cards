@@ -1,62 +1,55 @@
-import { useEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 
-import { Pagination, Alert } from 'antd'
-import { Navigate, useSearchParams } from 'react-router-dom'
+import { Pagination } from 'antd'
+import { useSearchParams } from 'react-router-dom'
 
-import { Preloader } from '../../common/components/preloader/Preloader'
+import { Preloader } from '../../common/components'
 import { useAppSelector } from '../../common/hooks/hooks'
-import { useMeMutation } from '../auth/authAPI'
+import { Login } from '../auth'
 
-import { RequestURIType, useGetPacksQuery } from './pagination-api'
+import { RequestURIType, useLazyGetPacksQuery } from './pagination-api'
 
 export const PaginationFC = () => {
-  const [params, setParams] = useState<RequestURIType>({
-    page: 1,
-    pageCount: 4,
-  })
+  const [params, setParams] = useState<RequestURIType>({})
   const [searchParams, setSearchParams] = useSearchParams()
-  const [getProfile, {}] = useMeMutation<any>()
-  const { data } = useGetPacksQuery<any>(params)
+  // const { data, error, isLoading } = useGetPacksQuery<any>(params)
+  const [trigger, result, lastPromiseInfo] = useLazyGetPacksQuery()
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const isLoading = useAppSelector(state => state.pagination.isLoading)
-  const error = useAppSelector(state => state.auth.error)
 
-  useEffect(() => {
-    getProfile({})
-  }, [])
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     const params = Object.fromEntries(searchParams)
+    const fetchData = async () => {
+      setParams({
+        page: +params.page,
+        pageCount: +params.pageCount,
+      })
+    }
 
-    setParams({
-      page: +params.page || 1,
-      pageCount: +params.pageCount || 4,
+    fetchData().then(() => {
+      trigger(params)
     })
   }, [])
-  const onChangePaginationHandler = (page: number, pageCount: number) => {
+
+  const onChangePaginationHandler = async (page: number, pageCount: number) => {
     setParams({ page, pageCount })
-    setSearchParams({ page: page.toString(), pageCount: pageCount?.toString() })
+    await setSearchParams({ page: page.toString(), pageCount: pageCount.toString() })
+    trigger(params)
   }
 
-  if (!isLoggedIn) return <Navigate to={'/login'} />
+  console.log(result)
+  if (!isLoggedIn) return <Login />
+  if (isLoading) return <Preloader />
 
   return (
-    <>
+    <div style={{ padding: '20px' }}>
       <Pagination
         onChange={onChangePaginationHandler}
-        total={data.cardPacksTotalCount}
-        current={data.page}
-        pageSize={data.pageCount}
+        total={result?.data?.cardPacksTotalCount || 100}
+        current={result?.data?.page || 1}
+        pageSize={result?.data?.pageCount || 4}
+        pageSizeOptions={[10, 20, 30, 40, 50]}
       />
-      {isLoading ? <Preloader /> : <></>}
-      {error && (
-        <Alert
-          style={{ position: 'absolute', bottom: '3%' }}
-          message={error}
-          type="error"
-          closable
-        />
-      )}
-    </>
+    </div>
   )
 }

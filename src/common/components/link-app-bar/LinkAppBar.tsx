@@ -26,6 +26,9 @@ export const LinkAppBar = () => {
       <NavLink to={PATH.CHECK_EMAIL} style={{ margin: '5px' }}>
         /check-email
       </NavLink>
+      <NavLink to={'/pagination'} style={{ margin: '5px' }}>
+        /pagination
+      </NavLink>
     </LinkBar>
   )
 }

@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const paginationApi = createApi({
   reducerPath: 'paginationApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
+    baseUrl: 'http://localhost:7542/2.0/',
     credentials: 'include',
   }),
   endpoints: build => ({
@@ -17,7 +17,7 @@ export const paginationApi = createApi({
   }),
 })
 
-export const { useGetPacksQuery } = paginationApi
+export const { useGetPacksQuery, useLazyGetPacksQuery } = paginationApi
 
 //types
 type CardPackType = {
