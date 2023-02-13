@@ -4,6 +4,9 @@ import { Radio, Table } from 'antd'
 import Input from 'antd/es/input/Input'
 import type { ColumnsType } from 'antd/es/table'
 
+import deleteIcon from '../../assets/pictures/deleteIcon.png'
+import editIcon from '../../assets/pictures/editIcon.png'
+import learnIcon from '../../assets/pictures/learnIcon.png'
 import { FormTitle } from '../../common/style'
 
 import {
@@ -13,6 +16,7 @@ import {
   SliderBlock,
   SliderInput,
   SliderWrapper,
+  StyledIcon,
   StyledSlider,
   TablePageStyle,
   Title,
@@ -64,7 +68,13 @@ const columns: ColumnsType<DataType> = [
     key: 'actions',
     fixed: 'right',
     width: 150,
-    render: () => <a>action</a>,
+    render: () => (
+      <>
+        <StyledIcon onClick={() => console.log('learn icon')} src={learnIcon} alt={'learn icon'} />
+        <StyledIcon src={editIcon} alt={'edit icon'} />
+        <StyledIcon src={deleteIcon} alt={'delete icon'} />
+      </>
+    ),
   },
 ]
 
@@ -86,6 +96,18 @@ const params: FetchCardsPacksRequestType = {
   block: false,
 }
 
+export const setLeadingZero = (num: number) => {
+  return num < 10 ? `0${num}` : num
+}
+
+export const formatDate = (str: string) => {
+  let date = new Date(str)
+
+  return `${setLeadingZero(date.getUTCDate())}.${setLeadingZero(
+    date.getUTCMonth() + 1
+  )}.${setLeadingZero(date.getUTCFullYear())}`
+}
+
 export const PacksList = () => {
   const [rows, setRows] = useState(initialRows)
   const { data } = useFetchCardsPackQuery(params)
@@ -100,12 +122,12 @@ export const PacksList = () => {
           key: p._id,
           name: `${p.name} ${p._id}`,
           cards: p.cardsCount,
-          updated: p.updated,
-          created: p.created,
+          updated: formatDate(p.updated),
+          created: formatDate(p.created),
           actions: 'action',
         })
       })
-      console.log(rows)
+      // console.log(rows)
       setRows(rows)
     }
   }, [data])
