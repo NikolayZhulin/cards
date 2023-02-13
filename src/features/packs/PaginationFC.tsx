@@ -3,19 +3,17 @@ import { useLayoutEffect, useState } from 'react'
 import { Pagination } from 'antd'
 import { useSearchParams } from 'react-router-dom'
 
-import { Preloader } from '../../common/components'
+import { InitialPreloader } from '../../common/components'
 import { useAppSelector } from '../../common/hooks/hooks'
 import { Login } from '../auth'
 
 import { RequestURIType, useLazyGetPacksQuery } from './pagination-api'
 
 export const PaginationFC = () => {
-  const [params, setParams] = useState<RequestURIType>({})
+  const [params, setParams] = useState<RequestURIType>({ page: 1, pageCount: 4 })
   const [searchParams, setSearchParams] = useSearchParams()
-  // const { data, error, isLoading } = useGetPacksQuery<any>(params)
   const [trigger, result, lastPromiseInfo] = useLazyGetPacksQuery()
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-  const isLoading = useAppSelector(state => state.pagination.isLoading)
 
   useLayoutEffect(() => {
     const params = Object.fromEntries(searchParams)
@@ -31,15 +29,14 @@ export const PaginationFC = () => {
     })
   }, [])
 
-  const onChangePaginationHandler = async (page: number, pageCount: number) => {
+  const onChangePaginationHandler = (page: number, pageCount: number) => {
     setParams({ page, pageCount })
     setSearchParams({ page: page.toString(), pageCount: pageCount.toString() })
     trigger({ page, pageCount })
   }
 
-  console.log(result)
   if (!isLoggedIn) return <Login />
-  if (isLoading) return <Preloader />
+  if (result.isLoading) return <InitialPreloader />
 
   return (
     <div style={{ padding: '20px' }}>

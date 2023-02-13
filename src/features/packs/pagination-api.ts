@@ -17,7 +17,7 @@ export const paginationApi = createApi({
   }),
 })
 
-export const { useGetPacksQuery, useLazyGetPacksQuery } = paginationApi
+export const { useLazyGetPacksQuery } = paginationApi
 
 //types
 type CardPackType = {
