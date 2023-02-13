@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Radio, Table } from 'antd'
 import Input from 'antd/es/input/Input'
@@ -20,6 +20,7 @@ import {
   ToggleOwnerButton,
   TopSection,
 } from './style'
+import { FetchCardsPacksRequestType, useFetchCardsPackQuery } from './tablesApi'
 
 type DataType = {
   key: React.Key
@@ -74,39 +75,39 @@ const initialRows: DataType[] = []
 //   password: "1qazxcvBG"
 //   rememberMe: false }
 
-const initialParams: FetchCardsPacksRequestType = {
+const params: FetchCardsPacksRequestType = {
   packName: '',
   min: 1,
-  max: 1,
+  max: 110,
   sortPacks: 0,
   page: 1,
-  pageCount: 5,
+  pageCount: 50,
   user_id: '',
   block: false,
 }
 
 export const PacksList = () => {
-  const [params, setParams] = useState(initialParams)
   const [rows, setRows] = useState(initialRows)
-  // const { data } = useFetchCardsPackQuery(params)
+  const { data } = useFetchCardsPackQuery(params)
 
-  // if (data) {
-  //   const { cardPacks } = data
-  //   let rows: DataType[] = []
-  //
-  //   cardPacks.forEach(p => {
-  //     rows.push({
-  //       key: p._id,
-  //       name: p.name,
-  //       cards: p.cardsCount,
-  //       updated: p.updated,
-  //       created: p.created,
-  //       actions: 'action',
-  //     })
-  //   })
-  //
-  //   setRows(rows)
-  // }
+  useEffect(() => {
+    if (data) {
+      const { cardPacks } = data
+      let rows: DataType[] = []
+
+      cardPacks.forEach(p => {
+        rows.push({
+          key: p._id,
+          name: p.name,
+          cards: p.cardsCount,
+          updated: p.updated,
+          created: p.created,
+          actions: 'action',
+        })
+      })
+      setRows(rows)
+    }
+  }, [data])
 
   return (
     <TablePageStyle>

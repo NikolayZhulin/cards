@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import ArrowLeftOutlined from '@ant-design/icons/lib/icons/ArrowLeftOutlined'
 import { Table } from 'antd'
@@ -18,7 +18,7 @@ import {
   TopSection,
   WideSearchBlock,
 } from './style'
-import { FetchCardsRequestType } from './tablesApi'
+import { FetchCardsRequestType, useFetchCardsQuery } from './tablesApi'
 
 type DataType = {
   key: React.Key
@@ -67,10 +67,10 @@ const columns: ColumnsType<DataType> = [
 
 const initialRows: DataType[] = []
 
-const initialParams: FetchCardsRequestType = {
+const params: FetchCardsRequestType = {
   cardAnswer: '',
   cardQuestion: '',
-  cardsPack_id: '63e93b5d0a72fc0768fd6afe',
+  cardsPack_id: '6311bf4b1ced5d2bb4e1fa4d',
   min: 1,
   max: 4,
   sortCards: '0grade',
@@ -79,28 +79,29 @@ const initialParams: FetchCardsRequestType = {
 }
 
 export const FullPack = () => {
-  const [params, setParams] = useState(initialParams)
   const [rows, setRows] = useState(initialRows)
   const [isMy, setIsMy] = useState(true)
-  // const { data } = useFetchCardsQuery(params)
+  const { data } = useFetchCardsQuery(params)
 
-  // if (data) {
-  //   const { cards } = data
-  //
-  //   let rows: DataType[] = []
-  //
-  //   cards.forEach(c => {
-  //     rows.push({
-  //       key: c._id,
-  //       question: c.question,
-  //       answer: c.answer,
-  //       updated: c.updated,
-  //       grade: c.grade,
-  //     })
-  //   })
-  //
-  //   setRows(rows)
-  // }
+  useEffect(() => {
+    if (data) {
+      const { cards } = data
+
+      let rows: DataType[] = []
+
+      cards.forEach(c => {
+        rows.push({
+          key: c._id,
+          question: c.question,
+          answer: c.answer,
+          updated: c.updated,
+          grade: c.grade,
+        })
+      })
+      console.log(rows)
+      setRows(rows)
+    }
+  }, [data])
 
   return (
     <TablePageStyle>
