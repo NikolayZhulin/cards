@@ -135,12 +135,12 @@ export const {
 
 export type FetchCardsPacksRequestType = {
   packName?: string
-  min?: number | null
-  max?: number | null
+  min?: number
+  max?: number
   sortPacks?: string
   page?: number
   pageCount?: number
-  user_id?: string | null
+  user_id?: string
   block?: boolean
 }
 

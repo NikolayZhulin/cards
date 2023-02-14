@@ -6,9 +6,11 @@ import Input from 'antd/es/input/Input'
 import type { ColumnsType } from 'antd/es/table'
 import { NavLink, useSearchParams } from 'react-router-dom'
 
+import { InitialPreloader } from '../../../common/components'
 import { PaginationFC } from '../../../common/components/pagination/PaginationFC'
 import { useAppSelector } from '../../../common/hooks/hooks'
 import { FormTitle } from '../../../common/style'
+import { Login } from '../../auth'
 import { UpdateButtons } from '../components/UpdateButtons'
 import {
   AddNewItemButton,
@@ -116,16 +118,13 @@ export const PacksList = () => {
   const [deletePack, {}] = useDeletePackMutation()
   const [trigger, result] = useLazyFetchCardsPackQuery()
   const [searchParams, setSearchParams] = useSearchParams()
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
   const search = Object.fromEntries(searchParams)
 
   const onChangePaginationHandler = (newPage: number, newPageCount: number) => {
-    trigger({ ...searchParams, page: newPage, pageCount: newPageCount })
-    setSearchParams({
-      ...searchParams,
-      page: newPage.toString(),
-      pageCount: newPageCount.toString(),
-    })
+    trigger({ ...search, page: newPage, pageCount: newPageCount })
+    setSearchParams({ ...search, page: newPage.toString(), pageCount: newPageCount.toString() })
   }
 
   useEffect(() => {
@@ -167,18 +166,26 @@ export const PacksList = () => {
   }
 
   const getMyPacks = () => {
-    trigger({ ...searchParams, user_id: userId?.toString() })
-    setSearchParams({ ...searchParams, user_id: userId?.toString() })
+    trigger({ ...search, user_id: userId?.toString() })
+    setSearchParams({ ...search, user_id: userId?.toString() || 'userId' })
   }
   const getAllPacks = () => {
-    trigger({ ...searchParams, user_id: 'false' })
-    setSearchParams({ ...searchParams, user_id: 'false' })
+    const newSearch = { ...search }
+
+    newSearch.user_id && delete newSearch.user_id
+    trigger(newSearch)
+    setSearchParams(newSearch)
   }
 
   const setCardsCount = (min: number, max: number) => {
-    setSearchParams(prevState => ({ ...prevState, min, max }))
+    trigger({ ...search, min, max })
+    setSearchParams({ ...search, min: min.toString(), max: max.toString() })
   }
+
   const maxCardsCount = result?.data ? result?.data.maxCardsCount : 78
+
+  if (!isLoggedIn) return <Login />
+  if (result.isLoading) return <InitialPreloader />
 
   return (
     <TablePageStyle>
