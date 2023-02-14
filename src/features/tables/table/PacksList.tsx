@@ -215,7 +215,7 @@ export const PacksList = () => {
               range={{ draggableTrack: true }}
               defaultValue={[+search.min || 0, +search.max || maxCardsCount]}
               min={0}
-              max={maxCardsCount}
+              max={+search.max || maxCardsCount}
               onAfterChange={(value: [number, number]) => {
                 setCardsCount(value[0], value[1])
               }}
@@ -225,7 +225,6 @@ export const PacksList = () => {
         </SliderBlock>
       </MiddleSection>
       <Table columns={columns} dataSource={rows} pagination={false} />
-      {/*<StyledPagination defaultCurrent={1} total={data && data.cardPacksTotalCount} />*/}
       <PaginationFC
         current={result.data?.page || 1}
         pageSize={result.data?.pageCount || 4}
