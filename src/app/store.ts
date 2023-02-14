@@ -14,7 +14,6 @@ export const store = configureStore({
     app: appReducer,
     auth: authReducer,
     profile: profileReducer,
-    pagination: paginationReducer,
     [authAPI.reducerPath]: authAPI.reducer,
     [tablesApi.reducerPath]: tablesApi.reducer,
     [paginationApi.reducerPath]: paginationApi.reducer,

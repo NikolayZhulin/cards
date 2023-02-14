@@ -1,2 +1,1 @@
-export * from './PaginationFC'
-export * from './pagination-reducer'
+export * from '../../common/components/pagination/PaginationFC'
