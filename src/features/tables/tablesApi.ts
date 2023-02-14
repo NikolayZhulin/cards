@@ -135,8 +135,8 @@ export const {
 
 export type FetchCardsPacksRequestType = {
   packName: string
-  min: number
-  max: number
+  min: number | null
+  max: number | null
   sortPacks: string
   page: number
   pageCount: number

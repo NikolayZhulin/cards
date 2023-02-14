@@ -4,7 +4,7 @@ import { FolderOpenTwoTone } from '@ant-design/icons'
 import { Radio, Table } from 'antd'
 import Input from 'antd/es/input/Input'
 import type { ColumnsType } from 'antd/es/table'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useSearchParams } from 'react-router-dom'
 
 import { useAppSelector } from '../../../common/hooks/hooks'
 import { FormTitle } from '../../../common/style'
@@ -103,11 +103,21 @@ export const formatDate = (str: string) => {
   )}.${setLeadingZero(date.getUTCFullYear())}`
 }
 
+type ParamType =
+  | 'packName'
+  | 'min'
+  | 'max'
+  | 'sortPacks'
+  | 'page'
+  | 'pageCount'
+  | 'user_id'
+  | 'block'
+
 export const PacksList = () => {
   const [params, setParams] = useState<FetchCardsPacksRequestType>({
     packName: '',
-    min: 0,
-    max: 110,
+    min: null,
+    max: null,
     sortPacks: '0created',
     page: 1,
     pageCount: 10,
@@ -121,10 +131,33 @@ export const PacksList = () => {
   const [updatePack, {}] = useUpdatePackMutation()
   const [deletePack, {}] = useDeletePackMutation()
   const [trigger, response] = useLazyFetchCardsPackQuery()
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const search = Object.fromEntries(searchParams)
 
   useEffect(() => {
-    trigger(params)
-  }, [params])
+    const requestParams = {
+      user_id: search?.user_id === 'false' ? '' : search.user_id,
+      min: +search.min,
+      max: +search.max,
+    }
+
+    trigger({ ...params, ...requestParams })
+  }, [params, searchParams])
+
+  // useEffect(() => {
+  //   const search = Object.fromEntries(searchParams)
+  //
+  //   console.log(search)
+  //   const newParams: any = {}
+  //
+  //   for (let key in params) {
+  //     if (params[key as ParamType]) {
+  //       newParams[key] = params[key as ParamType]
+  //     }
+  //   }
+  //   setSearchParams(newParams)
+  // }, [params])
 
   useEffect(() => {
     if (response && response.data) {
@@ -148,18 +181,6 @@ export const PacksList = () => {
                 editHandler={() => updatePack(p._id)}
                 deleteHandler={() => deletePack(p._id)}
               />
-              {/*{isMyPack && (*/}
-              {/*  <EditTwoTone*/}
-              {/*    onClick={() => updatePack(p._id)}*/}
-              {/*    style={{ fontSize: '20px', margin: '5px' }}*/}
-              {/*  />*/}
-              {/*)}*/}
-              {/*{isMyPack && (*/}
-              {/*  <DeleteTwoTone*/}
-              {/*    onClick={() => deletePack(p._id)}*/}
-              {/*    style={{ fontSize: '20px', margin: '5px' }}*/}
-              {/*  />*/}
-              {/*)}*/}
             </div>
           ),
         })
@@ -173,11 +194,20 @@ export const PacksList = () => {
   }
 
   const getMyPacks = () => {
-    setParams({ ...params, user_id: userId })
+    setSearchParams(prevState => {
+      console.log(prevState)
+
+      return { ...prevState, user_id: userId }
+    })
   }
   const getAllPacks = () => {
-    setParams({ ...params, user_id: '' })
+    setSearchParams(prevState => ({ ...prevState, user_id: 'false' }))
   }
+
+  const setCardsCount = (min: number, max: number) => {
+    setSearchParams(prevState => ({ ...prevState, min, max }))
+  }
+  const maxCardsCount = response?.data ? response?.data.maxCardsCount : 78
 
   return (
     <TablePageStyle>
@@ -202,9 +232,17 @@ export const PacksList = () => {
         <SliderBlock>
           <Title>Numbers of cards</Title>
           <SliderWrapper>
-            <SliderInput min={1} max={78} value={1} />
-            <StyledSlider min={1} max={78} value={36} />
-            <SliderInput min={1} max={78} value={78} />
+            <SliderInput min={0} max={maxCardsCount - 1} value={search.min || 0} />
+            <StyledSlider
+              range={{ draggableTrack: true }}
+              defaultValue={[+search.min || 0, +search.max || maxCardsCount]}
+              min={0}
+              max={maxCardsCount}
+              onAfterChange={(value: [number, number]) => {
+                setCardsCount(value[0], value[1])
+              }}
+            />
+            <SliderInput min={1} max={maxCardsCount} value={search.max || maxCardsCount} />
           </SliderWrapper>
         </SliderBlock>
       </MiddleSection>
