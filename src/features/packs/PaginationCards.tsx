@@ -4,11 +4,11 @@ import { Pagination } from 'antd'
 import { useSearchParams } from 'react-router-dom'
 
 import { InitialPreloader } from '../../common/components'
+import { PaginationFC } from '../../common/components/pagination/PaginationFC'
 import { useAppSelector } from '../../common/hooks/hooks'
 import { Login } from '../auth'
 
 import { RequestURIPackType, useLazyGetPacksQuery } from './pagination-api'
-import { PaginationFC } from './PaginationFC'
 
 export const PaginationCards = () => {
   const [params, setParams] = useState<RequestURIPackType>({ page: 1, pageCount: 4 })
