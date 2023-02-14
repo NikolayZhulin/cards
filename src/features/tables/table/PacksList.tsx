@@ -1,17 +1,14 @@
 import React, { ReactElement, useEffect, useState } from 'react'
 
-import { DeleteTwoTone, EditTwoTone, FolderOpenTwoTone } from '@ant-design/icons'
+import { FolderOpenTwoTone } from '@ant-design/icons'
 import { Radio, Table } from 'antd'
 import Input from 'antd/es/input/Input'
 import type { ColumnsType } from 'antd/es/table'
 import { NavLink } from 'react-router-dom'
 
-import deleteIcon from '../../assets/pictures/deleteIcon.png'
-import editIcon from '../../assets/pictures/editIcon.png'
-import learnIcon from '../../assets/pictures/learnIcon.png'
-import { useAppSelector } from '../../common/hooks/hooks'
-import { FormTitle } from '../../common/style'
-
+import { useAppSelector } from '../../../common/hooks/hooks'
+import { FormTitle } from '../../../common/style'
+import { UpdateButtons } from '../components/UpdateButtons'
 import {
   AddNewItemButton,
   MiddleSection,
@@ -19,22 +16,20 @@ import {
   SliderBlock,
   SliderInput,
   SliderWrapper,
-  StyledIcon,
   StyledSlider,
   TablePageStyle,
   Title,
   ToggleAuthorsBlock,
   ToggleOwnerButton,
   TopSection,
-} from './style'
+} from '../styles/style'
 import {
   FetchCardsPacksRequestType,
   useAddPackMutation,
   useDeletePackMutation,
-  useFetchCardsPackQuery,
   useLazyFetchCardsPackQuery,
   useUpdatePackMutation,
-} from './tablesApi'
+} from '../tablesApi'
 
 type DataType = {
   key: React.Key
@@ -147,18 +142,23 @@ export const PacksList = () => {
           actions: (
             <div style={{ display: 'flex', justifyContent: 'start' }}>
               <FolderOpenTwoTone style={{ fontSize: '20px', margin: '5px' }} />
-              {isMyPack && (
-                <EditTwoTone
-                  onClick={() => updatePack(p._id)}
-                  style={{ fontSize: '20px', margin: '5px' }}
-                />
-              )}
-              {isMyPack && (
-                <DeleteTwoTone
-                  onClick={() => deletePack(p._id)}
-                  style={{ fontSize: '20px', margin: '5px' }}
-                />
-              )}
+              <UpdateButtons
+                isMyItem={isMyPack}
+                editHandler={() => updatePack(p._id)}
+                deleteHandler={() => deletePack(p._id)}
+              />
+              {/*{isMyPack && (*/}
+              {/*  <EditTwoTone*/}
+              {/*    onClick={() => updatePack(p._id)}*/}
+              {/*    style={{ fontSize: '20px', margin: '5px' }}*/}
+              {/*  />*/}
+              {/*)}*/}
+              {/*{isMyPack && (*/}
+              {/*  <DeleteTwoTone*/}
+              {/*    onClick={() => deletePack(p._id)}*/}
+              {/*    style={{ fontSize: '20px', margin: '5px' }}*/}
+              {/*  />*/}
+              {/*)}*/}
             </div>
           ),
         })

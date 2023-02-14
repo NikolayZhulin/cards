@@ -1,20 +1,18 @@
 import React, { ReactElement, useEffect, useState } from 'react'
 
-import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons'
 import ArrowLeftOutlined from '@ant-design/icons/lib/icons/ArrowLeftOutlined'
 import { Table } from 'antd'
 import Input from 'antd/es/input/Input'
 import { ColumnsType } from 'antd/es/table'
 import { useParams } from 'react-router-dom'
 
-import emptyStar from '../../assets/pictures/emptyStar.png'
-import fullStar from '../../assets/pictures/fullStar.png'
-import halfStar from '../../assets/pictures/halfStar.png'
-import { useAppSelector } from '../../common/hooks/hooks'
-import { PATH } from '../../common/path/path'
-import { FormTitle } from '../../common/style'
-
-import { formatDate } from './PacksList'
+import emptyStar from '../../../assets/pictures/emptyStar.png'
+import fullStar from '../../../assets/pictures/fullStar.png'
+import halfStar from '../../../assets/pictures/halfStar.png'
+import { useAppSelector } from '../../../common/hooks/hooks'
+import { PATH } from '../../../common/path/path'
+import { FormTitle } from '../../../common/style'
+import { UpdateButtons } from '../components/UpdateButtons'
 import {
   AddNewItemButton,
   LinkBackWrapper,
@@ -25,14 +23,16 @@ import {
   Title,
   TopSection,
   WideSearchBlock,
-} from './style'
+} from '../styles/style'
 import {
   FetchCardsRequestType,
   useAddCardMutation,
   useDeleteCardMutation,
   useFetchCardsQuery,
   useUpdateCardMutation,
-} from './tablesApi'
+} from '../tablesApi'
+
+import { formatDate } from './PacksList'
 
 type DataType = {
   key: React.Key
@@ -134,12 +134,11 @@ export const FullPack = () => {
           grade: c.grade,
           actions: (
             <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-              {isMyPack && (
-                <>
-                  <EditTwoTone onClick={() => updateCard(c._id)} style={{ fontSize: '20px' }} />
-                  <DeleteTwoTone onClick={() => deleteCard(c._id)} style={{ fontSize: '20px' }} />
-                </>
-              )}
+              <UpdateButtons
+                isMyItem={isMyPack}
+                editHandler={() => updateCard(c._id)}
+                deleteHandler={() => deleteCard(c._id)}
+              />
             </div>
           ),
         })

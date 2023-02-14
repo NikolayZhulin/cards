@@ -2,9 +2,8 @@ import React from 'react'
 
 import ArrowLeftOutlined from '@ant-design/icons/lib/icons/ArrowLeftOutlined'
 
-import { PATH } from '../../common/path/path'
-import { FormTitle } from '../../common/style'
-
+import { PATH } from '../../../common/path/path'
+import { FormTitle } from '../../../common/style'
 import {
   AddNewItemButton,
   EmptyPackSection,
@@ -13,7 +12,7 @@ import {
   StyledLink,
   TablePageStyle,
   TopSection,
-} from './style'
+} from '../styles/style'
 
 export const EmptyPack = () => {
   return (

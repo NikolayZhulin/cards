@@ -10,9 +10,9 @@ import {
   SetNewPassword,
 } from '../../../features/auth'
 import { Profile } from '../../../features/profile'
-import { EmptyPack } from '../../../features/tables/EmptyPack'
-import { FullPack } from '../../../features/tables/FullPack'
-import { PacksList } from '../../../features/tables/PacksList'
+import { EmptyPack } from '../../../features/tables/table/EmptyPack'
+import { FullPack } from '../../../features/tables/table/FullPack'
+import { PacksList } from '../../../features/tables/table/PacksList'
 import { PATH } from '../../path/path'
 import { Error404 } from '../error404/Error404'
 import { PrivateRoutes } from '../private-routes/PrivateRoutes'
