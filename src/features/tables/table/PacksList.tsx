@@ -6,6 +6,7 @@ import Input from 'antd/es/input/Input'
 import type { ColumnsType } from 'antd/es/table'
 import { NavLink, useSearchParams } from 'react-router-dom'
 
+import { PaginationFC } from '../../../common/components/pagination/PaginationFC'
 import { useAppSelector } from '../../../common/hooks/hooks'
 import { FormTitle } from '../../../common/style'
 import { UpdateButtons } from '../components/UpdateButtons'
@@ -83,18 +84,11 @@ const columns: ColumnsType<DataType> = [
     // ),
   },
 ]
-
 const initialRows: DataType[] = []
-
-// {
-//   email: "nya-admin@nya.nya"
-//   password: "1qazxcvBG"
-//   rememberMe: false }
 
 export const setLeadingZero = (num: number) => {
   return num < 10 ? `0${num}` : num
 }
-
 export const formatDate = (str: string) => {
   let date = new Date(str)
 
@@ -114,54 +108,33 @@ type ParamType =
   | 'block'
 
 export const PacksList = () => {
-  const [params, setParams] = useState<FetchCardsPacksRequestType>({
-    packName: '',
-    min: null,
-    max: null,
-    sortPacks: '0created',
-    page: 1,
-    pageCount: 10,
-    user_id: '',
-    block: false,
-  })
   const userId = useAppSelector(state => state.auth.userId)
   const [rows, setRows] = useState(initialRows)
   // const { data } = useFetchCardsPackQuery(params)
   const [addPack, {}] = useAddPackMutation()
   const [updatePack, {}] = useUpdatePackMutation()
   const [deletePack, {}] = useDeletePackMutation()
-  const [trigger, response] = useLazyFetchCardsPackQuery()
+  const [trigger, result] = useLazyFetchCardsPackQuery()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const search = Object.fromEntries(searchParams)
 
-  useEffect(() => {
-    const requestParams = {
-      user_id: search?.user_id === 'false' ? '' : search.user_id,
-      min: +search.min,
-      max: +search.max,
-    }
-
-    trigger({ ...params, ...requestParams })
-  }, [params, searchParams])
-
-  // useEffect(() => {
-  //   const search = Object.fromEntries(searchParams)
-  //
-  //   console.log(search)
-  //   const newParams: any = {}
-  //
-  //   for (let key in params) {
-  //     if (params[key as ParamType]) {
-  //       newParams[key] = params[key as ParamType]
-  //     }
-  //   }
-  //   setSearchParams(newParams)
-  // }, [params])
+  const onChangePaginationHandler = (newPage: number, newPageCount: number) => {
+    trigger({ ...searchParams, page: newPage, pageCount: newPageCount })
+    setSearchParams({
+      ...searchParams,
+      page: newPage.toString(),
+      pageCount: newPageCount.toString(),
+    })
+  }
 
   useEffect(() => {
-    if (response && response.data) {
-      const { cardPacks } = response.data
+    trigger(search)
+  }, [])
+
+  useEffect(() => {
+    if (result && result.data) {
+      const { cardPacks } = result.data
       let rows: DataType[] = []
 
       cardPacks.forEach(p => {
@@ -187,27 +160,25 @@ export const PacksList = () => {
       })
       setRows(rows)
     }
-  }, [response])
+  }, [result])
 
   const addNewPack = () => {
     addPack({})
   }
 
   const getMyPacks = () => {
-    setSearchParams(prevState => {
-      console.log(prevState)
-
-      return { ...prevState, user_id: userId }
-    })
+    trigger({ ...searchParams, user_id: userId?.toString() })
+    setSearchParams({ ...searchParams, user_id: userId?.toString() })
   }
   const getAllPacks = () => {
-    setSearchParams(prevState => ({ ...prevState, user_id: 'false' }))
+    trigger({ ...searchParams, user_id: 'false' })
+    setSearchParams({ ...searchParams, user_id: 'false' })
   }
 
   const setCardsCount = (min: number, max: number) => {
     setSearchParams(prevState => ({ ...prevState, min, max }))
   }
-  const maxCardsCount = response?.data ? response?.data.maxCardsCount : 78
+  const maxCardsCount = result?.data ? result?.data.maxCardsCount : 78
 
   return (
     <TablePageStyle>
@@ -248,6 +219,12 @@ export const PacksList = () => {
       </MiddleSection>
       <Table columns={columns} dataSource={rows} pagination={false} />
       {/*<StyledPagination defaultCurrent={1} total={data && data.cardPacksTotalCount} />*/}
+      <PaginationFC
+        current={result.data?.page || 1}
+        pageSize={result.data?.pageCount || 4}
+        total={result.data?.cardPacksTotalCount || 100}
+        onChange={onChangePaginationHandler}
+      />
     </TablePageStyle>
   )
 }

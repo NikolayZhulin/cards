@@ -134,14 +134,14 @@ export const {
 } = tablesApi
 
 export type FetchCardsPacksRequestType = {
-  packName: string
-  min: number | null
-  max: number | null
-  sortPacks: string
-  page: number
-  pageCount: number
-  user_id: string | null
-  block: boolean
+  packName?: string
+  min?: number | null
+  max?: number | null
+  sortPacks?: string
+  page?: number
+  pageCount?: number
+  user_id?: string | null
+  block?: boolean
 }
 
 export type FetchCardsRequestType = {
