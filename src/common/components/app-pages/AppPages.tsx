@@ -9,8 +9,11 @@ import {
   Registration,
   SetNewPassword,
 } from '../../../features/auth'
-import { PaginationCards } from '../../../features/packs/PaginationCards'
+import { PaginationPacks } from '../../../features/packs/PaginationPacks'
 import { Profile } from '../../../features/profile'
+import { EmptyPack } from '../../../features/tables/table/EmptyPack'
+import { FullPack } from '../../../features/tables/table/FullPack'
+import { PacksList } from '../../../features/tables/table/PacksList'
 import { PATH } from '../../path/path'
 import { Error404 } from '../error404/Error404'
 import { PrivateRoutes } from '../private-routes/PrivateRoutes'
@@ -27,7 +30,10 @@ const AppPages = () => {
       <Route path={PATH.FORGOT_PASSWORD} element={<ForgotPassword />} />
       <Route path={PATH.CHECK_EMAIL} element={<CheckEmail />} />
       <Route path={PATH.SET_NEW_PASSWORD} element={<SetNewPassword />} />
-      <Route path={'/pagination'} element={<PaginationCards />} />
+      <Route path={'/pagination'} element={<PaginationPacks />} />
+      <Route path={PATH.PACKS_LIST} element={<PacksList />} />
+      <Route path={PATH.FULL_PACK} element={<FullPack />} />
+      <Route path={PATH.EMPTY_PACK} element={<EmptyPack />} />
       <Route path={'*'} element={<Error404 />} />
     </Routes>
   )

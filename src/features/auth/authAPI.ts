@@ -5,6 +5,7 @@ import { letter } from '../../common/utils'
 export const authAPI = createApi({
   reducerPath: 'registration/api',
   baseQuery: fetchBaseQuery({
+    // baseUrl: 'https://neko-back.herokuapp.com/2.0',
     baseUrl: 'http://localhost:7542/2.0/',
     credentials: 'include',
   }),

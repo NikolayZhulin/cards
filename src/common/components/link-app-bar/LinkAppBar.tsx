@@ -26,6 +26,15 @@ export const LinkAppBar = () => {
       <NavLink to={PATH.CHECK_EMAIL} style={{ margin: '5px' }}>
         /check-email
       </NavLink>
+      <NavLink to={PATH.PACKS_LIST} style={{ margin: '5px' }}>
+        /packs-list
+      </NavLink>
+      <NavLink to={PATH.FULL_PACK} style={{ margin: '5px' }}>
+        /full-pack
+      </NavLink>
+      <NavLink to={PATH.EMPTY_PACK} style={{ margin: '5px' }}>
+        /empty-pack
+      </NavLink>
       <NavLink to={'/pagination'} style={{ margin: '5px' }}>
         /pagination
       </NavLink>
