@@ -1,7 +1,9 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
+import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
 import thunkMiddleware from 'redux-thunk'
 
 import { authAPI, authReducer } from '../features/auth'
+import { paginationApi } from '../features/packs/pagination-api'
+import { paginationReducer } from '../features/packs/pagination-reducer'
 import { packsReducer } from '../features/packs'
 import { packsAPI } from '../features/packs/packs-api'
 import { profileReducer } from '../features/profile'
@@ -14,15 +16,17 @@ export const store = configureStore({
     app: appReducer,
     auth: authReducer,
     profile: profileReducer,
-    packs: packsReducer,
+    pagination: paginationReducer,
     [authAPI.reducerPath]: authAPI.reducer,
     [packsAPI.reducerPath]: packsAPI.reducer,
     [tablesApi.reducerPath]: tablesApi.reducer,
+    [paginationApi.reducerPath]: paginationApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware()
       .prepend(thunkMiddleware)
       .prepend(authAPI.middleware)
+      .prepend(paginationApi.middleware),
       .prepend(tablesApi.middleware)
       .prepend(packsAPI.middleware),
 })
