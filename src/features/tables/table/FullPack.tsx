@@ -50,6 +50,7 @@ const columns: ColumnsType<DataType> = [
     dataIndex: 'question',
     key: 'question',
     fixed: 'left',
+    ellipsis: true,
   },
   {
     title: 'Answer',
