@@ -9,7 +9,7 @@ import {
   Registration,
   SetNewPassword,
 } from '../../../features/auth'
-import { PaginationPacks } from '../../../features/packs/PaginationPacks'
+import { PaginationCards } from '../../../features/packs/PaginationCards'
 import { Profile } from '../../../features/profile'
 import { PATH } from '../../path/path'
 import { Error404 } from '../error404/Error404'
@@ -27,7 +27,7 @@ const AppPages = () => {
       <Route path={PATH.FORGOT_PASSWORD} element={<ForgotPassword />} />
       <Route path={PATH.CHECK_EMAIL} element={<CheckEmail />} />
       <Route path={PATH.SET_NEW_PASSWORD} element={<SetNewPassword />} />
-      <Route path={'/pagination'} element={<PaginationPacks />} />
+      <Route path={'/pagination'} element={<PaginationCards />} />
       <Route path={'*'} element={<Error404 />} />
     </Routes>
   )

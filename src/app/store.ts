@@ -3,7 +3,6 @@ import thunkMiddleware from 'redux-thunk'
 
 import { authAPI, authReducer } from '../features/auth'
 import { paginationApi } from '../features/packs/pagination-api'
-import { paginationReducer } from '../features/packs/pagination-reducer'
 import { profileReducer } from '../features/profile'
 
 import { appReducer } from './app-reducer'
@@ -13,7 +12,6 @@ export const store = configureStore({
     app: appReducer,
     auth: authReducer,
     profile: profileReducer,
-    pagination: paginationReducer,
     [authAPI.reducerPath]: authAPI.reducer,
     [paginationApi.reducerPath]: paginationApi.reducer,
   },
