@@ -4,11 +4,12 @@ import ArrowLeftOutlined from '@ant-design/icons/lib/icons/ArrowLeftOutlined'
 import { Table } from 'antd'
 import Input from 'antd/es/input/Input'
 import { ColumnsType } from 'antd/es/table'
-import { useParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 import emptyStar from '../../../assets/pictures/emptyStar.png'
 import fullStar from '../../../assets/pictures/fullStar.png'
 import halfStar from '../../../assets/pictures/halfStar.png'
+import { PaginationFC } from '../../../common/components/pagination/PaginationFC'
 import { useAppSelector } from '../../../common/hooks/hooks'
 import { PATH } from '../../../common/path/path'
 import { FormTitle } from '../../../common/style'
@@ -25,10 +26,9 @@ import {
   WideSearchBlock,
 } from '../styles/style'
 import {
-  FetchCardsRequestType,
   useAddCardMutation,
   useDeleteCardMutation,
-  useFetchCardsQuery,
+  useLazyFetchCardsQuery,
   useUpdateCardMutation,
 } from '../tablesApi'
 
@@ -99,28 +99,29 @@ const columns: ColumnsType<DataType> = [
 const initialRows: DataType[] = []
 
 export const FullPack = () => {
-  const param = useParams()
-  const params: FetchCardsRequestType = {
-    cardAnswer: '',
-    cardQuestion: '',
-    cardsPack_id: param.id ? param.id : '',
-    min: 0,
-    max: 10,
-    sortCards: '0updated',
-    page: 1,
-    pageCount: 10,
-  }
-
   const userID = useAppSelector(state => state.auth.userId)
   const [rows, setRows] = useState(initialRows)
-  const { data } = useFetchCardsQuery(params)
   const [addCard, {}] = useAddCardMutation()
   const [updateCard, {}] = useUpdateCardMutation()
   const [deleteCard, {}] = useDeleteCardMutation()
 
+  const [trigger, result] = useLazyFetchCardsQuery()
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const search = Object.fromEntries(searchParams)
+
+  const onChangePaginationHandler = (newPage: number, newPageCount: number) => {
+    // trigger({ ...search, page: newPage, pageCount: newPageCount })
+    setSearchParams({ ...search, page: newPage.toString(), pageCount: newPageCount.toString() })
+  }
+
   useEffect(() => {
-    if (data) {
-      const { cards } = data
+    trigger(search)
+  }, [searchParams])
+
+  useEffect(() => {
+    if (result.data) {
+      const { cards } = result.data
 
       let rows: DataType[] = []
 
@@ -146,7 +147,7 @@ export const FullPack = () => {
       })
       setRows(rows)
     }
-  }, [data])
+  }, [result.data])
 
   return (
     <TablePageStyle>
@@ -158,7 +159,7 @@ export const FullPack = () => {
       </LinkBackWrapper>
       <TopSection>
         <FormTitle>{` Pack`}</FormTitle>
-        <AddNewItemButton type="primary" onClick={() => addCard(param.id)}>
+        <AddNewItemButton type="primary" onClick={() => addCard(search.cardsPack_id)}>
           Add new pack
         </AddNewItemButton>
       </TopSection>
@@ -169,7 +170,12 @@ export const FullPack = () => {
         </WideSearchBlock>
       </MiddleSection>
       <Table columns={columns} dataSource={rows} pagination={false} />
-      {/*<StyledPagination defaultCurrent={1} total={data && data.cardPacksTotalCount} />*/}
+      <PaginationFC
+        current={result.data?.page || 1}
+        pageSize={result.data?.pageCount || 4}
+        total={result.data?.cardsTotalCount || 100}
+        onChange={onChangePaginationHandler}
+      />
     </TablePageStyle>
   )
 }

@@ -141,7 +141,7 @@ export const PacksList = () => {
 
         rows.push({
           key: p._id,
-          name: <NavLink to={'/full-pack/' + p._id}>{p.name}</NavLink>,
+          name: <NavLink to={'/full-pack?cardsPack_id=' + p._id}>{p.name}</NavLink>,
           cards: p.cardsCount,
           updated: formatDate(p.updated),
           created: formatDate(p.created),
