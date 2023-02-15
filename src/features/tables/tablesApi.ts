@@ -131,6 +131,7 @@ export const {
   useDeleteCardMutation,
   useUpdateCardMutation,
   useLazyFetchCardsPackQuery,
+  useLazyFetchCardsQuery,
 } = tablesApi
 
 export type FetchCardsPacksRequestType = {
@@ -145,14 +146,14 @@ export type FetchCardsPacksRequestType = {
 }
 
 export type FetchCardsRequestType = {
-  cardAnswer: string
-  cardQuestion: string
-  cardsPack_id: string
-  min: number
-  max: number
-  sortCards: string
-  page: number
-  pageCount: number
+  cardAnswer?: string
+  cardQuestion?: string
+  cardsPack_id?: string //?
+  min?: number
+  max?: number
+  sortCards?: string
+  page?: number
+  pageCount?: number
 }
 
 export type FetchCardsPacksResponseType = {

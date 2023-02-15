@@ -18,7 +18,7 @@ export const PaginationFC = ({ current, pageSize, total, onChange }: PropsType) 
         total={total}
         current={current}
         pageSize={pageSize}
-        pageSizeOptions={[10, 20, 30, 40, 50]}
+        pageSizeOptions={[4, 10, 20, 30, 40, 50]}
       />
     </div>
   )
