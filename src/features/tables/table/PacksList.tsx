@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, { ChangeEvent, ReactElement, useEffect, useState } from 'react'
 
 import { FolderOpenTwoTone } from '@ant-design/icons'
 import { Radio, Table } from 'antd'
@@ -27,7 +27,6 @@ import {
   TopSection,
 } from '../styles/style'
 import {
-  FetchCardsPacksRequestType,
   useAddPackMutation,
   useDeletePackMutation,
   useLazyFetchCardsPackQuery,
@@ -127,6 +126,21 @@ export const PacksList = () => {
     setSearchParams({ ...search, page: newPage.toString(), pageCount: newPageCount.toString() })
   }
 
+  const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value
+
+    if (value === '') {
+      const newSearch = { ...search }
+
+      newSearch.packName && delete newSearch.packName
+      trigger(newSearch)
+      setSearchParams(newSearch)
+    } else {
+      trigger({ ...search, packName: value })
+      setSearchParams({ ...search, packName: value })
+    }
+  }
+
   useEffect(() => {
     trigger(search)
   }, [])
@@ -198,7 +212,7 @@ export const PacksList = () => {
       <MiddleSection>
         <SearchBlock>
           <Title>Search</Title>
-          <Input />
+          <Input onChange={onChangeInputHandler} />
         </SearchBlock>
         <ToggleAuthorsBlock>
           <Title>Show packs cards</Title>

@@ -34,7 +34,6 @@ export const EditableSpan = memo(({ value, onChange, isSuccess }: EditableSpanPr
     }
   }
   const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(1111)
     setTitle(e.currentTarget.value)
   }
 
