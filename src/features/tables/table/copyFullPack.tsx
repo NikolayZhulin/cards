@@ -32,7 +32,7 @@ import {
   useUpdateCardMutation,
 } from '../tablesApi'
 
-import { formatDate } from './PacksList'
+import { formatDate } from './copyPacksList'
 
 type DataType = {
   key: React.Key

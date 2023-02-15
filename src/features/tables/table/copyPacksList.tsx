@@ -1,9 +1,10 @@
 import React, { ChangeEvent, ReactElement, useEffect, useState } from 'react'
 
 import { FolderOpenTwoTone } from '@ant-design/icons'
-import { Radio, Table } from 'antd'
+import { Radio, Table, TablePaginationConfig, TableProps } from 'antd'
 import Input from 'antd/es/input/Input'
 import type { ColumnsType } from 'antd/es/table'
+import { FilterValue, SorterResult } from 'antd/es/table/interface'
 import { NavLink, useSearchParams } from 'react-router-dom'
 
 import { InitialPreloader } from '../../../common/components'
@@ -50,6 +51,7 @@ const columns: ColumnsType<DataType> = [
     key: 'name',
     fixed: 'left',
     ellipsis: true,
+    sorter: true,
   },
   {
     title: 'Cards',
@@ -139,6 +141,29 @@ export const PacksList = () => {
       trigger({ ...search, packName: value })
       setSearchParams({ ...search, packName: value })
     }
+  }
+
+  const onChangeTableHandler: TableProps<DataType>['onChange'] = (
+    pagination,
+    filters,
+    sorter,
+    extra
+  ) => {
+    // @ts-ignore
+    // console.log(sorter.order, sorter.field)
+    // @ts-ignore
+    const order = sorter.order
+    // @ts-ignore
+    const field = sorter.field
+
+    if (order === 'ascend') {
+    }
+    if (order === 'descend') {
+    }
+    if (order === undefined) {
+    }
+    trigger({ ...search, sortPacks: search.sortPacks === '0name' ? '1name' : '0name' })
+    setSearchParams({ ...search, sortPacks: search.sortPacks === '0name' ? '1name' : '0name' })
   }
 
   useEffect(() => {
@@ -238,7 +263,12 @@ export const PacksList = () => {
           </SliderWrapper>
         </SliderBlock>
       </MiddleSection>
-      <Table columns={columns} dataSource={rows} pagination={false} />
+      <Table
+        columns={columns}
+        dataSource={rows}
+        pagination={false}
+        onChange={onChangeTableHandler}
+      />
       <PaginationFC
         current={result.data?.page || 1}
         pageSize={result.data?.pageCount || 4}
