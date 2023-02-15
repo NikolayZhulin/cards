@@ -35,9 +35,6 @@ export const LinkAppBar = () => {
       <NavLink to={PATH.EMPTY_PACK} style={{ margin: '5px' }}>
         /empty-pack
       </NavLink>
-      <NavLink to={'/pagination'} style={{ margin: '5px' }}>
-        /pagination
-      </NavLink>
     </LinkBar>
   )
 }

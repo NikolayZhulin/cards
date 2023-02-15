@@ -6,8 +6,11 @@ import Input from 'antd/es/input/Input'
 import type { ColumnsType } from 'antd/es/table'
 import { NavLink, useSearchParams } from 'react-router-dom'
 
+import { InitialPreloader } from '../../../common/components'
+import { PaginationFC } from '../../../common/components/pagination/PaginationFC'
 import { useAppSelector } from '../../../common/hooks/hooks'
 import { FormTitle } from '../../../common/style'
+import { Login } from '../../auth'
 import { UpdateButtons } from '../components/UpdateButtons'
 import {
   AddNewItemButton,
@@ -132,32 +135,18 @@ export const PacksList = () => {
   const [deletePack, {}] = useDeletePackMutation()
   const [trigger, response] = useLazyFetchCardsPackQuery()
   const [searchParams, setSearchParams] = useSearchParams()
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
   const search = Object.fromEntries(searchParams)
 
+  const onChangePaginationHandler = (newPage: number, newPageCount: number) => {
+    trigger({ ...search, page: newPage, pageCount: newPageCount })
+    setSearchParams({ ...search, page: newPage.toString(), pageCount: newPageCount.toString() })
+  }
+
   useEffect(() => {
-    const requestParams = {
-      user_id: search?.user_id === 'false' ? '' : search.user_id,
-      min: +search.min,
-      max: +search.max,
-    }
-
-    trigger({ ...params, ...requestParams })
-  }, [params, searchParams])
-
-  // useEffect(() => {
-  //   const search = Object.fromEntries(searchParams)
-  //
-  //   console.log(search)
-  //   const newParams: any = {}
-  //
-  //   for (let key in params) {
-  //     if (params[key as ParamType]) {
-  //       newParams[key] = params[key as ParamType]
-  //     }
-  //   }
-  //   setSearchParams(newParams)
-  // }, [params])
+    trigger(search)
+  }, [])
 
   useEffect(() => {
     if (response && response.data) {
@@ -197,11 +186,30 @@ export const PacksList = () => {
     setSearchParams(prevState => ({ ...prevState, ...search, user_id: userId }))
   }
   const getAllPacks = () => {
+    const newSearch = { ...search }
+
+    newSearch.user_id && delete newSearch.user_id
+    trigger(newSearch)
+    setSearchParams(newSearch)
+  }
+  const getAllPacks = () => {
     setSearchParams(prevState => ({ ...prevState, ...search, user_id: 'false' }))
   }
+
   const setCardsCount = (min: number, max: number) => {
     setSearchParams(prevState => ({ ...prevState, ...search, min, max }))
   }
+
+  const setCardsCount = (min: number, max: number) => {
+    trigger({ ...search, min, max })
+    setSearchParams({ ...search, min: min.toString(), max: max.toString() })
+  }
+
+  const maxCardsCount = result?.data ? result?.data.maxCardsCount : 78
+
+  if (!isLoggedIn) return <Login />
+  if (result.isLoading) return <InitialPreloader />
+
 
   const maxCardsCount = response?.data ? response?.data.maxCardsCount : 78
 
@@ -233,7 +241,7 @@ export const PacksList = () => {
               range={{ draggableTrack: true }}
               defaultValue={[+search.min || 0, +search.max || maxCardsCount]}
               min={0}
-              max={maxCardsCount}
+              max={+search.max || maxCardsCount}
               onAfterChange={(value: [number, number]) => {
                 setCardsCount(value[0], value[1])
               }}
@@ -243,7 +251,12 @@ export const PacksList = () => {
         </SliderBlock>
       </MiddleSection>
       <Table columns={columns} dataSource={rows} pagination={false} />
-      {/*<StyledPagination defaultCurrent={1} total={data && data.cardPacksTotalCount} />*/}
+      <PaginationFC
+        current={result.data?.page || 1}
+        pageSize={result.data?.pageCount || 4}
+        total={result.data?.cardPacksTotalCount || 100}
+        onChange={onChangePaginationHandler}
+      />
     </TablePageStyle>
   )
 }
