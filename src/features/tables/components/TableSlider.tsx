@@ -7,14 +7,12 @@ import { SliderInput, SliderWrapper, StyledSlider } from '../styles/style'
 type TableSliderPropsType = {
   maxCardsCount: number
   minCardsCount: number
-  setCardsCountParams: (min: number, max: number) => void
   minParam: number
   maxParam: number
 }
 
 const TableSlider = ({
   maxCardsCount,
-  setCardsCountParams,
   minCardsCount,
   minParam,
   maxParam,

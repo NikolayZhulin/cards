@@ -148,7 +148,7 @@ export type FetchCardsPacksRequestType = {
 export type FetchCardsRequestType = {
   cardAnswer?: string
   cardQuestion?: string
-  cardsPack_id?: string //?
+  cardsPack_id?: string
   min?: number
   max?: number
   sortCards?: string
