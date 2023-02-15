@@ -1,9 +1,8 @@
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import ArrowLeftOutlined from '@ant-design/icons/lib/icons/ArrowLeftOutlined'
 import { Table } from 'antd'
 import Input from 'antd/es/input/Input'
-import { ColumnsType } from 'antd/es/table'
 import { useParams } from 'react-router-dom'
 
 import emptyStar from '../../../assets/pictures/emptyStar.png'
@@ -12,6 +11,7 @@ import halfStar from '../../../assets/pictures/halfStar.png'
 import { useAppSelector } from '../../../common/hooks/hooks'
 import { PATH } from '../../../common/path/path'
 import { FormTitle } from '../../../common/style'
+import { formatDate } from '../../../common/utils/SetFormatDate'
 import { UpdateButtons } from '../components/UpdateButtons'
 import {
   AddNewItemButton,
@@ -31,71 +31,7 @@ import {
   useFetchCardsQuery,
   useUpdateCardMutation,
 } from '../tablesApi'
-
-import { formatDate } from './PacksList'
-
-type DataType = {
-  key: React.Key
-  question: string
-  answer: string
-  updated: string
-  grade: number
-  actions?: ReactElement
-}
-
-const columns: ColumnsType<DataType> = [
-  {
-    title: 'Question',
-    width: 318,
-    dataIndex: 'question',
-    key: 'question',
-    fixed: 'left',
-  },
-  {
-    title: 'Answer',
-    width: 140,
-    dataIndex: 'answer',
-    key: 'answer',
-    fixed: 'left',
-  },
-  {
-    title: 'Last Updated',
-    dataIndex: 'updated',
-    key: 'updated',
-    width: 200,
-  },
-  {
-    title: 'Created by',
-    dataIndex: 'updated',
-    key: 'updated',
-    width: 200,
-  },
-  {
-    title: 'Grade',
-    dataIndex: 'grade',
-    key: 'grade',
-    fixed: 'right',
-    width: 150,
-    render: () => (
-      <>
-        <StyledIcon src={fullStar} alt={'full star'} />
-        <StyledIcon src={fullStar} alt={'full star'} />
-        <StyledIcon src={fullStar} alt={'full star'} />
-        <StyledIcon src={halfStar} alt={'half star'} />
-        <StyledIcon src={emptyStar} alt={'empty star'} />
-      </>
-    ),
-  },
-  {
-    title: '',
-    dataIndex: 'actions',
-    key: 'actions',
-    fixed: 'right',
-    width: 150,
-  },
-]
-
-const initialRows: DataType[] = []
+import { columnsForPack, PackDataType } from '../utils/dataForTables'
 
 export const FullPack = () => {
   const param = useParams()
@@ -111,7 +47,7 @@ export const FullPack = () => {
   }
 
   const userID = useAppSelector(state => state.auth.userId)
-  const [rows, setRows] = useState(initialRows)
+  const [rows, setRows] = useState<PackDataType[]>()
   const { data } = useFetchCardsQuery(params)
   const [addCard, {}] = useAddCardMutation()
   const [updateCard, {}] = useUpdateCardMutation()
@@ -121,7 +57,7 @@ export const FullPack = () => {
     if (data) {
       const { cards } = data
 
-      let rows: DataType[] = []
+      let rows: PackDataType[] = []
 
       cards.forEach(c => {
         const isMyPack = c.user_id === userID
@@ -132,6 +68,15 @@ export const FullPack = () => {
           answer: c.answer,
           updated: formatDate(c.updated),
           grade: c.grade,
+          render: () => (
+            <div>
+              <StyledIcon src={fullStar} alt={'full star'} />
+              <StyledIcon src={fullStar} alt={'full star'} />
+              <StyledIcon src={fullStar} alt={'full star'} />
+              <StyledIcon src={halfStar} alt={'half star'} />
+              <StyledIcon src={emptyStar} alt={'empty star'} />
+            </div>
+          ),
           actions: (
             <div style={{ display: 'flex', justifyContent: 'space-around' }}>
               <UpdateButtons
@@ -167,8 +112,7 @@ export const FullPack = () => {
           <Input />
         </WideSearchBlock>
       </MiddleSection>
-      <Table columns={columns} dataSource={rows} pagination={false} />
-      {/*<StyledPagination defaultCurrent={1} total={data && data.cardPacksTotalCount} />*/}
+      <Table columns={columnsForPack} dataSource={rows} pagination={false} />
     </TablePageStyle>
   )
 }

@@ -26,8 +26,9 @@ const slice = createSlice({
       .addMatcher(authAPI.endpoints.forgotPassword.matchFulfilled, (state, { payload }) => {
         state.isRecoveryLetterSent = true
       })
-      .addMatcher(authAPI.endpoints.login.matchFulfilled, state => {
+      .addMatcher(authAPI.endpoints.login.matchFulfilled, (state, { payload }) => {
         state.isLoggedIn = true
+        state.userId = payload._id
       })
       .addMatcher(authAPI.endpoints.logOut.matchFulfilled, state => {
         state.isLoggedIn = false

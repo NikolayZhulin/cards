@@ -10,7 +10,9 @@ import { InitialPreloader } from '../../../common/components'
 import { PaginationFC } from '../../../common/components/pagination/PaginationFC'
 import { useAppSelector } from '../../../common/hooks/hooks'
 import { FormTitle } from '../../../common/style'
+import { formatDate } from '../../../common/utils/SetFormatDate'
 import { Login } from '../../auth'
+import TableSlider from '../components/TableSlider'
 import { UpdateButtons } from '../components/UpdateButtons'
 import {
   AddNewItemButton,
@@ -33,125 +35,29 @@ import {
   useLazyFetchCardsPackQuery,
   useUpdatePackMutation,
 } from '../tablesApi'
-
-type DataType = {
-  key: React.Key
-  name: ReactElement<any, any>
-  cards: number
-  updated: string
-  created: string
-  actions: ReactElement<any, any>
-}
-
-const columns: ColumnsType<DataType> = [
-  {
-    title: 'Name',
-    width: 318,
-    dataIndex: 'name',
-    key: 'name',
-    fixed: 'left',
-    ellipsis: true,
-  },
-  {
-    title: 'Cards',
-    width: 140,
-    dataIndex: 'cards',
-    key: 'cards',
-    fixed: 'left',
-  },
-  {
-    title: 'Last Updated',
-    dataIndex: 'updated',
-    key: 'updated',
-    width: 200,
-  },
-  {
-    title: 'Created by',
-    dataIndex: 'updated',
-    key: 'updated',
-    width: 200,
-  },
-  {
-    title: 'Action',
-    dataIndex: 'actions',
-    key: 'actions',
-    fixed: 'right',
-    width: 150,
-    // render: () => (
-    //   <>
-    //     <StyledIcon onClick={() => console.log('learn icon')} src={learnIcon} alt={'learn icon'} />
-    //     <StyledIcon src={editIcon} alt={'edit icon'} />
-    //     <StyledIcon src={deleteIcon} alt={'delete icon'} />
-    //   </>
-    // ),
-  },
-]
-
-const initialRows: DataType[] = []
-
-// {
-//   email: "nya-admin@nya.nya"
-//   password: "1qazxcvBG"
-//   rememberMe: false }
-
-export const setLeadingZero = (num: number) => {
-  return num < 10 ? `0${num}` : num
-}
-
-export const formatDate = (str: string) => {
-  let date = new Date(str)
-
-  return `${setLeadingZero(date.getUTCDate())}.${setLeadingZero(
-    date.getUTCMonth() + 1
-  )}.${setLeadingZero(date.getUTCFullYear())}`
-}
-
-type ParamType =
-  | 'packName'
-  | 'min'
-  | 'max'
-  | 'sortPacks'
-  | 'page'
-  | 'pageCount'
-  | 'user_id'
-  | 'block'
+import { columns, PackListDataType } from '../utils/dataForTables'
 
 export const PacksList = () => {
-  const [params, setParams] = useState<FetchCardsPacksRequestType>({
-    packName: '',
-    min: null,
-    max: null,
-    sortPacks: '0created',
-    page: 1,
-    pageCount: 10,
-    user_id: '',
-    block: false,
-  })
   const userId = useAppSelector(state => state.auth.userId)
-  const [rows, setRows] = useState(initialRows)
-  // const { data } = useFetchCardsPackQuery(params)
+  const [rows, setRows] = useState<PackListDataType[]>()
   const [addPack, {}] = useAddPackMutation()
   const [updatePack, {}] = useUpdatePackMutation()
   const [deletePack, {}] = useDeletePackMutation()
   const [trigger, response] = useLazyFetchCardsPackQuery()
   const [searchParams, setSearchParams] = useSearchParams()
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
   const search = Object.fromEntries(searchParams)
-
-  const onChangePaginationHandler = (newPage: number, newPageCount: number) => {
-    trigger({ ...search, page: newPage, pageCount: newPageCount })
-    setSearchParams({ ...search, page: newPage.toString(), pageCount: newPageCount.toString() })
-  }
+  const maxCardsCount = response?.data ? response?.data.maxCardsCount : 0
+  const minCardsCount = response?.data ? response?.data.minCardsCount : 0
 
   useEffect(() => {
-    trigger(search)
-  }, [])
+    trigger({ ...search })
+  }, [searchParams])
 
   useEffect(() => {
     if (response && response.data) {
       const { cardPacks } = response.data
-      let rows: DataType[] = []
+      let rows: PackListDataType[] = []
 
       cardPacks.forEach(p => {
         const isMyPack = userId === p.user_id
@@ -181,37 +87,33 @@ export const PacksList = () => {
   const addNewPack = () => {
     addPack({})
   }
-
+  const onChangePaginationHandler = (newPage: number, newPageCount: number) => {
+    setSearchParams({ ...search, page: newPage.toString(), pageCount: newPageCount.toString() })
+  }
   const getMyPacks = () => {
-    setSearchParams(prevState => ({ ...prevState, ...search, user_id: userId }))
+    const newSearch = { ...search }
+
+    newSearch.min && delete newSearch.min
+    newSearch.max && delete newSearch.max
+    setSearchParams(prevState => ({ ...prevState, ...newSearch, user_id: userId }))
   }
   const getAllPacks = () => {
     const newSearch = { ...search }
 
     newSearch.user_id && delete newSearch.user_id
-    trigger(newSearch)
-    setSearchParams(newSearch)
+    newSearch.min && delete newSearch.min
+    newSearch.max && delete newSearch.max
+    setSearchParams(prevState => ({ ...prevState, ...newSearch }))
   }
-  const getAllPacks = () => {
-    setSearchParams(prevState => ({ ...prevState, ...search, user_id: 'false' }))
-  }
-
   const setCardsCount = (min: number, max: number) => {
     setSearchParams(prevState => ({ ...prevState, ...search, min, max }))
   }
 
-  const setCardsCount = (min: number, max: number) => {
-    trigger({ ...search, min, max })
-    setSearchParams({ ...search, min: min.toString(), max: max.toString() })
+  const setCardsCountFromInput = (min: number, max: number) => {
+    setCardsCount(min, max)
   }
 
-  const maxCardsCount = result?.data ? result?.data.maxCardsCount : 78
-
-  if (!isLoggedIn) return <Login />
-  if (result.isLoading) return <InitialPreloader />
-
-
-  const maxCardsCount = response?.data ? response?.data.maxCardsCount : 78
+  if (response.isLoading) return <InitialPreloader />
 
   return (
     <TablePageStyle>
@@ -235,26 +137,20 @@ export const PacksList = () => {
         </ToggleAuthorsBlock>
         <SliderBlock>
           <Title>Numbers of cards</Title>
-          <SliderWrapper>
-            <SliderInput min={0} max={maxCardsCount - 1} value={search.min || 0} />
-            <StyledSlider
-              range={{ draggableTrack: true }}
-              defaultValue={[+search.min || 0, +search.max || maxCardsCount]}
-              min={0}
-              max={+search.max || maxCardsCount}
-              onAfterChange={(value: [number, number]) => {
-                setCardsCount(value[0], value[1])
-              }}
-            />
-            <SliderInput min={1} max={maxCardsCount} value={search.max || maxCardsCount} />
-          </SliderWrapper>
+          <TableSlider
+            maxCardsCount={maxCardsCount}
+            minCardsCount={minCardsCount}
+            setCardsCountParams={setCardsCount}
+            minParam={+search.min}
+            maxParam={+search.max}
+          />
         </SliderBlock>
       </MiddleSection>
       <Table columns={columns} dataSource={rows} pagination={false} />
       <PaginationFC
-        current={result.data?.page || 1}
-        pageSize={result.data?.pageCount || 4}
-        total={result.data?.cardPacksTotalCount || 100}
+        current={response.data?.page || 1}
+        pageSize={response.data?.pageCount || 4}
+        total={response.data?.cardPacksTotalCount || 100}
         onChange={onChangePaginationHandler}
       />
     </TablePageStyle>
