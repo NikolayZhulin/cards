@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react'
 
 import ArrowLeftOutlined from '@ant-design/icons/lib/icons/ArrowLeftOutlined'
-import { Table } from 'antd'
+import { Table, TableProps } from 'antd'
 import Input from 'antd/es/input/Input'
 import { ColumnsType } from 'antd/es/table'
 import { useSearchParams } from 'react-router-dom'
@@ -51,6 +51,7 @@ const columns: ColumnsType<DataType> = [
     key: 'question',
     fixed: 'left',
     ellipsis: true,
+    sorter: true,
   },
   {
     title: 'Answer',
@@ -58,18 +59,21 @@ const columns: ColumnsType<DataType> = [
     dataIndex: 'answer',
     key: 'answer',
     fixed: 'left',
+    sorter: true,
   },
   {
     title: 'Last Updated',
     dataIndex: 'updated',
     key: 'updated',
     width: 200,
+    sorter: true,
   },
   {
     title: 'Created by',
-    dataIndex: 'updated',
-    key: 'updated',
+    dataIndex: 'created',
+    key: 'created',
     width: 200,
+    sorter: true,
   },
   {
     title: 'Grade',
@@ -77,6 +81,7 @@ const columns: ColumnsType<DataType> = [
     key: 'grade',
     fixed: 'right',
     width: 150,
+    sorter: true,
     render: () => (
       <>
         <StyledIcon src={fullStar} alt={'full star'} />
@@ -111,13 +116,41 @@ export const FullPack = () => {
   const search = Object.fromEntries(searchParams)
 
   const onChangePaginationHandler = (newPage: number, newPageCount: number) => {
-    // trigger({ ...search, page: newPage, pageCount: newPageCount })
+    trigger({ ...search, page: newPage, pageCount: newPageCount })
     setSearchParams({ ...search, page: newPage.toString(), pageCount: newPageCount.toString() })
+  }
+
+  const onChangeTableHandler: TableProps<DataType>['onChange'] = (
+    pagination,
+    filters,
+    sorter,
+    extra
+  ) => {
+    // @ts-ignore
+    const order = sorter.order
+    // @ts-ignore
+    const field = sorter.columnKey
+
+    if (order === 'ascend') {
+      trigger({ ...search, sortCards: `1${field}` })
+      setSearchParams({ ...search, sortCards: `1${field}` })
+    }
+    if (order === 'descend') {
+      trigger({ ...search, sortCards: `0${field}` })
+      setSearchParams({ ...search, sortCards: `0${field}` })
+    }
+    if (order === undefined) {
+      const searchCopy = { ...search }
+
+      delete searchCopy.sortCards
+      trigger({ ...searchCopy })
+      setSearchParams({ ...searchCopy })
+    }
   }
 
   useEffect(() => {
     trigger(search)
-  }, [searchParams])
+  }, [])
 
   useEffect(() => {
     if (result.data) {
@@ -169,7 +202,12 @@ export const FullPack = () => {
           <Input />
         </WideSearchBlock>
       </MiddleSection>
-      <Table columns={columns} dataSource={rows} pagination={false} />
+      <Table
+        onChange={onChangeTableHandler}
+        columns={columns}
+        dataSource={rows}
+        pagination={false}
+      />
       <PaginationFC
         current={result.data?.page || 1}
         pageSize={result.data?.pageCount || 4}
