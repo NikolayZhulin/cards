@@ -194,19 +194,15 @@ export const PacksList = () => {
   }
 
   const getMyPacks = () => {
-    setSearchParams(prevState => {
-      console.log(prevState)
-
-      return { ...prevState, user_id: userId }
-    })
+    setSearchParams(prevState => ({ ...prevState, ...search, user_id: userId }))
   }
   const getAllPacks = () => {
-    setSearchParams(prevState => ({ ...prevState, user_id: 'false' }))
+    setSearchParams(prevState => ({ ...prevState, ...search, user_id: 'false' }))
+  }
+  const setCardsCount = (min: number, max: number) => {
+    setSearchParams(prevState => ({ ...prevState, ...search, min, max }))
   }
 
-  const setCardsCount = (min: number, max: number) => {
-    setSearchParams(prevState => ({ ...prevState, min, max }))
-  }
   const maxCardsCount = response?.data ? response?.data.maxCardsCount : 78
 
   return (

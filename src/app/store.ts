@@ -2,7 +2,6 @@ import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
 import thunkMiddleware from 'redux-thunk'
 
 import { authAPI, authReducer } from '../features/auth'
-import { paginationReducer } from '../features/packs'
 import { paginationApi } from '../features/packs/pagination-api'
 import { profileReducer } from '../features/profile'
 import { tablesApi } from '../features/tables/tablesApi'

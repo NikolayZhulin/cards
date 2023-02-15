@@ -137,8 +137,8 @@ export const StyledLink = styled(Link)`
 `
 
 export const StyledIcon = styled.img`
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   cursor: pointer;
-  margin: 0 3px;
+  margin: 0 1px;
 `
