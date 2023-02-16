@@ -11,7 +11,7 @@ type TableSliderPropsType = {
   maxParam: number
 }
 
-const TableSlider = ({
+export const TableSlider = ({
   maxCardsCount,
   minCardsCount,
   minParam,

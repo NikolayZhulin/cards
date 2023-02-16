@@ -14,6 +14,7 @@ import { PATH } from '../../../common/utils/path'
 import { formatDate } from '../../../common/utils/SetFormatDate'
 import SearchInput from '../components/SearchInput'
 import { UpdateButtons } from '../components/UpdateButtons'
+import { PackDataType } from '../helpers/dataForTables'
 import {
   AddNewItemButton,
   LinkBackWrapper,
@@ -31,7 +32,6 @@ import {
   useLazyFetchCardsQuery,
   useUpdateCardMutation,
 } from '../tablesApi'
-import { PackDataType } from '../utils/dataForTables'
 
 import { ListTable } from './PackList/pack-list-blocks/PackListTable'
 

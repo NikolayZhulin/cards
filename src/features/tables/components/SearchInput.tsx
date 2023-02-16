@@ -9,10 +9,10 @@ type SearchInputPropsType = {
   type: 'packName' | 'cardQuestion'
 }
 
-const SearchInput = ({ type }: SearchInputPropsType) => {
+export const SearchInput = ({ type }: SearchInputPropsType) => {
   const [searchInputValue, setSearchInputValue] = useState('')
   const debouncedValue = useDebounce(searchInputValue, 700)
-  const { searchParams, search, setSearchParams } = useSearch()
+  const { search, setSearchParams } = useSearch()
 
   useEffect(() => {
     if (debouncedValue) {

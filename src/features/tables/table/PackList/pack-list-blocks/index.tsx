@@ -9,7 +9,7 @@ import { PATH } from '../../../../../common/utils/path'
 import { formatDate } from '../../../../../common/utils/SetFormatDate'
 import { LearnButton } from '../../../components/LearnButton'
 import { UpdateButtons } from '../../../components/UpdateButtons'
-import { PackListDataType } from '../../../utils/dataForTables'
+import { PackListDataType } from '../../../helpers/dataForTables'
 import { usePackList } from '../hooks/use-pack-list'
 
 import { PackListMiddleSection } from './PackListMiddleSection'

@@ -4,8 +4,7 @@ import { FilterOutlined } from '@ant-design/icons'
 import { Button, Radio, Tooltip } from 'antd'
 
 import { useSearch } from '../../../../../common/hooks/useSearch'
-import SearchInput from '../../../components/SearchInput'
-import TableSlider from '../../../components/TableSlider'
+import { SearchInput, TableSlider } from '../../../components'
 import {
   MiddleSection,
   SearchBlock,
