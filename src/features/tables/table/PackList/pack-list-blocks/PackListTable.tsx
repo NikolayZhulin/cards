@@ -46,10 +46,10 @@ export const ListTable = ({ rows, type }: PackListTablePropsType) => {
         setSearchParams({ ...searchCopy })
       }
     }
-    setSearchParams({
-      ...search,
-      sortPacks: search.sortPacks === `0${field}` ? `1${field}` : `0${field}`,
-    })
+    // setSearchParams({
+    //   ...search,
+    //   sortPacks: search.sortPacks === `0${field}` ? `1${field}` : `0${field}`,
+    // })
   }
 
   if (!rows?.length) {

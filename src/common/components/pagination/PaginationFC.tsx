@@ -14,10 +14,11 @@ export const PaginationFC = ({ current, pageSize, total, onChange }: PropsType) 
   return (
     <div>
       <Pagination
+        showSizeChanger
         onChange={onChangePaginationHandler}
-        total={total || 100}
+        total={total || 1}
         current={current || 1}
-        pageSize={pageSize || 4}
+        pageSize={pageSize || 1}
         pageSizeOptions={[4, 10, 20, 30, 40, 50]}
       />
     </div>

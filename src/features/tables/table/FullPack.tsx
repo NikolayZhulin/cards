@@ -46,6 +46,7 @@ export const FullPack = () => {
 
   const search = Object.fromEntries(searchParams)
 
+  console.log(search)
   useEffect(() => {
     trigger({ ...search })
   }, [searchParams])
@@ -104,8 +105,8 @@ export const FullPack = () => {
       </LinkBackWrapper>
       <TopSection>
         <FormTitle>{` Pack`}</FormTitle>
-        <AddNewItemButton type="primary" onClick={() => addCard(search.id)}>
-          Add new pack
+        <AddNewItemButton type="primary" onClick={() => addCard(search.cardsPack_id)}>
+          Add new card
         </AddNewItemButton>
       </TopSection>
       <MiddleSection>

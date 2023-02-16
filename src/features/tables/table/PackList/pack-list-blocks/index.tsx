@@ -78,9 +78,9 @@ export const PacksListBlocks = () => {
       />
       <ListTable rows={rows} type="packs" />
       <PaginationFC
-        current={response.data?.page || 1}
-        pageSize={response.data?.pageCount || 4}
-        total={response.data?.cardPacksTotalCount || 100}
+        current={response.data?.page}
+        pageSize={response.data?.pageCount}
+        total={response.data?.cardPacksTotalCount}
         onChange={onChangePaginationHandler}
       />
     </>
