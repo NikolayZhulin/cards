@@ -4,28 +4,27 @@ import { DownCircleOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Dropdown, Space } from 'antd'
 
-import deleteIcon from '../../../assets/pictures/deleteIcon.png'
-import editIcon from '../../../assets/pictures/editIcon.png'
-import learnIcon from '../../../assets/pictures/learnIcon.png'
-import { usePackList } from '../../../features/tables/table/PackList/hooks/use-pack-list'
+import { useDeletePackMutation, useUpdatePackMutation } from '../../../features/tables/tablesApi'
+
 type PropsType = {
   id: string | undefined
 }
 export const DropDown = ({ id }: PropsType) => {
-  const { deletePack, updatePack } = usePackList()
+  const [updatePack, {}] = useUpdatePackMutation()
+  const [deletePack, {}] = useDeletePackMutation()
   const items: MenuProps['items'] = [
     {
       label: 'Edit',
       key: '0',
       disabled: false,
-      onClick: () => deletePack(id),
+      onClick: () => updatePack(id),
       // icon: editIcon,
     },
     {
       label: 'Delete',
       key: '1',
       disabled: false,
-      onClick: () => updatePack(id),
+      onClick: () => deletePack(id),
       // icon: deleteIcon,
     },
     {

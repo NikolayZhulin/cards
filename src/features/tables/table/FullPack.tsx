@@ -13,8 +13,7 @@ import { useAppSelector } from '../../../common/hooks/hooks'
 import { FormTitle } from '../../../common/style'
 import { PATH } from '../../../common/utils/path'
 import { formatDate } from '../../../common/utils/SetFormatDate'
-import SearchInput from '../components/SearchInput'
-import { UpdateButtons } from '../components/UpdateButtons'
+import { SearchInput, UpdateButtons } from '../components'
 import { PackDataType } from '../helpers/dataForTables'
 import {
   AddNewItemButton,
@@ -34,7 +33,6 @@ import {
   useUpdateCardMutation,
 } from '../tablesApi'
 
-import { usePackList } from './PackList/hooks/use-pack-list'
 import { ListTable } from './PackList/pack-list-blocks/PackListTable'
 
 export const FullPack = () => {
@@ -105,10 +103,9 @@ export const FullPack = () => {
       </LinkBackWrapper>
       <TopSection>
         <FormTitle>
-          {` ${response?.data?.packName}`}
-          <DropDown id={response?.data?.packUserId} />
+          {response?.data?.packName}
+          <DropDown id={response?.originalArgs?.cardsPack_id} />
         </FormTitle>
-
         <AddNewItemButton type="primary" onClick={() => addCard(search.cardsPack_id)}>
           Add new card
         </AddNewItemButton>
