@@ -7,6 +7,7 @@ import emptyStar from '../../../assets/pictures/emptyStar.png'
 import fullStar from '../../../assets/pictures/fullStar.png'
 import halfStar from '../../../assets/pictures/halfStar.png'
 import { InitialPreloader } from '../../../common/components'
+import { DropDown } from '../../../common/components/dropdown/DropDown'
 import { PaginationFC } from '../../../common/components/pagination/PaginationFC'
 import { useAppSelector } from '../../../common/hooks/hooks'
 import { FormTitle } from '../../../common/style'
@@ -33,6 +34,7 @@ import {
 } from '../tablesApi'
 import { PackDataType } from '../utils/dataForTables'
 
+import { usePackList } from './PackList/hooks/use-pack-list'
 import { ListTable } from './PackList/pack-list-blocks/PackListTable'
 
 export const FullPack = () => {
@@ -43,7 +45,6 @@ export const FullPack = () => {
   const [deleteCard, {}] = useDeleteCardMutation()
   const [trigger, response] = useLazyFetchCardsQuery()
   const [searchParams, setSearchParams] = useSearchParams()
-
   const search = Object.fromEntries(searchParams)
 
   console.log(search)
@@ -104,7 +105,11 @@ export const FullPack = () => {
         </StyledLink>
       </LinkBackWrapper>
       <TopSection>
-        <FormTitle>{` Pack`}</FormTitle>
+        <FormTitle>
+          {` ${response?.data?.packName}`}
+          <DropDown />
+        </FormTitle>
+
         <AddNewItemButton type="primary" onClick={() => addCard(search.cardsPack_id)}>
           Add new card
         </AddNewItemButton>
