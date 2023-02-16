@@ -43,7 +43,11 @@ export const PacksListBlocks = () => {
 
         rows.push({
           key: p._id,
-          name: <NavLink to={`${PATH.FULL_PACK}?cardsPack_id=` + p._id}>{p.name}</NavLink>,
+          name: (
+            <NavLink to={`${PATH.FULL_PACK}?cardsPack_id=` + p._id}>
+              {p.name} ${p._id}
+            </NavLink>
+          ),
           cards: p.cardsCount,
           updated: formatDate(p.updated),
           created: formatDate(p.created),

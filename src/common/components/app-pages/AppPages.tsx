@@ -10,7 +10,6 @@ import {
   SetNewPassword,
 } from '../../../features/auth'
 import { Profile } from '../../../features/profile'
-import { EmptyPack } from '../../../features/tables/table/EmptyPack'
 import { FullPack } from '../../../features/tables/table/FullPack'
 import { PacksList } from '../../../features/tables/table/PackList'
 import { PATH } from '../../utils/path'
@@ -25,7 +24,6 @@ const AppPages = () => {
         <Route path={PATH.PROFILE} element={<Profile />} />
         <Route path={PATH.PACKS_LIST} element={<PacksList />} />
         <Route path={PATH.FULL_PACK} element={<FullPack />} />
-        <Route path={PATH.EMPTY_PACK} element={<EmptyPack />} />
       </Route>
       <Route path={PATH.REGISTRATION} element={<Registration />} />
       <Route path={PATH.LOGIN} element={<Login />} />
