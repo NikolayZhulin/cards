@@ -14,6 +14,7 @@ export const PaginationFC = ({ current, pageSize, total, onChange }: PropsType) 
   return (
     <div>
       <Pagination
+        showSizeChanger
         onChange={onChangePaginationHandler}
         total={total}
         current={current}
