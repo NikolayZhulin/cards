@@ -11,6 +11,7 @@ import {
   StyledCard,
   CardWrapper,
 } from '../../../common/style'
+import { PATH } from '../../../common/utils/path'
 
 export const CheckEmail: React.FC = () => {
   return (
@@ -23,7 +24,7 @@ export const CheckEmail: React.FC = () => {
             <FormInformationText style={{ marginBottom: '30px' }}>
               We have sent Email with instructions to {'your email'}
             </FormInformationText>
-            <NavLink to={'/login'}>
+            <NavLink to={PATH.LOGIN}>
               <PrimaryButton>Back To Login</PrimaryButton>
             </NavLink>
           </FormWrapper>

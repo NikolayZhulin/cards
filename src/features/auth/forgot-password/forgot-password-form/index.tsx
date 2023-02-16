@@ -11,6 +11,7 @@ import {
   FormWrapper,
   PrimaryButton,
 } from '../../../../common/style'
+import { PATH } from '../../../../common/utils/path'
 import { useForgotPassword } from '../hooks/use-forgot-password'
 
 export const ForgotPasswordForm = () => {
@@ -35,7 +36,7 @@ export const ForgotPasswordForm = () => {
         <PrimaryButton>Send instruction</PrimaryButton>
       </Form>
       <FormInformationText>Did you remember your password?</FormInformationText>
-      <NavLink to={'/login'}>Try logging in</NavLink>
+      <NavLink to={PATH.LOGIN}>Try logging in</NavLink>
     </FormWrapper>
   )
 }

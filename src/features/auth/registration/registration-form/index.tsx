@@ -8,6 +8,7 @@ import {
   FormWrapper,
   PrimaryButton,
 } from '../../../../common/style'
+import { PATH } from '../../../../common/utils/path'
 import { useRegistration } from '../hooks/use-registration'
 
 export const RegistrationForm = () => {
@@ -45,7 +46,7 @@ export const RegistrationForm = () => {
         <PrimaryButton>Submit</PrimaryButton>
       </Form>
       <FormInformationText>Already have an account?</FormInformationText>
-      <NavLink to={'/login'}>Sign in</NavLink>
+      <NavLink to={PATH.LOGIN}>Sign in</NavLink>
     </FormWrapper>
   )
 }

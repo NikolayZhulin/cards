@@ -12,6 +12,7 @@ import {
   PrimaryButton,
   StyledCheckBox,
 } from '../../../../common/style'
+import { PATH } from '../../../../common/utils/path'
 import { useLogin } from '../hooks/use-login'
 
 export const LoginForm = () => {
@@ -47,11 +48,11 @@ export const LoginForm = () => {
             </StyledCheckBox>
           )}
         />
-        <NavLink to={'/recover-password'}>Forgot Password?</NavLink>
+        <NavLink to={PATH.FORGOT_PASSWORD}>Forgot Password?</NavLink>
         <PrimaryButton>Submit</PrimaryButton>
       </Form>
       <FormInformationText>Dont have an account yet?</FormInformationText>
-      <NavLink to={'/registration'}>Sign Up</NavLink>
+      <NavLink to={PATH.REGISTRATION}>Sign Up</NavLink>
     </FormWrapper>
   )
 }
