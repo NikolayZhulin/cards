@@ -106,7 +106,7 @@ export const FullPack = () => {
       <TopSection>
         <FormTitle>
           {` ${response?.data?.packName}`}
-          <DropDown />
+          <DropDown id={response?.data?.packUserId} />
         </FormTitle>
 
         <AddNewItemButton type="primary" onClick={() => addCard(search.cardsPack_id)}>
