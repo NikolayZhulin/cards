@@ -2,8 +2,8 @@ import React from 'react'
 
 import { NavLink } from 'react-router-dom'
 
-import { PATH } from '../../path/path'
 import { LinkBar } from '../../style/link-bar'
+import { PATH } from '../../utils/path'
 
 export const LinkAppBar = () => {
   return (

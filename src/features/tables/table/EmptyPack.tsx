@@ -2,8 +2,8 @@ import React from 'react'
 
 import ArrowLeftOutlined from '@ant-design/icons/lib/icons/ArrowLeftOutlined'
 
-import { PATH } from '../../../common/path/path'
 import { FormTitle } from '../../../common/style'
+import { PATH } from '../../../common/utils/path'
 import {
   AddNewItemButton,
   EmptyPackSection,

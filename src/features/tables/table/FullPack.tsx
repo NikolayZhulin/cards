@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import ArrowLeftOutlined from '@ant-design/icons/lib/icons/ArrowLeftOutlined'
-import { Table } from 'antd'
-import Input from 'antd/es/input/Input'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 import emptyStar from '../../../assets/pictures/emptyStar.png'
 import fullStar from '../../../assets/pictures/fullStar.png'
@@ -11,8 +9,8 @@ import halfStar from '../../../assets/pictures/halfStar.png'
 import { InitialPreloader } from '../../../common/components'
 import { PaginationFC } from '../../../common/components/pagination/PaginationFC'
 import { useAppSelector } from '../../../common/hooks/hooks'
-import { PATH } from '../../../common/path/path'
 import { FormTitle } from '../../../common/style'
+import { PATH } from '../../../common/utils/path'
 import { formatDate } from '../../../common/utils/SetFormatDate'
 import SearchInput from '../components/SearchInput'
 import { UpdateButtons } from '../components/UpdateButtons'
@@ -28,15 +26,14 @@ import {
   WideSearchBlock,
 } from '../styles/style'
 import {
-  FetchCardsRequestType,
   useAddCardMutation,
   useDeleteCardMutation,
-  useFetchCardsQuery,
-  useLazyFetchCardsPackQuery,
   useLazyFetchCardsQuery,
   useUpdateCardMutation,
 } from '../tablesApi'
-import { columnsForPack, PackDataType } from '../utils/dataForTables'
+import { PackDataType } from '../utils/dataForTables'
+
+import { ListTable } from './PackList/pack-list-blocks/PackListTable'
 
 export const FullPack = () => {
   const userID = useAppSelector(state => state.auth.userId)
@@ -50,7 +47,6 @@ export const FullPack = () => {
   const search = Object.fromEntries(searchParams)
 
   useEffect(() => {
-    console.log(search)
     trigger({ ...search })
   }, [searchParams])
 
@@ -118,11 +114,11 @@ export const FullPack = () => {
           <SearchInput type={'cardQuestion'} />
         </WideSearchBlock>
       </MiddleSection>
-      <Table columns={columnsForPack} dataSource={rows} pagination={false} />
+      <ListTable rows={rows} type="cards" />
       <PaginationFC
-        current={response.data?.page || 1}
-        pageSize={response.data?.pageCount || 4}
-        total={response.data?.cardsTotalCount || 100}
+        current={response.data?.page}
+        pageSize={response.data?.pageCount}
+        total={response.data?.cardsTotalCount}
         onChange={onChangePaginationHandler}
       />
     </TablePageStyle>

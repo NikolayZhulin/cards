@@ -11,8 +11,8 @@ import fullStar from '../../assets/pictures/fullStar.png'
 import halfStar from '../../assets/pictures/halfStar.png'
 import { useAppSelector } from '../../common/hooks/hooks'
 import { useDebounce } from '../../common/hooks/useDebounce'
-import { PATH } from '../../common/path/path'
 import { FormTitle } from '../../common/style'
+import { PATH } from '../../common/utils/path'
 import { UpdateButtons } from '../tables/components/UpdateButtons'
 import {
   AddNewItemButton,

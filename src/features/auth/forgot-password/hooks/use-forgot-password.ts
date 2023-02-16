@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../../common/hooks/hooks'
-import { PATH } from '../../../../common/path/path'
+import { PATH } from '../../../../common/utils/path'
 import { schemaEmail } from '../../../../common/validation'
 import { isSentRecoveryLetterAC } from '../../auth-reducer'
 import { useForgotPasswordMutation } from '../../authAPI'

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 import { useAppSelector } from '../../../../common/hooks/hooks'
-import { PATH } from '../../../../common/path/path'
+import { PATH } from '../../../../common/utils/path'
 import { schemaLogin } from '../../../../common/validation'
 import { useLoginMutation } from '../../authAPI'
 

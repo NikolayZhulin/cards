@@ -48,6 +48,7 @@ export const Title = styled.h4`
   transform: translateX(3px);
   line-height: 20px;
   color: #000000;
+  opacity: 0.8;
 `
 
 export const SearchBlock = styled.div`

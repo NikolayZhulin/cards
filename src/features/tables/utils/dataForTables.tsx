@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react'
 
 import { ColumnsType } from 'antd/es/table'
+import { SortOrder } from 'antd/es/table/interface'
 
 import emptyStar from '../../../assets/pictures/emptyStar.png'
 import fullStar from '../../../assets/pictures/fullStar.png'
@@ -13,7 +14,7 @@ export type PackListDataType = {
   cards: number
   updated: string
   created: string
-  actions?: ReactElement<any, any>
+  actions?: ReactElement
 }
 
 export type PackDataType = {
@@ -26,7 +27,7 @@ export type PackDataType = {
   render?: () => ReactElement
 }
 
-export const columns: ColumnsType<PackListDataType> = [
+export const columns: ColumnsType<PackDataType | PackListDataType> = [
   {
     title: 'Name',
     width: 318,
@@ -34,25 +35,29 @@ export const columns: ColumnsType<PackListDataType> = [
     key: 'name',
     fixed: 'left',
     ellipsis: true,
+    sorter: true,
   },
   {
     title: 'Cards',
     width: 140,
     dataIndex: 'cards',
-    key: 'cards',
+    key: 'cardsCount',
     fixed: 'left',
+    sorter: true,
   },
   {
     title: 'Last Updated',
     dataIndex: 'updated',
     key: 'updated',
     width: 200,
+    sorter: true,
   },
   {
     title: 'Created by',
-    dataIndex: 'updated',
-    key: 'updated',
+    dataIndex: 'created',
+    key: 'created',
     width: 200,
+    sorter: true,
   },
   {
     title: 'Action',
@@ -63,7 +68,7 @@ export const columns: ColumnsType<PackListDataType> = [
   },
 ]
 
-export const columnsForPack: ColumnsType<PackDataType> = [
+export const columnsForPack: ColumnsType<PackDataType | PackListDataType> = [
   {
     title: 'Question',
     width: 318,

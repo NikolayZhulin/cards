@@ -15,7 +15,6 @@ const slice = createSlice({
   reducers: {
     isSentRecoveryLetterAC(state, action: PayloadAction<{ isRecoveryLetterSent: boolean }>) {
       state.isRecoveryLetterSent = action.payload.isRecoveryLetterSent
-      console.log(state.isRecoveryLetterSent)
     },
   },
   extraReducers: builder => {

@@ -147,20 +147,6 @@ export const PacksListSearch = () => {
     trigger({ ...params, ...requestParams })
   }, [params, searchParams])
 
-  // useEffect(() => {
-  //   const search = Object.fromEntries(searchParams)
-  //
-  //   console.log(search)
-  //   const newParams: any = {}
-  //
-  //   for (let key in params) {
-  //     if (params[key as ParamType]) {
-  //       newParams[key] = params[key as ParamType]
-  //     }
-  //   }
-  //   setSearchParams(newParams)
-  // }, [params])
-
   useEffect(() => {
     if (response && response.data) {
       const { cardPacks } = response.data
@@ -197,8 +183,6 @@ export const PacksListSearch = () => {
 
   const getMyPacks = () => {
     setSearchParams(prevState => {
-      console.log(prevState)
-
       return { ...prevState, user_id: userId }
     })
   }
@@ -261,7 +245,6 @@ export const PacksListSearch = () => {
         </SliderBlock>
       </MiddleSection>
       <Table columns={columns} dataSource={rows} pagination={false} />
-      {/*<StyledPagination defaultCurrent={1} total={data && data.cardPacksTotalCount} />*/}
     </TablePageStyle>
   )
 }

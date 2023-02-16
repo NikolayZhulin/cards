@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { PATH } from '../../../../common/path/path'
+import { PATH } from '../../../../common/utils/path'
 import { schemaPass } from '../../../../common/validation'
 import { useSetNewPasswordMutation } from '../../authAPI'
 
