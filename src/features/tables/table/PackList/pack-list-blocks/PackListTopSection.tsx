@@ -1,8 +1,5 @@
 import React from 'react'
 
-import { FilterOutlined, SearchOutlined } from '@ant-design/icons'
-import { Button, Tooltip } from 'antd'
-
 import { FormTitle } from '../../../../../common/style'
 import { AddNewItemButton, TopSection } from '../../../styles/style'
 

@@ -47,10 +47,9 @@ export const FullPack = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const search = Object.fromEntries(searchParams)
 
-  console.log(search)
   useEffect(() => {
     trigger({ ...search })
-  }, [searchParams])
+  }, [search.cardsPack_id, search.page, search.pageCount, search.cardQuestion])
 
   useEffect(() => {
     if (response && response.data) {

@@ -24,6 +24,7 @@ export const usePackList = () => {
 
   useEffect(() => {
     trigger({ ...search })
+    console.log(1111111)
   }, [searchParams])
 
   const addNewPack = () => {

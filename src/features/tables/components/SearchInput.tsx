@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import Input from 'antd/es/input/Input'
-import { useSearchParams } from 'react-router-dom'
 
 import { useDebounce } from '../../../common/hooks/useDebounce'
+import { useSearch } from '../../../common/hooks/useSearch'
 
 type SearchInputPropsType = {
   type: 'packName' | 'cardQuestion'
@@ -11,19 +11,25 @@ type SearchInputPropsType = {
 
 const SearchInput = ({ type }: SearchInputPropsType) => {
   const [searchInputValue, setSearchInputValue] = useState('')
-  const [searchParams, setSearchParams] = useSearchParams()
-  const params = Object.fromEntries(searchParams)
   const debouncedValue = useDebounce(searchInputValue, 700)
+  const { searchParams, search, setSearchParams } = useSearch()
 
   useEffect(() => {
-    setSearchParams(prevState => ({ ...prevState, ...params, [type]: debouncedValue }))
+    if (debouncedValue) {
+      setSearchParams(prevState => ({ ...prevState, ...search, [type]: debouncedValue }))
+    } else {
+      const copySearch = { ...search }
+
+      delete copySearch[type]
+      setSearchParams(prevState => ({ ...prevState, ...copySearch }))
+    }
   }, [debouncedValue])
 
   useEffect(() => {
-    if (!params.type) {
+    if (!search.type) {
       setSearchInputValue('')
     }
-  }, [params.type])
+  }, [search.type])
 
   const setPackName = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInputValue(e.currentTarget.value)
