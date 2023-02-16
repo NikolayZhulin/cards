@@ -210,8 +210,8 @@ export const FullPack = () => {
       />
       <PaginationFC
         current={result.data?.page || 1}
-        pageSize={result.data?.pageCount || 4}
-        total={result.data?.cardsTotalCount || 100}
+        pageSize={result.data?.pageCount || 1}
+        total={result.data?.cardsTotalCount || 1}
         onChange={onChangePaginationHandler}
       />
     </TablePageStyle>

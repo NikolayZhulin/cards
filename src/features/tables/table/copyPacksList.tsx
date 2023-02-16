@@ -271,8 +271,8 @@ export const PacksList = () => {
       />
       <PaginationFC
         current={result.data?.page || 1}
-        pageSize={result.data?.pageCount || 4}
-        total={result.data?.cardPacksTotalCount || 100}
+        pageSize={result.data?.pageCount || 1}
+        total={result.data?.cardPacksTotalCount || 1}
         onChange={onChangePaginationHandler}
       />
     </TablePageStyle>
