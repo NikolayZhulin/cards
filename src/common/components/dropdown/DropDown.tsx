@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { DownCircleOutlined } from '@ant-design/icons'
+import { DeleteOutlined, DownCircleOutlined, EditOutlined, ReadOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Dropdown, Space } from 'antd'
 import { useNavigate } from 'react-router-dom'
@@ -33,7 +33,7 @@ export const DropDown = ({ cardsPackId, packUserId }: PropsType) => {
         await updatePack(cardsPackId)
         trigger({ cardsPack_id: cardsPackId })
       },
-      // icon: editIcon,
+      icon: <EditOutlined />,
     },
     {
       label: 'Delete',
@@ -43,7 +43,7 @@ export const DropDown = ({ cardsPackId, packUserId }: PropsType) => {
         await deletePack(cardsPackId)
         navigate(PATH.PACKS_LIST)
       },
-      // icon: deleteIcon,
+      icon: <DeleteOutlined />,
     },
     {
       label: 'Learn',
@@ -51,7 +51,7 @@ export const DropDown = ({ cardsPackId, packUserId }: PropsType) => {
       onClick: () => {
         alert('Learn')
       },
-      // icon: learnIcon,
+      icon: <ReadOutlined />,
     },
   ]
 
@@ -59,7 +59,7 @@ export const DropDown = ({ cardsPackId, packUserId }: PropsType) => {
     <Dropdown menu={{ items }} trigger={['click']}>
       <a onClick={e => e.preventDefault()}>
         <Space>
-          <DownCircleOutlined />
+          <DownCircleOutlined style={{ marginLeft: '10px' }} />
         </Space>
       </a>
     </Dropdown>
