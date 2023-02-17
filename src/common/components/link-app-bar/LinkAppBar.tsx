@@ -3,7 +3,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { LinkBar } from '../../style/link-bar'
-import { PATH } from '../../utils/path'
+import { PATH } from '../../utils'
 
 export const LinkAppBar = () => {
   return (
@@ -28,6 +28,9 @@ export const LinkAppBar = () => {
       </NavLink>
       <NavLink to={PATH.PACKS_LIST} style={{ margin: '5px' }}>
         /packs-list
+      </NavLink>
+      <NavLink to={'*'} style={{ margin: '5px' }}>
+        error
       </NavLink>
     </LinkBar>
   )

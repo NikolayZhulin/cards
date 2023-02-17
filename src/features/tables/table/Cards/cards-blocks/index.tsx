@@ -73,6 +73,7 @@ export const CardsBlocks = () => {
         packName={response?.data?.packName}
         cardsPackId={response?.originalArgs?.cardsPack_id}
         addCard={addNewCard}
+        userId={response?.data?.packUserId}
       />
       <CardMiddleSection />
       <ListTable rows={rows} type="cards" />

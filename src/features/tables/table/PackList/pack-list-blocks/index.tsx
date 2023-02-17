@@ -5,11 +5,10 @@ import { NavLink } from 'react-router-dom'
 import { Preloader } from '../../../../../common/components'
 import { PaginationFC } from '../../../../../common/components/pagination/PaginationFC'
 import { useAppSelector } from '../../../../../common/hooks/reduxHooks'
-import { PATH } from '../../../../../common/utils/path'
-import { formatDate } from '../../../../../common/utils/set-format-date'
+import { PATH, formatDate } from '../../../../../common/utils'
 import { LearnButton, UpdateButtons } from '../../../components'
-import { PackListDataType } from '../../../helpers/dataForTables'
-import { usePackList } from '../../../hooks/use-pack-list'
+import { PackListDataType } from '../../../helpers'
+import { usePackList } from '../../../hooks'
 
 import { PackListMiddleSection } from './PackListMiddleSection'
 import { ListTable } from './PackListTable'
@@ -42,11 +41,7 @@ export const PacksListBlocks = () => {
 
         rows.push({
           key: p._id,
-          name: (
-            <NavLink to={`${PATH.CARDS}?cardsPack_id=` + p._id}>
-              {p.name} ${p._id}
-            </NavLink>
-          ),
+          name: <NavLink to={`${PATH.CARDS}?cardsPack_id=` + p._id}>{p.name}</NavLink>,
           cards: p.cardsCount,
           updated: formatDate(p.updated),
           created: formatDate(p.created),

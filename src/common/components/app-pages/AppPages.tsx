@@ -10,7 +10,7 @@ import {
   SetNewPassword,
 } from '../../../features/auth'
 import { Profile } from '../../../features/profile'
-import { Cards } from '../../../features/tables/table/Cards/Cards'
+import { Cards } from '../../../features/tables/table/Cards'
 import { PacksList } from '../../../features/tables/table/PackList'
 import { PATH } from '../../utils'
 import { Error404 } from '../error404/Error404'
