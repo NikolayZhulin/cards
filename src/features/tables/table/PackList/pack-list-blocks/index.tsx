@@ -45,7 +45,8 @@ export const PacksListBlocks = () => {
           key: p._id,
           name: (
             <NavLink to={`${PATH.FULL_PACK}?cardsPack_id=` + p._id}>
-              {p.name} ${p._id}
+              {p.name}
+              {/*${p._id}*/}
             </NavLink>
           ),
           cards: p.cardsCount,
