@@ -1,11 +1,11 @@
 import React from 'react'
 
 import { Table } from 'antd'
+import { ColumnsType } from 'antd/es/table'
 
-import { columnsForCards, columnsForPacks, PackDataType, PackListDataType } from '../../../helpers'
+import { PackDataType, PackListDataType } from '../../../helpers'
 import { UseTableSort } from '../../../hooks'
 import { Title } from '../../../styles'
-import { ColumnsType } from 'antd/es/table'
 
 type PackListTablePropsType = {
   rows: any
