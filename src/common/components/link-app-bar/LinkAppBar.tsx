@@ -29,7 +29,7 @@ export const LinkAppBar = () => {
       <NavLink to={PATH.PACKS_LIST} style={{ margin: '5px' }}>
         /packs-list
       </NavLink>
-      <NavLink to={'*'} style={{ margin: '5px' }}>
+      <NavLink to={PATH.ERROR} style={{ margin: '5px' }}>
         error
       </NavLink>
     </LinkBar>
