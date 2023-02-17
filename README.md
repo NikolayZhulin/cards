@@ -8,4 +8,4 @@ React
 Redux toolkit
 Styled components
 React hook form
-Ant-design
+Ant design
