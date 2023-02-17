@@ -2,17 +2,20 @@ import React from 'react'
 
 import { Table } from 'antd'
 
-import { PackDataType, PackListDataType } from '../../../helpers'
+import { columnsForCards, columnsForPacks, PackDataType, PackListDataType } from '../../../helpers'
 import { UseTableSort } from '../../../hooks'
 import { Title } from '../../../styles'
+import { ColumnsType } from 'antd/es/table'
 
 type PackListTablePropsType = {
   rows: any
-  type: 'cards' | 'packs'
+  name: string
+  columns: ColumnsType<any>
+  sortType: string
 }
 
-export const ListTable = ({ rows, type }: PackListTablePropsType) => {
-  const { titleForEmptyTable, columnsForTable, onChangeTableHandler } = UseTableSort(type)
+export const ListTable = ({ rows, name, columns, sortType }: PackListTablePropsType) => {
+  const { titleForEmptyTable, onChangeTableHandler } = UseTableSort(sortType, name)
 
   if (!rows?.length) {
     return <Title style={{ margin: '30px 0' }}>{titleForEmptyTable}</Title>
@@ -20,7 +23,7 @@ export const ListTable = ({ rows, type }: PackListTablePropsType) => {
 
   return (
     <Table<PackDataType | PackListDataType>
-      columns={columnsForTable}
+      columns={columns}
       dataSource={rows}
       pagination={false}
       onChange={onChangeTableHandler}

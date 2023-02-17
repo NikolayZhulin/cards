@@ -1,7 +1,12 @@
-import { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+
+import { NavLink } from 'react-router-dom'
 
 import { useAppSelector } from '../../../common/hooks/reduxHooks'
 import { useSearch } from '../../../common/hooks/useSearch'
+import { formatDate, PATH } from '../../../common/utils'
+import { LearnButton, UpdateButtons } from '../components'
+import { PackListDataType } from '../helpers'
 import {
   useAddPackMutation,
   useDeletePackMutation,
@@ -11,6 +16,7 @@ import {
 
 export const usePackList = () => {
   const userId = useAppSelector(state => state.auth.userId)
+  const [rows, setRows] = useState<PackListDataType[]>()
 
   const [addPack, {}] = useAddPackMutation()
   const [updatePack, {}] = useUpdatePackMutation()
@@ -25,6 +31,36 @@ export const usePackList = () => {
   useEffect(() => {
     trigger({ ...search })
   }, [searchParams])
+
+  useEffect(() => {
+    if (response && response.data) {
+      const { cardPacks } = response.data
+      let rows: PackListDataType[] = []
+
+      cardPacks.forEach(p => {
+        const isMyPack = userId === p.user_id
+
+        rows.push({
+          key: p._id,
+          name: <NavLink to={`${PATH.CARDS}?cardsPack_id=` + p._id}>{p.name}</NavLink>,
+          cards: p.cardsCount,
+          updated: formatDate(p.updated),
+          created: formatDate(p.created),
+          actions: (
+            <div style={{ display: 'flex', justifyContent: 'start' }}>
+              <LearnButton isCardCount={!!p.cardsCount} />
+              <UpdateButtons
+                isMyItem={isMyPack}
+                editHandler={() => updatePack(p._id)}
+                deleteHandler={() => deletePack(p._id)}
+              />
+            </div>
+          ),
+        })
+      })
+      setRows(rows)
+    }
+  }, [response])
 
   const addNewPack = () => {
     addPack({})
@@ -50,5 +86,6 @@ export const usePackList = () => {
     onChangePaginationHandler,
     response,
     search,
+    rows,
   }
 }
