@@ -2,12 +2,12 @@ import React from 'react'
 
 import { TablePageStyle } from '../../styles'
 
-import { PacksListBlocks } from './pack-list-blocks'
+import { CardsBlocks } from './cards-blocks'
 
-export const PacksList = () => {
+export const Cards = () => {
   return (
     <TablePageStyle>
-      <PacksListBlocks />
+      <CardsBlocks />
     </TablePageStyle>
   )
 }

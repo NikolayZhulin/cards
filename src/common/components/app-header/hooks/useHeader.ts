@@ -1,5 +1,5 @@
 import { useLogOutMutation } from '../../../../features/auth'
-import { useAppSelector } from '../../../hooks/hooks'
+import { useAppSelector } from '../../../hooks/reduxHooks'
 
 export const useHeader = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)

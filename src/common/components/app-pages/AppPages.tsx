@@ -10,9 +10,9 @@ import {
   SetNewPassword,
 } from '../../../features/auth'
 import { Profile } from '../../../features/profile'
-import { FullPack } from '../../../features/tables/table/FullPack'
+import { Cards } from '../../../features/tables/table/Cards/Cards'
 import { PacksList } from '../../../features/tables/table/PackList'
-import { PATH } from '../../utils/path'
+import { PATH } from '../../utils'
 import { Error404 } from '../error404/Error404'
 import { PrivateRoutes } from '../private-routes/PrivateRoutes'
 
@@ -23,7 +23,7 @@ const AppPages = () => {
       <Route element={<PrivateRoutes />}>
         <Route path={PATH.PROFILE} element={<Profile />} />
         <Route path={PATH.PACKS_LIST} element={<PacksList />} />
-        <Route path={PATH.FULL_PACK} element={<FullPack />} />
+        <Route path={PATH.CARDS} element={<Cards />} />
       </Route>
       <Route path={PATH.REGISTRATION} element={<Registration />} />
       <Route path={PATH.LOGIN} element={<Login />} />

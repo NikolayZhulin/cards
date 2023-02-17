@@ -3,7 +3,7 @@ import thunkMiddleware from 'redux-thunk'
 
 import { authAPI, authReducer } from '../features/auth'
 import { profileReducer } from '../features/profile'
-import { tablesApi } from '../features/tables/tablesApi'
+import { tablesApi } from '../features/tables'
 
 import { appReducer } from './app-reducer'
 

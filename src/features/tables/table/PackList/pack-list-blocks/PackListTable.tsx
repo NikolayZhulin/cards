@@ -2,9 +2,9 @@ import React from 'react'
 
 import { Table } from 'antd'
 
-import { PackDataType, PackListDataType } from '../../../helpers/dataForTables'
-import { Title } from '../../../styles/style'
-import { UseTableSort } from '../hooks/use-table-sort'
+import { PackDataType, PackListDataType } from '../../../helpers'
+import { UseTableSort } from '../../../hooks'
+import { Title } from '../../../styles'
 
 type PackListTablePropsType = {
   rows: any

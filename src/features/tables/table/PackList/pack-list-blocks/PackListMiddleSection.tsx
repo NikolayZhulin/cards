@@ -12,7 +12,7 @@ import {
   Title,
   ToggleAuthorsBlock,
   ToggleOwnerButton,
-} from '../../../styles/style'
+} from '../../../styles'
 
 type PackListMiddleSectionPropsType = {
   getMyPacks: () => void

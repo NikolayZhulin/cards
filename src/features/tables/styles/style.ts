@@ -15,11 +15,9 @@ export const TablePageStyle = styled.div`
   box-shadow: 5px 5px 20px 0 rgba(115, 109, 115, 1);
   padding: 24px;
   border-radius: 8px;
-  //background-color: cadetblue;
 `
 
 export const TopSection = styled.div`
-  //background-color: lightgrey;
   width: 100%;
   display: flex;
   align-items: flex-end;
@@ -38,7 +36,6 @@ export const MiddleSection = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  //background-color: antiquewhite;
 `
 
 export const Title = styled.h4`
@@ -58,20 +55,17 @@ export const SearchBlock = styled.div`
 export const ToggleAuthorsBlock = styled.div`
   display: flex;
   flex-direction: column;
-  //background-color: burlywood;
 `
 
 export const SliderBlock = styled.div`
   width: 100%;
   max-width: 287px;
-  //background-color: lightblue;
 `
 export const SliderWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  //background-color: red;
 `
 
 export const SliderInput = styled(Input)`
@@ -96,30 +90,8 @@ export const ToggleOwnerButton = styled(Radio.Button)`
   text-align: center;
 `
 
-export const StyledPagination = styled(Pagination)`
-  margin-top: 20px;
-  //background-color: crimson;
-`
-
 export const WideSearchBlock = styled(SearchBlock)`
   width: 100%;
-`
-
-export const EmptyPackSection = styled.div`
-  width: 100%;
-  height: 300px;
-  padding-bottom: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  //background-color: cadetblue;
-`
-
-export const EmptyPackWarning = styled.span`
-  margin-bottom: 20px;
-  font-size: 16px;
-  opacity: 0.5;
 `
 
 export const LinkBackWrapper = styled.div`
@@ -142,4 +114,23 @@ export const StyledIcon = styled.img`
   height: 15px;
   cursor: pointer;
   margin: 0 1px;
+`
+export const EmptyPackSection = styled.div`
+  width: 100%;
+  height: 300px;
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
+export const EmptyPackWarning = styled.span`
+  margin-bottom: 20px;
+  font-size: 16px;
+  opacity: 0.5;
+`
+
+export const StyledPagination = styled(Pagination)`
+  margin-top: 20px;
 `

@@ -10,7 +10,7 @@ import { StyledIcon } from '../styles/style'
 
 export type PackListDataType = {
   key: React.Key
-  name: ReactElement<any, any>
+  name: ReactElement
   cards: number
   updated: string
   created: string
@@ -27,7 +27,7 @@ export type PackDataType = {
   render?: () => ReactElement
 }
 
-export const columns: ColumnsType<PackDataType | PackListDataType> = [
+export const columnsForPacks: ColumnsType<PackDataType | PackListDataType> = [
   {
     title: 'Name',
     width: 318,
@@ -68,13 +68,14 @@ export const columns: ColumnsType<PackDataType | PackListDataType> = [
   },
 ]
 
-export const columnsForPack: ColumnsType<PackDataType | PackListDataType> = [
+export const columnsForCards: ColumnsType<PackDataType | PackListDataType> = [
   {
     title: 'Question',
     width: 318,
     dataIndex: 'question',
     key: 'question',
     fixed: 'left',
+    sorter: true,
   },
   {
     title: 'Answer',
@@ -82,18 +83,21 @@ export const columnsForPack: ColumnsType<PackDataType | PackListDataType> = [
     dataIndex: 'answer',
     key: 'answer',
     fixed: 'left',
+    sorter: true,
   },
   {
     title: 'Last Updated',
     dataIndex: 'updated',
     key: 'updated',
     width: 200,
+    sorter: true,
   },
   {
     title: 'Created by',
     dataIndex: 'updated',
     key: 'updated',
     width: 200,
+    sorter: true,
   },
   {
     title: 'Grade',

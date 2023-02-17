@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { FormTitle } from '../../../../../common/style'
-import { AddNewItemButton, TopSection } from '../../../styles/style'
+import { AddNewItemButton, TopSection } from '../../../styles'
 
 type PackListTopSectionPropsType = {
   formTitle: string

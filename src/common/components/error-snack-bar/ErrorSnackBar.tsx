@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { message } from 'antd'
 
 import { setAppErrorAC } from '../../../app'
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 
 export const ErrorSnackBar = () => {
   const error = useAppSelector(state => state.app.error)

@@ -4,13 +4,12 @@ import { NavLink } from 'react-router-dom'
 
 import { Preloader } from '../../../../../common/components'
 import { PaginationFC } from '../../../../../common/components/pagination/PaginationFC'
-import { useAppSelector } from '../../../../../common/hooks/hooks'
+import { useAppSelector } from '../../../../../common/hooks/reduxHooks'
 import { PATH } from '../../../../../common/utils/path'
-import { formatDate } from '../../../../../common/utils/SetFormatDate'
-import { LearnButton } from '../../../components/LearnButton'
-import { UpdateButtons } from '../../../components/UpdateButtons'
+import { formatDate } from '../../../../../common/utils/set-format-date'
+import { LearnButton, UpdateButtons } from '../../../components'
 import { PackListDataType } from '../../../helpers/dataForTables'
-import { usePackList } from '../hooks/use-pack-list'
+import { usePackList } from '../../../hooks/use-pack-list'
 
 import { PackListMiddleSection } from './PackListMiddleSection'
 import { ListTable } from './PackListTable'
@@ -44,7 +43,7 @@ export const PacksListBlocks = () => {
         rows.push({
           key: p._id,
           name: (
-            <NavLink to={`${PATH.FULL_PACK}?cardsPack_id=` + p._id}>
+            <NavLink to={`${PATH.CARDS}?cardsPack_id=` + p._id}>
               {p.name} ${p._id}
             </NavLink>
           ),

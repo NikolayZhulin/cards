@@ -11,12 +11,12 @@ const initialState: {
     email: 'email',
     name: 'name',
     avatar: 'avatar',
-    publicCardPacksCount: 0, // количество колод
+    publicCardPacksCount: 0,
 
     created: '',
     updated: '',
     isAdmin: false,
-    verified: true, // подтвердил ли почту
+    verified: true,
     rememberMe: true,
     __v: 0,
     token: '',
@@ -41,10 +41,6 @@ const slice = createSlice({
       .addMatcher(authAPI.endpoints.me.matchRejected, state => {
         state.isLoading = false
       })
-    // .addMatcher(profileAPI.endpoints.changeUser.matchFulfilled, (state, { payload }) => {
-    //   state.user.name = payload.updatedUser.name
-    //   state.user.avatar = payload.updatedUser.avatar
-    // })
   },
 })
 

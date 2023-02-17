@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { useAppSelector } from '../../hooks/hooks'
+import { useAppSelector } from '../../hooks/reduxHooks'
 import { PATH } from '../../utils/path'
 
 export const PrivateRoutes = () => {

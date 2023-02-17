@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 
-import { useAppSelector } from '../../../../../common/hooks/hooks'
-import { useSearch } from '../../../../../common/hooks/useSearch'
+import { useAppSelector } from '../../../common/hooks/reduxHooks'
+import { useSearch } from '../../../common/hooks/useSearch'
 import {
   useAddPackMutation,
   useDeletePackMutation,
   useLazyFetchCardsPackQuery,
   useUpdatePackMutation,
-} from '../../../tablesApi'
+} from '../tablesApi'
 
 export const usePackList = () => {
   const userId = useAppSelector(state => state.auth.userId)

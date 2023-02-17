@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../../../common/hooks/hooks'
+import { useAppDispatch, useAppSelector } from '../../../../common/hooks/reduxHooks'
 import { PATH } from '../../../../common/utils/path'
 import { schemaEmail } from '../../../../common/validation'
 import { isSentRecoveryLetterAC } from '../../auth-reducer'
