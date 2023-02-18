@@ -14,6 +14,7 @@ import { Cards } from '../../../features/tables/table/Cards'
 import { PacksList } from '../../../features/tables/table/PackList'
 import { PATH } from '../../utils'
 import { Error404 } from '../error404/Error404'
+import { ModalFC } from '../modal/ModalFC'
 import { PrivateRoutes } from '../private-routes/PrivateRoutes'
 
 const AppPages = () => {
@@ -31,6 +32,22 @@ const AppPages = () => {
       <Route path={PATH.CHECK_EMAIL} element={<CheckEmail />} />
       <Route path={PATH.SET_NEW_PASSWORD} element={<SetNewPassword />} />
       <Route path={'*'} element={<Error404 />} />
+      <Route
+        path={'/modal'}
+        element={
+          <ModalFC
+            open={true}
+            handleOk={() => {}}
+            handleCancel={() => {}}
+            loading={true}
+            cancelText={'Cancel'}
+            okText={'Save'}
+            danger={true}
+          >
+            Hello my friends!
+          </ModalFC>
+        }
+      />
     </Routes>
   )
 }
