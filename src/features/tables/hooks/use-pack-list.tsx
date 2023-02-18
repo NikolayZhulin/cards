@@ -18,7 +18,7 @@ export const usePackList = () => {
   const userId = useAppSelector(state => state.auth.userId)
   const [rows, setRows] = useState<PackListDataType[]>()
 
-  const [addPack, {}] = useAddPackMutation()
+  const [addPack, { isLoading: packIsAdding }] = useAddPackMutation()
   const [updatePack, {}] = useUpdatePackMutation()
   const [deletePack, {}] = useDeletePackMutation()
   const [trigger, response] = useLazyFetchCardsPackQuery()
@@ -62,8 +62,8 @@ export const usePackList = () => {
     }
   }, [response])
 
-  const addNewPack = () => {
-    addPack({})
+  const addNewPack = (name: string, isPrivate: boolean) => {
+    addPack({ cardsPack: { name, private: isPrivate } })
   }
   const onChangePaginationHandler = (newPage: number, newPageCount: number) => {
     setSearchParams({ ...search, page: newPage.toString(), pageCount: newPageCount.toString() })
@@ -87,5 +87,6 @@ export const usePackList = () => {
     response,
     search,
     rows,
+    packIsAdding,
   }
 }

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 
 import { Modal } from 'antd'
 
@@ -6,34 +6,33 @@ type PropsType = {
   children?: ReactNode
   handleOk: () => void
   handleCancel: () => void
-  loading: boolean
-  open: boolean
+  isLoading: boolean
+  isOpen: boolean
   okText: string
-  cancelText: string
   danger: boolean
 }
 
 export const ModalFC = ({
   children,
-  loading,
+  isLoading,
   handleOk,
-  handleCancel,
-  open,
+  isOpen,
   okText,
-  cancelText,
   danger,
+  handleCancel,
 }: PropsType) => {
   return (
     <Modal
-      open={open}
+      open={isOpen}
       onOk={handleOk}
-      confirmLoading={loading}
+      confirmLoading={isLoading}
       onCancel={handleCancel}
       okText={okText}
-      cancelText={cancelText}
-      okButtonProps={{ danger: danger, disabled: loading }}
-      cancelButtonProps={{ disabled: loading }}
+      okButtonProps={{ danger: danger, disabled: isLoading }}
+      cancelButtonProps={{ disabled: isLoading }}
       closable={false}
+      centered={true}
+      style={{ width: '400px' }}
     >
       {children}
     </Modal>
