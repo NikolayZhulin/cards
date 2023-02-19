@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react'
 
+import { Preloader } from '../../../common/components'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
-import { removePrevCard, setRandomCard } from '../learn-reducer'
+import {
+  GradedCardsIds,
+  GradesType,
+  HandledPackType,
+  removePrevPlaceCard,
+  setRandomCard,
+} from '../learn-reducer'
 import { useFetchAllCardsQuery, useUpdateGradeMutation } from '../learnApi'
-
-import { GradedCardsIds, GradesType, HandledPackType } from './index'
 
 export type CardPropsType = {
   cards?: HandledPackType
@@ -13,7 +18,7 @@ export type CardPropsType = {
 }
 
 export const Card: React.FC<CardPropsType> = () => {
-  const { data, isSuccess } = useFetchAllCardsQuery({
+  const { isLoading } = useFetchAllCardsQuery({
     cardsPack_id: '607fece70857db0004f314d1',
     pageCount: 100,
   })
@@ -21,8 +26,12 @@ export const Card: React.FC<CardPropsType> = () => {
   const cardsIds = useAppSelector(state => state.learn.ids)
   const grades = useAppSelector(state => state.learn.grades)
   const [trigger] = useUpdateGradeMutation()
-  const dispatch = useAppDispatch()
   const randomCard = useAppSelector(state => state.learn.randomCard)
+  const dispatch = useAppDispatch()
+
+  console.log('cards :', cards)
+  console.log('cardsIds :', cardsIds)
+  console.log('grades :', grades)
 
   const chooseRandomCard = () => {
     if (cards && cardsIds && grades) {
@@ -37,31 +46,29 @@ export const Card: React.FC<CardPropsType> = () => {
       }
     }
   }
-  const updateCardGrade = async (grade: 1 | 2 | 3 | 4 | 5) => {
+  const updateCardGrade = (grade: 1 | 2 | 3 | 4 | 5) => {
     if (randomCard) {
-      await trigger({ grade, card_id: randomCard._id })
-      dispatch(removePrevCard(randomCard))
+      trigger({ grade, card_id: randomCard._id })
+      dispatch(removePrevPlaceCard(randomCard))
       chooseRandomCard()
     }
   }
 
   useEffect(() => {
-    console.log('useEffect')
     chooseRandomCard()
-  }, [])
+  }, [isLoading])
 
-  console.log(cards)
-  console.log(randomCard)
+  if (isLoading) return <Preloader />
 
   return (
     <>
-      <div>{JSON.stringify(randomCard)}</div>
-      <button onClick={chooseRandomCard}>random</button>
-      <button onClick={() => updateCardGrade(5)}>5</button>
-      <button onClick={() => updateCardGrade(4)}>4</button>
-      <button onClick={() => updateCardGrade(3)}>3</button>
-      <button onClick={() => updateCardGrade(2)}>2</button>
-      <button onClick={() => updateCardGrade(1)}>1</button>
+      <h2>Question: {randomCard.question}</h2>
+      <h3>Answer: {randomCard.answer}</h3>
+      <button onClick={() => updateCardGrade(5)}>Knew the answer</button>
+      <button onClick={() => updateCardGrade(4)}>Confused</button>
+      <button onClick={() => updateCardGrade(3)}>A lot of thought</button>
+      <button onClick={() => updateCardGrade(2)}>Forgot</button>
+      <button onClick={() => updateCardGrade(1)}>Did not know</button>
     </>
   )
 }

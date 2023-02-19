@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { CardType } from '../tables'
 
-import { CardObjType, GradedCardsIds, GradesType, HandledPackType } from './learn'
 import { learnApi } from './learnApi'
 import { multiplyGradesPush } from './utils/multiplyGradesPush'
 
@@ -12,22 +11,8 @@ const initialState: {
   grades: GradesType
   randomCard: CardType
 } = {
-  handledCards: {
-    '0': {} as CardObjType,
-    '1': {} as CardObjType,
-    '2': {} as CardObjType,
-    '3': {} as CardObjType,
-    '4': {} as CardObjType,
-    '5': {} as CardObjType,
-  },
-  ids: {
-    '0': [],
-    '1': [],
-    '2': [],
-    '3': [],
-    '4': [],
-    '5': [],
-  },
+  handledCards: {},
+  ids: {},
   grades: [],
   randomCard: {} as CardType,
 }
@@ -36,10 +21,20 @@ const slice = createSlice({
   name: 'learn',
   initialState,
   reducers: {
-    removePrevCard: (state, action: PayloadAction<CardType>) => {
+    removePrevPlaceCard: (state, action: PayloadAction<CardType>) => {
       const { grade, _id } = action.payload
 
-      delete state.handledCards[grade][_id]
+      if (state.ids[grade].length > 1) {
+        delete state.handledCards[grade][_id]
+        state.ids[grade].splice(
+          state.ids[grade].findIndex(id => id === _id),
+          1
+        )
+      } else {
+        delete state.handledCards[grade]
+        delete state.ids[grade]
+        state.grades = state.grades.filter(g => g !== grade)
+      }
     },
     setRandomCard: (state, action) => {
       state.randomCard = action.payload
@@ -52,35 +47,26 @@ const slice = createSlice({
 
       cards.forEach(c => {
         state.handledCards[c.grade] = { ...state.handledCards[c.grade], [c._id]: c }
-        state.ids[c.grade].push(c._id)
         gradesSet.add(c.grade)
+
+        // eslint-disable-next-line no-prototype-builtins
+        if (state.ids.hasOwnProperty(c.grade)) {
+          state.ids[c.grade].push(c._id)
+        } else {
+          state.ids[c.grade] = [c._id]
+        }
       })
 
       gradesSet.forEach(g => {
-        switch (g) {
-          case 0:
-            multiplyGradesPush(g, 5, state)
-            break
-          case 1:
-            multiplyGradesPush(g, 5, state)
-            break
-          case 2:
-            multiplyGradesPush(g, 4, state)
-            break
-          case 3:
-            multiplyGradesPush(g, 3, state)
-            break
-          case 4:
-            multiplyGradesPush(g, 2, state)
-            break
-          case 5:
-            multiplyGradesPush(g, 1, state)
-        }
+        const grade = Number(g)
+        const qty = Math.round(20 / grade)
+
+        multiplyGradesPush(grade, qty, state)
       })
     })
     builder.addMatcher(learnApi.endpoints.updateGrade.matchFulfilled, (state, { payload }) => {
       const { updatedGrade } = payload
-      const { grade, _id, card_id, cardsPack_id, user_id, shots } = updatedGrade
+      const { grade, card_id, cardsPack_id, user_id, shots } = updatedGrade
       const { answer, question, created, updated } = state.randomCard
 
       console.log(updatedGrade)
@@ -99,9 +85,27 @@ const slice = createSlice({
           updated,
         },
       }
+
+      state.ids[grade] = [...state.ids[grade], card_id]
+
+      const qty = Math.round(20 / grade)
+
+      multiplyGradesPush(grade, qty, state)
     })
   },
 })
 
 export const learnReducer = slice.reducer
-export const { removePrevCard, setRandomCard } = slice.actions
+export const { removePrevPlaceCard, setRandomCard } = slice.actions
+
+export type HandledPackType = {
+  [key: string]: CardObjType
+}
+
+export type GradedCardsIds = {
+  [key: string]: string[]
+}
+
+export type GradesType = number[]
+
+export type CardObjType = { [key: string]: CardType }
