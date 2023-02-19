@@ -38,7 +38,7 @@ export const learnApi = createApi({
     updateGrade: build.mutation<UpdateGradeResponseType, UpdateGradeRequestType>({
       query: ({ grade, card_id }) => ({
         url: 'cards/grade',
-        method: 'POST',
+        method: 'PUT',
         body: {
           grade,
           card_id,
