@@ -4,7 +4,7 @@ import { Preloader } from '../../../../../common/components'
 import { PaginationFC } from '../../../../../common/components/pagination/PaginationFC'
 import { columnsForCards } from '../../../helpers'
 import { UseCards } from '../../../hooks'
-import { ListTable } from '../../PackList/pack-list-blocks/PackListTable'
+import { PackListTable } from '../../PackList/pack-list-blocks/PackListTable'
 
 import { BackToPacksButton } from './BackToPacksButton'
 import CardMiddleSection from './CardMiddleSection'
@@ -25,7 +25,7 @@ export const CardsBlocks = () => {
         userId={response?.data?.packUserId}
       />
       <CardMiddleSection />
-      <ListTable
+      <PackListTable
         {...{
           name: 'Cards',
           columns: columnsForCards,

@@ -14,6 +14,7 @@ export type PackListDataType = {
   cards: number
   updated: string
   created: string
+  author: string
   actions?: ReactElement
 }
 
@@ -30,9 +31,18 @@ export type PackDataType = {
 export const columnsForPacks: ColumnsType<PackDataType | PackListDataType> = [
   {
     title: 'Name',
-    width: 318,
+    width: 200,
     dataIndex: 'name',
     key: 'name',
+    fixed: 'left',
+    ellipsis: true,
+    sorter: true,
+  },
+  {
+    title: 'Author',
+    width: 118,
+    dataIndex: 'author',
+    key: 'user_name',
     fixed: 'left',
     ellipsis: true,
     sorter: true,

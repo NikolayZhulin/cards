@@ -60,16 +60,11 @@ export const tablesApi = createApi({
       }),
       invalidatesTags: ['getCards'],
     }),
-    updatePack: build.mutation<any, any>({
-      query: data => ({
+    updatePack: build.mutation<any, UpdatePackRequestType>({
+      query: body => ({
         url: '/cards/pack',
         method: 'PUT',
-        body: {
-          cardsPack: {
-            _id: data,
-            name: 'NEW_NAME',
-          },
-        },
+        body,
       }),
       invalidatesTags: ['getCards'],
     }),
@@ -216,5 +211,12 @@ type AddPackRequestType = {
     name: string
     deckCover?: string
     private?: boolean
+  }
+}
+
+type UpdatePackRequestType = {
+  cardsPack: {
+    _id?: string /// need to fix!!
+    name?: string
   }
 }

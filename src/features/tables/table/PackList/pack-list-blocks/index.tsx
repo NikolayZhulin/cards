@@ -10,7 +10,7 @@ import { usePackList } from '../../../hooks'
 import { useAddPackMutation } from '../../../tablesApi'
 
 import { PackListMiddleSection } from './PackListMiddleSection'
-import { ListTable } from './PackListTable'
+import { PackListTable } from './PackListTable'
 import { PackListTopSection } from './PackListTopSection'
 
 export const PacksListBlocks = () => {
@@ -63,7 +63,6 @@ export const PacksListBlocks = () => {
             onChange={e => setName(e.currentTarget.value)}
             placeholder="Enter name"
             bordered={false}
-            autoFocus={true}
           />
           <Checkbox checked={isPrivate} onChange={e => setIsPrivate(e.target.checked)}>
             Private pack
@@ -84,7 +83,9 @@ export const PacksListBlocks = () => {
         min={+search.min}
         max={+search.max}
       />
-      <ListTable {...{ name: 'Packs', columns: columnsForPacks, sortType: 'sortPacks', rows }} />
+      <PackListTable
+        {...{ name: 'Packs', columns: columnsForPacks, sortType: 'sortPacks', rows }}
+      />
       <PaginationFC
         current={response.data?.page}
         pageSize={response.data?.pageCount}

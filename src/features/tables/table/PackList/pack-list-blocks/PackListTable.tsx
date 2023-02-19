@@ -8,13 +8,13 @@ import { UseTableSort } from '../../../hooks'
 import { Title } from '../../../styles'
 
 type PackListTablePropsType = {
-  rows: any
   name: string
   columns: ColumnsType<any>
   sortType: string
+  rows: any
 }
 
-export const ListTable = ({ rows, name, columns, sortType }: PackListTablePropsType) => {
+export const PackListTable = ({ name, columns, sortType, rows }: PackListTablePropsType) => {
   const { titleForEmptyTable, onChangeTableHandler } = UseTableSort(sortType, name)
 
   if (!rows?.length) {

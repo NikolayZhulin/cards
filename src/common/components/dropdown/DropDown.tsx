@@ -14,7 +14,7 @@ import { useAppSelector } from '../../hooks/reduxHooks'
 import { PATH } from '../../utils'
 
 type PropsType = {
-  cardsPackId: string | undefined
+  cardsPackId?: string
   packUserId: string | undefined
 }
 export const DropDown = ({ cardsPackId, packUserId }: PropsType) => {
@@ -30,7 +30,7 @@ export const DropDown = ({ cardsPackId, packUserId }: PropsType) => {
       key: '0',
       disabled: packUserId !== myID,
       onClick: async () => {
-        await updatePack(cardsPackId)
+        await updatePack({ cardsPack: { _id: cardsPackId, name: 'newName' } })
         trigger({ cardsPack_id: cardsPackId })
       },
       icon: <EditOutlined />,
