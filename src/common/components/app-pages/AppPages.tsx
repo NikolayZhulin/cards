@@ -14,7 +14,6 @@ import { Cards } from '../../../features/tables/table/Cards'
 import { PacksList } from '../../../features/tables/table/PackList'
 import { PATH } from '../../utils'
 import { Error404 } from '../error404/Error404'
-import { ModalFC } from '../modal/ModalFC'
 import { PrivateRoutes } from '../private-routes/PrivateRoutes'
 
 const AppPages = () => {
