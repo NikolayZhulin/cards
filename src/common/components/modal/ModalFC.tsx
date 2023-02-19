@@ -31,7 +31,7 @@ export const ModalFC = ({
       okButtonProps={{ danger: danger, disabled: isLoading }}
       cancelButtonProps={{ disabled: isLoading }}
       closable={false}
-      centered={true}
+      // centered={true}
       style={{ width: '400px' }}
     >
       {children}

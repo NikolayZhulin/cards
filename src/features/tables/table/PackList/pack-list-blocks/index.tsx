@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import { Checkbox, Input } from 'antd'
 
@@ -7,6 +7,7 @@ import { ModalFC } from '../../../../../common/components/modal/ModalFC'
 import { PaginationFC } from '../../../../../common/components/pagination/PaginationFC'
 import { columnsForPacks } from '../../../helpers'
 import { usePackList } from '../../../hooks'
+import { useAddPackMutation } from '../../../tablesApi'
 
 import { PackListMiddleSection } from './PackListMiddleSection'
 import { ListTable } from './PackListTable'
@@ -14,7 +15,6 @@ import { PackListTopSection } from './PackListTopSection'
 
 export const PacksListBlocks = () => {
   const {
-    addNewPack,
     getAllPacks,
     getMyPacks,
     maxCardsCount,
@@ -23,21 +23,24 @@ export const PacksListBlocks = () => {
     response,
     search,
     rows,
-    packIsAdding,
   } = usePackList()
   const [openModal, setOpenModal] = useState<boolean>(false)
-  const [name, setName] = useState<string>('new name')
+  const [name, setName] = useState<string>('')
   const [isPrivate, setIsPrivate] = useState<boolean>(false)
+  const [addPack, { isLoading: packIsAdding }] = useAddPackMutation()
 
   const closeModal = () => {
     setName('')
     setOpenModal(false)
   }
-  const addNewPackHandler = () => addNewPack(name, isPrivate)
-
-  useEffect(() => {
-    closeModal()
-  }, [response])
+  const addNewPackHandler = async () => {
+    try {
+      await addPack({ cardsPack: { name, private: isPrivate } }).unwrap()
+      closeModal()
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   if (response.isLoading) return <Preloader />
 
@@ -51,15 +54,21 @@ export const PacksListBlocks = () => {
         handleOk={addNewPackHandler}
         handleCancel={closeModal}
       >
-        <>
+        <div>
+          <h3>Add new pack</h3>
+          <hr />
+          <div>Name pack</div>
           <Input
             value={name}
             onChange={e => setName(e.currentTarget.value)}
-            placeholder="Name pack"
+            placeholder="Enter name"
             bordered={false}
+            autoFocus={true}
           />
-          <Checkbox checked={isPrivate} onChange={e => setIsPrivate(e.target.checked)} />
-        </>
+          <Checkbox checked={isPrivate} onChange={e => setIsPrivate(e.target.checked)}>
+            Private pack
+          </Checkbox>
+        </div>
       </ModalFC>
       <PackListTopSection
         formTitle={'Pack list'}

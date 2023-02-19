@@ -18,7 +18,7 @@ export const usePackList = () => {
   const userId = useAppSelector(state => state.auth.userId)
   const [rows, setRows] = useState<PackListDataType[]>()
 
-  const [addPack, { isLoading: packIsAdding }] = useAddPackMutation()
+  const [addPack, {}] = useAddPackMutation()
   const [updatePack, {}] = useUpdatePackMutation()
   const [deletePack, {}] = useDeletePackMutation()
   const [trigger, response] = useLazyFetchCardsPackQuery()
@@ -87,6 +87,5 @@ export const usePackList = () => {
     response,
     search,
     rows,
-    packIsAdding,
   }
 }
