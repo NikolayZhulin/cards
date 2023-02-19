@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
-import { Input } from 'antd'
 import { NavLink } from 'react-router-dom'
 
-import { ModalFC } from '../../../common/components/modal/ModalFC'
-import { useAppSelector } from '../../../common/hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
 import { useSearch } from '../../../common/hooks/useSearch'
 import { formatDate, PATH } from '../../../common/utils'
 import { LearnButton, UpdateButtons } from '../components'
+import { toggleUpdatePackModal } from '../packs-reducer'
 import {
   useAddPackMutation,
   useDeletePackMutation,
@@ -19,30 +18,18 @@ export const usePackList = () => {
   const userId = useAppSelector(state => state.auth.userId)
 
   const [addPack, {}] = useAddPackMutation()
-  const [updatePack, { isLoading: packIsUpdating }] = useUpdatePackMutation()
+  const [updatePack, {}] = useUpdatePackMutation()
   const [deletePack, {}] = useDeletePackMutation()
   const [trigger, response] = useLazyFetchCardsPackQuery()
+  const dispatch = useAppDispatch()
 
   const maxCardsCount = response?.data ? response?.data.maxCardsCount : 0
   const minCardsCount = response?.data ? response?.data.minCardsCount : 0
   const emptyParams = {}
   const { setSearchParams, search, searchParams } = useSearch()
 
-  const [openModal, setOpenModal] = useState<boolean>(false)
-  const [value, setValue] = useState<string>('')
-
-  const closeModal = () => {
-    setValue('')
-    setOpenModal(false)
-  }
-
-  const updatePackHandler = async (_id: string) => {
-    try {
-      await updatePack({ cardsPack: { _id, name: value } }).unwrap()
-      closeModal()
-    } catch (e) {
-      console.log(e)
-    }
+  const editItemHandler = (packId: string) => {
+    dispatch(toggleUpdatePackModal({ showModal: true, packId: packId }))
   }
 
   const rows = response.data?.cardPacks.map(p => {
@@ -60,29 +47,9 @@ export const usePackList = () => {
           <LearnButton isCardCount={!!p.cardsCount} />
           <UpdateButtons
             isMyItem={isMyPack}
-            editHandler={() => setOpenModal(true)}
+            editHandler={() => editItemHandler(p._id)}
             deleteHandler={() => deletePack(p._id)}
           />
-          <ModalFC
-            okText={'Save'}
-            danger={false}
-            isOpen={openModal}
-            isLoading={packIsUpdating}
-            handleOk={() => updatePackHandler(p._id)}
-            handleCancel={closeModal}
-          >
-            <div>
-              <h3>Edit pack</h3>
-              <hr />
-              <div>Name pack</div>
-              <Input
-                value={value}
-                onChange={e => setValue(e.currentTarget.value)}
-                placeholder="Enter name"
-                bordered={false}
-              />
-            </div>
-          </ModalFC>
         </div>
       ),
     }
