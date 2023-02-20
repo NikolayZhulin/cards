@@ -3,9 +3,10 @@ import React, { useEffect } from 'react'
 import emptyStar from '../../../assets/pictures/emptyStar.png'
 import fullStar from '../../../assets/pictures/fullStar.png'
 import halfStar from '../../../assets/pictures/halfStar.png'
-import { useAppSelector } from '../../../common/hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
 import { useSearch } from '../../../common/hooks/useSearch'
 import { formatDate } from '../../../common/utils'
+import { saveCardForDelete, toggleDeleteCardModal } from '../cards-reducer'
 import { UpdateButtons } from '../components'
 import { StyledIcon } from '../styles'
 import {
@@ -22,10 +23,16 @@ export const UseCards = () => {
   const [trigger, response] = useLazyFetchCardsQuery()
   const userId = useAppSelector(state => state.auth.userId)
   const { search, setSearchParams, searchParams } = useSearch()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     trigger({ ...search })
   }, [searchParams])
+
+  const deleteCardHandler = (id: string, question: string) => {
+    dispatch(toggleDeleteCardModal({ showModal: true }))
+    dispatch(saveCardForDelete({ id, question }))
+  }
 
   const rows = response.data?.cards.map(c => {
     const isMyPack = c.user_id === userId
@@ -50,7 +57,7 @@ export const UseCards = () => {
           <UpdateButtons
             isMyItem={isMyPack}
             editHandler={() => updateCard(c._id)}
-            deleteHandler={() => deleteCard(c._id)}
+            deleteHandler={() => deleteCardHandler(c._id, c.question)}
           />
         </div>
       ),
