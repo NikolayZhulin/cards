@@ -10,49 +10,14 @@ export const tablesApi = createApi({
   tagTypes: ['getCards', 'getCard'],
   endpoints: build => ({
     fetchCardsPack: build.query<FetchCardsPacksResponseType, FetchCardsPacksRequestType>({
-      query: ({ packName, min, max, sortPacks, page, pageCount, user_id, block }) => ({
+      query: params => ({
         url: 'cards/pack',
         method: 'GET',
-        params: {
-          packName,
-          min,
-          max,
-          sortPacks,
-          page,
-          pageCount,
-          user_id,
-          block,
-        },
+        params,
       }),
       providesTags: ['getCards'],
     }),
-    fetchCards: build.query<FetchCardsResponseType, FetchCardsRequestType>({
-      query: ({
-        cardAnswer,
-        cardQuestion,
-        cardsPack_id,
-        min,
-        max,
-        sortCards,
-        page,
-        pageCount,
-      }) => ({
-        url: 'cards/card',
-        method: 'GET',
-        params: {
-          cardAnswer,
-          cardQuestion,
-          cardsPack_id,
-          min,
-          max,
-          sortCards,
-          page,
-          pageCount,
-        },
-      }),
-      providesTags: ['getCard'],
-    }),
-    addPack: build.mutation<any, AddPackRequestType>({
+    addPack: build.mutation<AddPackResponseType, AddPackRequestType>({
       query: body => ({
         url: '/cards/pack',
         method: 'POST',
@@ -60,7 +25,7 @@ export const tablesApi = createApi({
       }),
       invalidatesTags: ['getCards'],
     }),
-    updatePack: build.mutation<any, UpdatePackRequestType>({
+    updatePack: build.mutation<UpdatePackResponseType, UpdatePackRequestType>({
       query: body => ({
         url: '/cards/pack',
         method: 'PUT',
@@ -68,14 +33,22 @@ export const tablesApi = createApi({
       }),
       invalidatesTags: ['getCards', 'getCard'],
     }),
-    deletePack: build.mutation<any, string>({
+    deletePack: build.mutation<DeletePackResponseType, string>({
       query: packId => ({
         url: `/cards/pack?id=${packId}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['getCards'],
     }),
-    addCard: build.mutation<any, AddCardRequestType>({
+    fetchCards: build.query<FetchCardsResponseType, FetchCardsRequestType>({
+      query: params => ({
+        url: 'cards/card',
+        method: 'GET',
+        params,
+      }),
+      providesTags: ['getCard'],
+    }),
+    addCard: build.mutation<AddCardResponseType, AddCardRequestType>({
       query: body => ({
         url: '/cards/card',
         method: 'POST',
@@ -83,7 +56,7 @@ export const tablesApi = createApi({
       }),
       invalidatesTags: ['getCard'],
     }),
-    updateCard: build.mutation<any, UpdateCardRequestType>({
+    updateCard: build.mutation<UpdateCardResponseType, UpdateCardRequestType>({
       query: body => ({
         url: '/cards/card',
         method: 'PUT',
@@ -91,7 +64,7 @@ export const tablesApi = createApi({
       }),
       invalidatesTags: ['getCard'],
     }),
-    deleteCard: build.mutation<any, string>({
+    deleteCard: build.mutation<DeleteCardResponseType, string>({
       query: id => ({
         url: `/cards/card?id=${id}`,
         method: 'DELETE',
@@ -102,8 +75,6 @@ export const tablesApi = createApi({
 })
 
 export const {
-  useFetchCardsPackQuery,
-  useFetchCardsQuery,
   useAddPackMutation,
   useUpdatePackMutation,
   useDeletePackMutation,
@@ -114,7 +85,8 @@ export const {
   useLazyFetchCardsQuery,
 } = tablesApi
 
-export type FetchCardsPacksRequestType = {
+// request types
+type FetchCardsPacksRequestType = {
   packName?: string
   min?: number | null
   max?: number | null
@@ -125,7 +97,7 @@ export type FetchCardsPacksRequestType = {
   block?: boolean
 }
 
-export type FetchCardsRequestType = {
+type FetchCardsRequestType = {
   cardAnswer?: string
   cardQuestion?: string
   cardsPack_id?: string
@@ -134,65 +106,6 @@ export type FetchCardsRequestType = {
   sortCards?: string
   page?: number
   pageCount?: number
-}
-
-export type FetchCardsPacksResponseType = {
-  cardPacks: CardPack[]
-  page: number
-  pageCount: number
-  cardPacksTotalCount: number
-  minCardsCount: number
-  maxCardsCount: number
-  token: string
-  tokenDeathTime: number
-  user_id: string
-}
-
-export type CardPack = {
-  _id: string
-  user_id: string
-  user_name: string
-  private: boolean
-  name: string
-  cardsCount: number
-  created: string
-  updated: string
-  __v: number
-  path: string
-  grade: number
-  shots: number
-  type: string
-  rating: number
-  more_id: string
-}
-
-export type FetchCardsResponseType = {
-  cards: CardType[]
-  packUserId: string
-  packName: string
-  packPrivate: boolean
-  packDeckCover: any
-  packCreated: string
-  packUpdated: string
-  page: number
-  pageCount: number
-  cardsTotalCount: number
-  minGrade: number
-  maxGrade: number
-  token: string
-  tokenDeathTime: number
-}
-
-export type CardType = {
-  answer: string
-  question: string
-  cardsPack_id: string
-  grade: number
-  shots: number
-  user_id: string
-  created: string
-  updated: string
-  _id: string
 }
 
 type AddPackRequestType = {
@@ -205,7 +118,7 @@ type AddPackRequestType = {
 
 type UpdatePackRequestType = {
   cardsPack: {
-    _id?: string /// need to fix!!
+    _id?: string
     name?: string
   }
 }
@@ -231,4 +144,108 @@ type UpdateCardRequestType = {
     answer?: string
     answerImg?: string
   }
+}
+
+//response types
+type FetchCardsPacksResponseType = {
+  cardPacks: CardPack[]
+  page: number
+  pageCount: number
+  cardPacksTotalCount: number
+  minCardsCount: number
+  maxCardsCount: number
+  token: string
+  tokenDeathTime: number
+  user_id: string
+}
+type CardPack = {
+  _id: string
+  user_id: string
+  user_name: string
+  private: boolean
+  name: string
+  path: string
+  grade: number
+  shots: number
+  cardsCount: number
+  type: string
+  rating: number
+  created: string
+  updated: string
+  __v: number
+  more_id: string
+}
+
+type AddPackResponseType = {
+  newCardsPack: CardPack
+  token: string
+  tokenDeathTime: number
+}
+
+type UpdatePackResponseType = {
+  updatedCardsPack: CardPack & { deckCover?: any }
+  token: string
+  tokenDeathTime: number
+}
+
+type DeletePackResponseType = {
+  deletedCardsPack: CardPack & { deckCover?: any }
+  token: string
+  tokenDeathTime: number
+}
+
+type FetchCardsResponseType = {
+  cards: CardType[]
+  packUserId: string
+  packName: string
+  packPrivate: boolean
+  packDeckCover: any
+  packCreated: string
+  packUpdated: string
+  page: number
+  pageCount: number
+  cardsTotalCount: number
+  minGrade: number
+  maxGrade: number
+  token: string
+  tokenDeathTime: number
+}
+
+type NewCard = {
+  answer: string
+  question: string
+  cardsPack_id: string
+  grade: number
+  shots: number
+  user_id: string
+  created: string
+  updated: string
+  _id: string
+  comments: string
+  type: string
+  rating: number
+  more_id: string
+  __v: number
+}
+type CardType = NewCard & {
+  answerImg: string
+  answerVideo: string
+  questionImg: string
+  questionVideo: string
+}
+
+type AddCardResponseType = {
+  newCard: NewCard
+  token: string
+  tokenDeathTime: number
+}
+type DeleteCardResponseType = {
+  deletedCard: NewCard
+  token: string
+  tokenDeathTime: number
+}
+type UpdateCardResponseType = {
+  updatedCard: CardType
+  token: string
+  tokenDeathTime: number
 }
