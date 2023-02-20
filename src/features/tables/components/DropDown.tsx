@@ -5,33 +5,31 @@ import type { MenuProps } from 'antd'
 import { Dropdown, Space } from 'antd'
 import { useNavigate } from 'react-router-dom'
 
-import {
-  useDeletePackMutation,
-  useLazyFetchCardsQuery,
-  useUpdatePackMutation,
-} from '../../../features/tables'
-import { useAppSelector } from '../../hooks/reduxHooks'
-import { PATH } from '../../utils'
+import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
+import { PATH } from '../../../common/utils'
+import { useDeletePackMutation } from '../index'
+import { savePackIdForUpdate, savePackNameForUpdate, toggleUpdatePackModal } from '../packs-reducer'
 
 type PropsType = {
   cardsPackId?: string
   packUserId: string | undefined
+  packName: string | undefined
 }
-export const DropDown = ({ cardsPackId, packUserId }: PropsType) => {
-  const [updatePack, {}] = useUpdatePackMutation()
+export const DropDown = ({ cardsPackId, packUserId, packName }: PropsType) => {
   const [deletePack, {}] = useDeletePackMutation()
-  const [trigger, response] = useLazyFetchCardsQuery()
   const myID = useAppSelector(state => state.auth.userId)
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   const items: MenuProps['items'] = [
     {
       label: 'Edit',
       key: '0',
       disabled: packUserId !== myID,
-      onClick: async () => {
-        await updatePack({ cardsPack: { _id: cardsPackId, name: 'newName' } })
-        trigger({ cardsPack_id: cardsPackId })
+      onClick: () => {
+        dispatch(toggleUpdatePackModal({ showModal: true }))
+        dispatch(savePackIdForUpdate({ packId: cardsPackId }))
+        dispatch(savePackNameForUpdate({ name: packName }))
       },
       icon: <EditOutlined />,
     },

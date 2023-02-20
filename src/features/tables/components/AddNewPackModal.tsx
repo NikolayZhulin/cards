@@ -3,21 +3,20 @@ import React, { useState } from 'react'
 import { Checkbox, Input } from 'antd'
 
 import { ModalFC } from '../../../common/components/modal/ModalFC'
+import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
+import { toggleAddNewPackModal } from '../packs-reducer'
 import { useAddPackMutation } from '../tablesApi'
 
-type PropsType = {
-  hideModal: () => void
-}
-export const AddNewPackModal = ({ hideModal }: PropsType) => {
-  const [openModal, setOpenModal] = useState<boolean>(true)
+export const AddNewPackModal = () => {
+  const openModal = useAppSelector(state => state.packs.isAddNewPackModalOpen)
+  const dispatch = useAppDispatch()
   const [name, setName] = useState<string>('')
   const [isPrivate, setIsPrivate] = useState<boolean>(false)
   const [addPack, { isLoading: packIsAdding }] = useAddPackMutation()
 
   const closeModal = () => {
     setName('')
-    setOpenModal(false)
-    hideModal()
+    dispatch(toggleAddNewPackModal({ showModal: false }))
   }
   const addNewPackHandler = async () => {
     try {

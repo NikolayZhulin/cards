@@ -66,7 +66,7 @@ export const tablesApi = createApi({
         method: 'PUT',
         body,
       }),
-      invalidatesTags: ['getCards'],
+      invalidatesTags: ['getCards', 'getCard'],
     }),
     deletePack: build.mutation<any, any>({
       query: data => ({

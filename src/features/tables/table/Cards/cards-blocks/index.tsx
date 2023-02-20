@@ -4,6 +4,7 @@ import { Preloader } from '../../../../../common/components'
 import { PaginationFC } from '../../../../../common/components/pagination/PaginationFC'
 import { columnsForCards } from '../../../helpers'
 import { UseCards } from '../../../hooks'
+import { useLazyFetchCardsQuery } from '../../../tablesApi'
 import { PackListTable } from '../../PackList/pack-list-blocks/PackListTable'
 
 import { BackToPacksButton } from './BackToPacksButton'
@@ -11,7 +12,7 @@ import CardMiddleSection from './CardMiddleSection'
 import { CardsTopSection } from './CardsTopSection'
 
 export const CardsBlocks = () => {
-  const { addNewCard, response, onChangePaginationHandler, rows } = UseCards()
+  const { addNewCard, onChangePaginationHandler, rows, response } = UseCards()
 
   if (response.isLoading) return <Preloader />
 

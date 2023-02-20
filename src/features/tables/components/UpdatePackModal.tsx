@@ -1,22 +1,23 @@
 import React, { useState } from 'react'
 
-import { Checkbox, Input } from 'antd'
+import { Input } from 'antd'
 
 import { ModalFC } from '../../../common/components/modal/ModalFC'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
-import { toggleUpdatePackModal } from '../packs-reducer'
-import { useAddPackMutation, useUpdatePackMutation } from '../tablesApi'
+import { savePackIdForUpdate, toggleUpdatePackModal } from '../packs-reducer'
+import { useUpdatePackMutation } from '../tablesApi'
 
 export const UpdatePackModal = () => {
   const showModal = useAppSelector(state => state.packs.isUpdatePackModalOpen)
-  const id = useAppSelector(state => state.packs.packForUpdate)
+  const id = useAppSelector(state => state.packs.packIdForUpdate)
+  const oldName = useAppSelector(state => state.packs.packNameForUpdate)
   const dispatch = useAppDispatch()
   const [updatePack, { isLoading: packIsUpdating }] = useUpdatePackMutation()
-  const [value, setValue] = useState<string>('')
+  const [value, setValue] = useState<string>(oldName)
 
   const closeModal = () => {
-    setValue('')
     dispatch(toggleUpdatePackModal({ showModal: false }))
+    dispatch(savePackIdForUpdate({ packId: '' }))
   }
 
   const updatePackHandler = async (_id: string) => {

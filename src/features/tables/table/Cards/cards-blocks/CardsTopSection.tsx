@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { DropDown } from '../../../../../common/components/dropdown/DropDown'
 import { FormTitle } from '../../../../../common/style'
+import { DropDown } from '../../../components/DropDown'
 import { AddNewItemButton, TopSection } from '../../../styles'
 
 type CardsTopSectionType = {
@@ -21,7 +21,7 @@ export const CardsTopSection = ({
     <TopSection>
       <FormTitle>
         {packName}
-        <DropDown packUserId={userId} cardsPackId={cardsPackId} />
+        <DropDown packName={packName} packUserId={userId} cardsPackId={cardsPackId} />
       </FormTitle>
       <AddNewItemButton type="primary" onClick={addCard}>
         Add new card
