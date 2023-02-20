@@ -75,17 +75,11 @@ export const tablesApi = createApi({
       }),
       invalidatesTags: ['getCards'],
     }),
-    addCard: build.mutation<any, any>({
-      query: data => ({
+    addCard: build.mutation<any, AddCardRequestType>({
+      query: body => ({
         url: '/cards/card',
         method: 'POST',
-        body: {
-          card: {
-            cardsPack_id: data,
-            question: 'NEW QUESTION5555555',
-            answer: 'NEW ANSWER5555555',
-          },
-        },
+        body,
       }),
       invalidatesTags: ['getCard'],
     }),
@@ -102,9 +96,9 @@ export const tablesApi = createApi({
       }),
       invalidatesTags: ['getCard'],
     }),
-    deleteCard: build.mutation<any, any>({
-      query: data => ({
-        url: `/cards/card?id=${data}`,
+    deleteCard: build.mutation<any, string>({
+      query: id => ({
+        url: `/cards/card?id=${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['getCard'],
@@ -218,5 +212,19 @@ type UpdatePackRequestType = {
   cardsPack: {
     _id?: string /// need to fix!!
     name?: string
+  }
+}
+
+type AddCardRequestType = {
+  card: {
+    cardsPack_id: string
+    question?: string
+    answer?: string
+    grade?: 0 | 1 | 2 | 3 | 4 | 5
+    shots?: number
+    answerImg?: string
+    questionImg?: string
+    questionVideo?: string
+    answerVideo?: string
   }
 }

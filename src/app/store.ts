@@ -4,6 +4,7 @@ import thunkMiddleware from 'redux-thunk'
 import { authAPI, authReducer } from '../features/auth'
 import { profileReducer } from '../features/profile'
 import { tablesApi } from '../features/tables'
+import { cardsReducer } from '../features/tables/cards-reducer'
 import { packsReducer } from '../features/tables/packs-reducer'
 
 import { appReducer } from './app-reducer'
@@ -14,6 +15,7 @@ export const store = configureStore({
     auth: authReducer,
     profile: profileReducer,
     packs: packsReducer,
+    cards: cardsReducer,
     [authAPI.reducerPath]: authAPI.reducer,
     [tablesApi.reducerPath]: tablesApi.reducer,
   },

@@ -2,10 +2,8 @@ import React from 'react'
 
 import { Preloader } from '../../../../../common/components'
 import { PaginationFC } from '../../../../../common/components/pagination/PaginationFC'
-import { useAppDispatch } from '../../../../../common/hooks/reduxHooks'
 import { columnsForPacks } from '../../../helpers'
 import { usePackList } from '../../../hooks'
-import { toggleAddNewPackModal } from '../../../packs-reducer'
 
 import { PackListMiddleSection } from './PackListMiddleSection'
 import { PackListTable } from './PackListTable'
@@ -22,16 +20,12 @@ export const PacksListBlocks = () => {
     search,
     rows,
   } = usePackList()
-  const dispatch = useAppDispatch()
-  const addNewItemHandler = () => {
-    dispatch(toggleAddNewPackModal({ showModal: true }))
-  }
 
   if (response.isLoading) return <Preloader />
 
   return (
     <>
-      <PackListTopSection formTitle={'Pack list'} addNewItem={addNewItemHandler} />
+      <PackListTopSection formTitle={'Pack list'} />
       <PackListMiddleSection
         getMyPacks={getMyPacks}
         getAllPacks={getAllPacks}
