@@ -1,52 +1,60 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Input, Select } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 
 import { ModalFC } from '../../../common/components/modal/ModalFC'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
-import { toggleAddNewCardModal } from '../cards-reducer'
-import { useAddCardMutation } from '../tablesApi'
+import { toggleUpdateCardModal } from '../cards-reducer'
+import { useUpdateCardMutation } from '../tablesApi'
 
-export const AddNewCardModal = () => {
-  const openModal = useAppSelector(state => state.cards.isAddNewCardModalOpen)
-  const cardsPack_id = useAppSelector(state => state.cards.packIdForNewCard)
+export const UpdateCardModal = () => {
+  const cardId = useAppSelector(state => state.cards.cardForUpdate.id)
+  const showModal = useAppSelector(state => state.cards.isUpdateCardModalOpen)
+  const prevFormat = useAppSelector(state => state.cards.cardForUpdate.format)
+  const prevQuestion = useAppSelector(state => state.cards.cardForUpdate.question)
+  const prevAnswer = useAppSelector(state => state.cards.cardForUpdate.answer)
+  const [question, setQuestion] = useState<string>(prevQuestion)
+  const [answer, setAnswer] = useState<string>(prevAnswer)
+  const [format, setFormat] = useState<string>(prevFormat)
+  const [updateCard, { isLoading: cardIsUpdating }] = useUpdateCardMutation()
   const dispatch = useAppDispatch()
-  const [question, setQuestion] = useState<string>('')
-  const [answer, setAnswer] = useState<string>('')
-  const [format, setFormat] = useState<string>('text')
-  const [addCard, { isLoading: cardIsAdding }] = useAddCardMutation()
 
   const closeModal = () => {
     setAnswer('')
     setQuestion('')
     setFormat('text')
-    dispatch(toggleAddNewCardModal({ showModal: false }))
+    dispatch(toggleUpdateCardModal({ showModal: false }))
   }
-  const addNewCardHandler = async () => {
+  const updateCardHandler = async () => {
     try {
-      if (format === 'text') await addCard({ card: { cardsPack_id, question, answer } }).unwrap()
+      if (format === 'text') await updateCard({ card: { _id: cardId, question, answer } }).unwrap()
       closeModal()
     } catch (e) {
       console.log(e)
     }
   }
-
   const handleChange = (value: string) => {
     setFormat(value)
   }
+
+  useEffect(() => {
+    setAnswer(prevAnswer)
+    setQuestion(prevQuestion)
+    setFormat(prevFormat)
+  }, [prevQuestion, prevAnswer, prevFormat])
 
   return (
     <ModalFC
       okText={'Save'}
       danger={false}
-      isOpen={openModal}
-      isLoading={cardIsAdding}
-      handleOk={addNewCardHandler}
+      isOpen={showModal}
+      isLoading={cardIsUpdating}
+      handleOk={updateCardHandler}
       handleCancel={closeModal}
     >
       <div>
-        <h3>Add new card</h3>
+        <h3>Edit card</h3>
         <hr />
         <div>Choose a question format</div>
         <Select

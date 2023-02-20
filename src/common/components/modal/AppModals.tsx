@@ -4,6 +4,7 @@ import { AddNewCardModal } from '../../../features/tables/components/AddNewCardM
 import { AddNewPackModal } from '../../../features/tables/components/AddNewPackModal'
 import { DeleteCardModal } from '../../../features/tables/components/DeleteCardModal'
 import { DeletePackModal } from '../../../features/tables/components/DeletePackModal'
+import { UpdateCardModal } from '../../../features/tables/components/UpdateCardModal'
 import { UpdatePackModal } from '../../../features/tables/components/UpdatePackModal'
 
 export const AppModals = () => {
@@ -12,6 +13,7 @@ export const AppModals = () => {
       <AddNewPackModal />
       <AddNewCardModal />
       <UpdatePackModal />
+      <UpdateCardModal />
       <DeletePackModal />
       <DeleteCardModal />
     </>

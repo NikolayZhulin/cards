@@ -83,16 +83,11 @@ export const tablesApi = createApi({
       }),
       invalidatesTags: ['getCard'],
     }),
-    updateCard: build.mutation<any, any>({
-      query: data => ({
+    updateCard: build.mutation<any, UpdateCardRequestType>({
+      query: body => ({
         url: '/cards/card',
         method: 'PUT',
-        body: {
-          card: {
-            _id: data,
-            question: 'NE',
-          },
-        },
+        body,
       }),
       invalidatesTags: ['getCard'],
     }),
@@ -226,5 +221,14 @@ type AddCardRequestType = {
     questionImg?: string
     questionVideo?: string
     answerVideo?: string
+  }
+}
+type UpdateCardRequestType = {
+  card: {
+    _id: string
+    question?: string
+    questionImg?: string
+    answer?: string
+    answerImg?: string
   }
 }

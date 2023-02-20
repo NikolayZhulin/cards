@@ -6,7 +6,12 @@ import halfStar from '../../../assets/pictures/halfStar.png'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
 import { useSearch } from '../../../common/hooks/useSearch'
 import { formatDate } from '../../../common/utils'
-import { saveCardForDelete, toggleDeleteCardModal } from '../cards-reducer'
+import {
+  saveCardForDelete,
+  saveCardForUpdate,
+  toggleDeleteCardModal,
+  toggleUpdateCardModal,
+} from '../cards-reducer'
 import { UpdateButtons } from '../components'
 import { StyledIcon } from '../styles'
 import {
@@ -33,7 +38,10 @@ export const UseCards = () => {
     dispatch(toggleDeleteCardModal({ showModal: true }))
     dispatch(saveCardForDelete({ id, question }))
   }
-
+  const updateCardHandler = (id: string, question: string, answer: string) => {
+    dispatch(saveCardForUpdate({ id, question, answer }))
+    dispatch(toggleUpdateCardModal({ showModal: true }))
+  }
   const rows = response.data?.cards.map(c => {
     const isMyPack = c.user_id === userId
 
@@ -56,7 +64,7 @@ export const UseCards = () => {
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           <UpdateButtons
             isMyItem={isMyPack}
-            editHandler={() => updateCard(c._id)}
+            editHandler={() => updateCardHandler(c._id, c.question, c.answer)}
             deleteHandler={() => deleteCardHandler(c._id, c.question)}
           />
         </div>

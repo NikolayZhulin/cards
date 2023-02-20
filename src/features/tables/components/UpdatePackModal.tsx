@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Input } from 'antd'
 
 import { ModalFC } from '../../../common/components/modal/ModalFC'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
-import { savePackForUpdate, toggleUpdatePackModal } from '../packs-reducer'
+import { toggleUpdatePackModal } from '../packs-reducer'
 import { useUpdatePackMutation } from '../tablesApi'
 
 export const UpdatePackModal = () => {
   const showModal = useAppSelector(state => state.packs.isUpdatePackModalOpen)
   const packId = useAppSelector(state => state.packs.packForUpdate.id)
-  const oldName = useAppSelector(state => state.packs.packForUpdate.name)
+  const prevName = useAppSelector(state => state.packs.packForUpdate.name)
   const dispatch = useAppDispatch()
   const [updatePack, { isLoading: packIsUpdating }] = useUpdatePackMutation()
-  const [value, setValue] = useState<string>(oldName)
+  const [value, setValue] = useState<string>(prevName)
 
   const closeModal = () => dispatch(toggleUpdatePackModal({ showModal: false }))
 
@@ -25,6 +25,8 @@ export const UpdatePackModal = () => {
       console.log(e)
     }
   }
+
+  useEffect(() => setValue(prevName), [prevName])
 
   return (
     <ModalFC
