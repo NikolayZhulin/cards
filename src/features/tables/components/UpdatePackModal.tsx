@@ -4,25 +4,22 @@ import { Input } from 'antd'
 
 import { ModalFC } from '../../../common/components/modal/ModalFC'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
-import { savePackIdForUpdate, toggleUpdatePackModal } from '../packs-reducer'
+import { savePackForUpdate, toggleUpdatePackModal } from '../packs-reducer'
 import { useUpdatePackMutation } from '../tablesApi'
 
 export const UpdatePackModal = () => {
   const showModal = useAppSelector(state => state.packs.isUpdatePackModalOpen)
-  const id = useAppSelector(state => state.packs.packIdForUpdate)
-  const oldName = useAppSelector(state => state.packs.packNameForUpdate)
+  const packId = useAppSelector(state => state.packs.packForUpdate.id)
+  const oldName = useAppSelector(state => state.packs.packForUpdate.name)
   const dispatch = useAppDispatch()
   const [updatePack, { isLoading: packIsUpdating }] = useUpdatePackMutation()
   const [value, setValue] = useState<string>(oldName)
 
-  const closeModal = () => {
-    dispatch(toggleUpdatePackModal({ showModal: false }))
-    dispatch(savePackIdForUpdate({ packId: '' }))
-  }
+  const closeModal = () => dispatch(toggleUpdatePackModal({ showModal: false }))
 
-  const updatePackHandler = async (_id: string) => {
+  const updatePackHandler = async () => {
     try {
-      await updatePack({ cardsPack: { _id, name: value } }).unwrap()
+      await updatePack({ cardsPack: { _id: packId, name: value } }).unwrap()
       closeModal()
     } catch (e) {
       console.log(e)
@@ -35,7 +32,7 @@ export const UpdatePackModal = () => {
       danger={false}
       isOpen={showModal}
       isLoading={packIsUpdating}
-      handleOk={() => updatePackHandler(id)}
+      handleOk={updatePackHandler}
       handleCancel={closeModal}
     >
       <div>

@@ -40,7 +40,7 @@ export const columnsForPacks: ColumnsType<PackDataType | PackListDataType> = [
   },
   {
     title: 'Author',
-    width: 118,
+    width: 150,
     dataIndex: 'author',
     key: 'user_name',
     fixed: 'left',
@@ -59,7 +59,7 @@ export const columnsForPacks: ColumnsType<PackDataType | PackListDataType> = [
     title: 'Last Updated',
     dataIndex: 'updated',
     key: 'updated',
-    width: 200,
+    width: 150,
     sorter: true,
   },
   {

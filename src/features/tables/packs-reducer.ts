@@ -3,8 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 const initialState = {
   isUpdatePackModalOpen: false,
   isAddNewPackModalOpen: false,
-  packIdForUpdate: '',
-  packNameForUpdate: '',
+  isDeletePackModalOpen: false,
+  packForUpdate: { id: '', name: '' },
+  packForDelete: { id: '', name: '', insidePack: false },
 }
 
 const slice = createSlice({
@@ -14,14 +15,23 @@ const slice = createSlice({
     toggleUpdatePackModal(state, action: PayloadAction<{ showModal: boolean }>) {
       state.isUpdatePackModalOpen = action.payload.showModal
     },
-    savePackIdForUpdate(state, action: PayloadAction<{ packId?: string }>) {
-      if (action.payload.packId) state.packIdForUpdate = action.payload.packId
-    },
-    savePackNameForUpdate(state, action: PayloadAction<{ name?: string }>) {
-      if (action.payload.name) state.packNameForUpdate = action.payload.name
-    },
     toggleAddNewPackModal(state, action: PayloadAction<{ showModal: boolean }>) {
       state.isAddNewPackModalOpen = action.payload.showModal
+    },
+    toggleDeletePackModal(state, action: PayloadAction<{ showModal: boolean }>) {
+      state.isDeletePackModalOpen = action.payload.showModal
+    },
+    savePackForUpdate(state, action: PayloadAction<{ packId?: string; name?: string }>) {
+      if (action.payload.packId) state.packForUpdate.id = action.payload.packId
+      if (action.payload.name) state.packForUpdate.name = action.payload.name
+    },
+    savePackForDelete(
+      state,
+      action: PayloadAction<{ packId?: string; name?: string; insidePack?: boolean }>
+    ) {
+      if (action.payload.packId) state.packForDelete.id = action.payload.packId
+      if (action.payload.name) state.packForDelete.name = action.payload.name
+      if (action.payload.insidePack) state.packForDelete.insidePack = action.payload.insidePack
     },
   },
 })
@@ -29,7 +39,8 @@ const slice = createSlice({
 export const packsReducer = slice.reducer
 export const {
   toggleUpdatePackModal,
-  savePackIdForUpdate,
-  savePackNameForUpdate,
   toggleAddNewPackModal,
+  toggleDeletePackModal,
+  savePackForUpdate,
+  savePackForDelete,
 } = slice.actions

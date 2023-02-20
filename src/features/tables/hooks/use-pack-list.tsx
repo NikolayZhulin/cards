@@ -6,7 +6,12 @@ import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks
 import { useSearch } from '../../../common/hooks/useSearch'
 import { formatDate, PATH } from '../../../common/utils'
 import { LearnButton, UpdateButtons } from '../components'
-import { savePackIdForUpdate, savePackNameForUpdate, toggleUpdatePackModal } from '../packs-reducer'
+import {
+  savePackForDelete,
+  savePackForUpdate,
+  toggleDeletePackModal,
+  toggleUpdatePackModal,
+} from '../packs-reducer'
 import {
   useAddPackMutation,
   useDeletePackMutation,
@@ -28,10 +33,13 @@ export const usePackList = () => {
   const emptyParams = {}
   const { setSearchParams, search, searchParams } = useSearch()
 
-  const editItemHandler = (packId: string, name: string) => {
-    dispatch(savePackIdForUpdate({ packId }))
-    dispatch(savePackNameForUpdate({ name }))
+  const editPackHandler = (packId: string, name: string) => {
+    dispatch(savePackForUpdate({ packId, name }))
     dispatch(toggleUpdatePackModal({ showModal: true }))
+  }
+  const deletePackHandler = (packId: string, name: string) => {
+    dispatch(toggleDeletePackModal({ showModal: true }))
+    dispatch(savePackForDelete({ packId, name, insidePack: false }))
   }
 
   const rows = response.data?.cardPacks.map(p => {
@@ -49,8 +57,8 @@ export const usePackList = () => {
           <LearnButton isCardCount={!!p.cardsCount} />
           <UpdateButtons
             isMyItem={isMyPack}
-            editHandler={() => editItemHandler(p._id, p.name)}
-            deleteHandler={() => deletePack(p._id)}
+            editHandler={() => editPackHandler(p._id, p.name)}
+            deleteHandler={() => deletePackHandler(p._id, p.name)}
           />
         </div>
       ),

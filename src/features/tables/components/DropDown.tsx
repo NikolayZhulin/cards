@@ -3,12 +3,14 @@ import React from 'react'
 import { DeleteOutlined, DownCircleOutlined, EditOutlined, ReadOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Dropdown, Space } from 'antd'
-import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
-import { PATH } from '../../../common/utils'
-import { useDeletePackMutation } from '../index'
-import { savePackIdForUpdate, savePackNameForUpdate, toggleUpdatePackModal } from '../packs-reducer'
+import {
+  savePackForDelete,
+  savePackForUpdate,
+  toggleDeletePackModal,
+  toggleUpdatePackModal,
+} from '../packs-reducer'
 
 type PropsType = {
   cardsPackId?: string
@@ -16,9 +18,7 @@ type PropsType = {
   packName: string | undefined
 }
 export const DropDown = ({ cardsPackId, packUserId, packName }: PropsType) => {
-  const [deletePack, {}] = useDeletePackMutation()
   const myID = useAppSelector(state => state.auth.userId)
-  const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
   const items: MenuProps['items'] = [
@@ -28,8 +28,7 @@ export const DropDown = ({ cardsPackId, packUserId, packName }: PropsType) => {
       disabled: packUserId !== myID,
       onClick: () => {
         dispatch(toggleUpdatePackModal({ showModal: true }))
-        dispatch(savePackIdForUpdate({ packId: cardsPackId }))
-        dispatch(savePackNameForUpdate({ name: packName }))
+        dispatch(savePackForUpdate({ packId: cardsPackId, name: packName }))
       },
       icon: <EditOutlined />,
     },
@@ -38,8 +37,12 @@ export const DropDown = ({ cardsPackId, packUserId, packName }: PropsType) => {
       key: '1',
       disabled: packUserId !== myID,
       onClick: async () => {
-        await deletePack(cardsPackId)
-        navigate(PATH.PACKS_LIST)
+        if (cardsPackId) {
+          await dispatch(toggleDeletePackModal({ showModal: true }))
+          await dispatch(
+            savePackForDelete({ packId: cardsPackId, name: packName, insidePack: true })
+          )
+        }
       },
       icon: <DeleteOutlined />,
     },
