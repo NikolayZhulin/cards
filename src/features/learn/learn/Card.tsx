@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { Button, Space } from 'antd'
 import Radio from 'antd/es/radio'
 import { RadioChangeEvent } from 'antd/es/radio/interface'
+import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { Preloader } from '../../../common/components'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
 import {
+  clearAllState,
   GradedCardsIds,
   GradesType,
   HandledPackType,
@@ -23,21 +25,14 @@ export type CardPropsType = {
 }
 
 export const Card: React.FC<CardPropsType> = () => {
-  // const { isLoading } = useFetchAllCardsQuery({
-  //   // cardsPack_id: '607fece70857db0004f314d1',
-  //   // cardsPack_id: '63f27d4e2f5b653e95c0d6f5',
-  //   // cardsPack_id: '629fa8c5f0ffde100d74e176',
-  //   // cardsPack_id: '63aae5104bbb7936c28c1316',
-  //   // cardsPack_id: '6311bf4b1ced5d2bb4e1fa4d',
-  //   // cardsPack_id: '63b699c0e62d0f092fc7b57e',
-  //   cardsPack_id: '63f2778d2f5b653e95c0d4fa',
-  //   pageCount: 100,
-  // })
   const [fetch, { isLoading, data }] = useLazyFetchAllCardsQuery()
   const randomCard = useAppSelector(state => state.learn.randomCard)
   const [trigger] = useUpdateGradeMutation()
   const [isHidden, setIsHidden] = useState(true)
   const dispatch = useAppDispatch()
+
+  const [searhParams] = useSearchParams()
+  const cardsPack_id = Object.fromEntries(searhParams)['cardsPack_id']
 
   const packName = useAppSelector(state => state.learn.packName)
 
@@ -71,7 +66,7 @@ export const Card: React.FC<CardPropsType> = () => {
   useEffect(() => {
     const foo = async () => {
       await fetch({
-        cardsPack_id: '607fece70857db0004f314d1',
+        cardsPack_id: cardsPack_id,
         pageCount: 100,
       })
 
@@ -80,7 +75,7 @@ export const Card: React.FC<CardPropsType> = () => {
 
         for (let i = 0; i < fetchQty; i++) {
           await fetch({
-            cardsPack_id: '607fece70857db0004f314d1',
+            cardsPack_id: cardsPack_id,
             pageCount: 100,
             page: i + 2,
           })
@@ -90,6 +85,10 @@ export const Card: React.FC<CardPropsType> = () => {
     }
 
     foo()
+
+    return () => {
+      dispatch(clearAllState())
+    }
   }, [isLoading])
 
   if (isLoading) return <Preloader />

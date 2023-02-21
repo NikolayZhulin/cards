@@ -68,6 +68,13 @@ const slice = createSlice({
         state.randomCard = gradedCards[randomCardId]
       }
     },
+    clearAllState: state => {
+      state.packName = ''
+      state.handledCards = {}
+      state.ids = {}
+      state.grades = []
+      state.randomCard = {} as CardType
+    },
   },
   extraReducers: builder => {
     builder.addMatcher(learnApi.endpoints.fetchAllCards.matchFulfilled, (state, { payload }) => {
@@ -130,7 +137,7 @@ const slice = createSlice({
 })
 
 export const learnReducer = slice.reducer
-export const { removePrevPlaceCard, setRandomCard } = slice.actions
+export const { removePrevPlaceCard, setRandomCard, clearAllState } = slice.actions
 
 export type HandledPackType = {
   [key: string]: CardObjType
