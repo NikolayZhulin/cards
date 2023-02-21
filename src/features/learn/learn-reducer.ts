@@ -78,7 +78,9 @@ const slice = createSlice({
 
         // eslint-disable-next-line no-prototype-builtins
         if (state.ids.hasOwnProperty(c.grade)) {
-          state.ids[c.grade].push(c._id)
+          if (!state.ids[c.grade].includes(c._id)) {
+            state.ids[c.grade].push(c._id)
+          }
         } else {
           state.ids[c.grade] = [c._id]
         }
@@ -87,7 +89,9 @@ const slice = createSlice({
       gradesSet.forEach(g => {
         const grade = Number(g)
 
-        multiplyGradesPush(grade, state)
+        if (!state.grades.includes(grade)) {
+          multiplyGradesPush(grade, state)
+        }
       })
     })
     builder.addMatcher(learnApi.endpoints.updateGrade.matchFulfilled, (state, { payload }) => {

@@ -33,7 +33,7 @@ export const Card: React.FC<CardPropsType> = () => {
   //   cardsPack_id: '63f2778d2f5b653e95c0d4fa',
   //   pageCount: 100,
   // })
-  const [fetch, { isLoading }] = useLazyFetchAllCardsQuery()
+  const [fetch, { isLoading, data }] = useLazyFetchAllCardsQuery()
   const randomCard = useAppSelector(state => state.learn.randomCard)
   const [trigger] = useUpdateGradeMutation()
 
@@ -60,14 +60,26 @@ export const Card: React.FC<CardPropsType> = () => {
   useEffect(() => {
     const foo = async () => {
       await fetch({
-        cardsPack_id: '63f2778d2f5b653e95c0d4fa',
+        cardsPack_id: '607fece70857db0004f314d1',
         pageCount: 100,
       })
+
+      if (data && data.cardsTotalCount > data.pageCount) {
+        const fetchQty = Math.ceil(data.cardsTotalCount / data.pageCount) - 1
+
+        for (let i = 0; i < fetchQty; i++) {
+          await fetch({
+            cardsPack_id: '607fece70857db0004f314d1',
+            pageCount: 100,
+            page: i + 2,
+          })
+        }
+      }
       chooseRandomCardInSlice()
     }
 
     foo()
-  }, [])
+  }, [isLoading])
 
   if (isLoading) return <Preloader />
 
