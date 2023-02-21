@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 import { CardType } from '../tables'
 
@@ -21,23 +21,50 @@ const slice = createSlice({
   name: 'learn',
   initialState,
   reducers: {
-    removePrevPlaceCard: (state, action: PayloadAction<CardType>) => {
-      const { grade, _id } = action.payload
+    removePrevPlaceCard: state => {
+      const { grade, _id } = state.randomCard
 
-      if (state.ids[grade].length > 1) {
-        delete state.handledCards[grade][_id]
-        state.ids[grade].splice(
-          state.ids[grade].findIndex(id => id === _id),
-          1
-        )
-      } else {
+      delete state.handledCards[grade][_id]
+      state.ids[grade].splice(
+        state.ids[grade].findIndex(id => id === _id),
+        1
+      )
+
+      if (
+        JSON.stringify(state.handledCards[grade]) === '{}' &&
+        JSON.stringify(state.ids[grade]) === '[]'
+      ) {
         delete state.handledCards[grade]
         delete state.ids[grade]
         state.grades = state.grades.filter(g => g !== grade)
       }
+      if (
+        JSON.stringify(state.handledCards[grade]) === '{}' &&
+        JSON.stringify(state.ids[grade]) !== '[]'
+      ) {
+        throw new Error('removePrevPlaceError')
+      }
+      if (
+        JSON.stringify(state.handledCards[grade]) !== '{}' &&
+        JSON.stringify(state.ids[grade]) === '[]'
+      ) {
+        throw new Error('removePrevPlaceError')
+      }
     },
-    setRandomCard: (state, action) => {
-      state.randomCard = action.payload
+    setRandomCard: state => {
+      if (
+        JSON.stringify(state.handledCards) !== '{}' &&
+        JSON.stringify(state.ids) !== '{}' &&
+        state.grades.length
+      ) {
+        const randomGradeIdx = state.grades[Math.floor(Math.random() * state.grades.length)]
+        const gradedCards = state.handledCards[randomGradeIdx]
+        const gradedIds = state.ids[randomGradeIdx]
+
+        const randomCardId = gradedIds[Math.floor(Math.random() * gradedIds.length)]
+
+        state.randomCard = gradedCards[randomCardId]
+      }
     },
   },
   extraReducers: builder => {
@@ -59,17 +86,13 @@ const slice = createSlice({
 
       gradesSet.forEach(g => {
         const grade = Number(g)
-        const qty = Math.round(20 / grade)
 
-        multiplyGradesPush(grade, qty, state)
+        multiplyGradesPush(grade, state)
       })
     })
     builder.addMatcher(learnApi.endpoints.updateGrade.matchFulfilled, (state, { payload }) => {
-      const { updatedGrade } = payload
-      const { grade, card_id, cardsPack_id, user_id, shots } = updatedGrade
+      const { grade, card_id, cardsPack_id, user_id, shots } = payload.updatedGrade
       const { answer, question, created, updated } = state.randomCard
-
-      console.log(updatedGrade)
 
       state.handledCards[grade] = {
         ...state.handledCards[grade],
@@ -85,12 +108,15 @@ const slice = createSlice({
           updated,
         },
       }
+      if (!state.ids[grade]) {
+        state.ids[grade] = []
+      }
 
-      state.ids[grade] = [...state.ids[grade], card_id]
+      state.ids[grade].push(card_id)
 
-      const qty = Math.round(20 / grade)
-
-      multiplyGradesPush(grade, qty, state)
+      if (!state.grades.includes(grade)) {
+        multiplyGradesPush(grade, state)
+      }
     })
   },
 })

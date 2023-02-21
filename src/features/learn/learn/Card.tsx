@@ -1,4 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+
+import { Button, Space } from 'antd'
+import Radio from 'antd/es/radio'
+import { RadioChangeEvent } from 'antd/es/radio/interface'
+import styled from 'styled-components'
 
 import { Preloader } from '../../../common/components'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
@@ -9,7 +14,7 @@ import {
   removePrevPlaceCard,
   setRandomCard,
 } from '../learn-reducer'
-import { useFetchAllCardsQuery, useUpdateGradeMutation } from '../learnApi'
+import { useLazyFetchAllCardsQuery, useUpdateGradeMutation } from '../learnApi'
 
 export type CardPropsType = {
   cards?: HandledPackType
@@ -18,57 +23,81 @@ export type CardPropsType = {
 }
 
 export const Card: React.FC<CardPropsType> = () => {
-  const { isLoading } = useFetchAllCardsQuery({
-    cardsPack_id: '607fece70857db0004f314d1',
-    pageCount: 100,
-  })
-  const cards = useAppSelector(state => state.learn.handledCards)
-  const cardsIds = useAppSelector(state => state.learn.ids)
-  const grades = useAppSelector(state => state.learn.grades)
-  const [trigger] = useUpdateGradeMutation()
+  // const { isLoading } = useFetchAllCardsQuery({
+  //   // cardsPack_id: '607fece70857db0004f314d1',
+  //   // cardsPack_id: '63f27d4e2f5b653e95c0d6f5',
+  //   // cardsPack_id: '629fa8c5f0ffde100d74e176',
+  //   // cardsPack_id: '63aae5104bbb7936c28c1316',
+  //   // cardsPack_id: '6311bf4b1ced5d2bb4e1fa4d',
+  //   // cardsPack_id: '63b699c0e62d0f092fc7b57e',
+  //   cardsPack_id: '63f2778d2f5b653e95c0d4fa',
+  //   pageCount: 100,
+  // })
+  const [fetch, { isLoading }] = useLazyFetchAllCardsQuery()
   const randomCard = useAppSelector(state => state.learn.randomCard)
+  const [trigger] = useUpdateGradeMutation()
+
   const dispatch = useAppDispatch()
 
-  console.log('cards :', cards)
-  console.log('cardsIds :', cardsIds)
-  console.log('grades :', grades)
+  const chooseRandomCardInSlice = () => {
+    dispatch(setRandomCard())
+  }
 
-  const chooseRandomCard = () => {
-    if (cards && cardsIds && grades) {
-      const randomGradeIdx = grades[Math.floor(Math.random() * grades.length)]
-      const gradedCards = cards[randomGradeIdx]
-      const gradedIds = cardsIds[randomGradeIdx]
+  const [grade, setGrade] = useState<1 | 2 | 3 | 4 | 5>(1)
 
-      if (gradedIds) {
-        const randomCardId = gradedIds[Math.floor(Math.random() * gradedIds.length)]
-
-        dispatch(setRandomCard(gradedCards[randomCardId]))
-      }
+  const updateCardGrade = async () => {
+    if (randomCard) {
+      dispatch(removePrevPlaceCard())
+      await trigger({ grade, card_id: randomCard._id })
+      chooseRandomCardInSlice()
     }
   }
-  const updateCardGrade = (grade: 1 | 2 | 3 | 4 | 5) => {
-    if (randomCard) {
-      trigger({ grade, card_id: randomCard._id })
-      dispatch(removePrevPlaceCard(randomCard))
-      chooseRandomCard()
-    }
+
+  const changeGrade = (e: RadioChangeEvent) => {
+    setGrade(e.target.value)
   }
 
   useEffect(() => {
-    chooseRandomCard()
-  }, [isLoading])
+    const foo = async () => {
+      await fetch({
+        cardsPack_id: '63f2778d2f5b653e95c0d4fa',
+        pageCount: 100,
+      })
+      chooseRandomCardInSlice()
+    }
+
+    foo()
+  }, [])
 
   if (isLoading) return <Preloader />
 
   return (
     <>
       <h2>Question: {randomCard.question}</h2>
+      <p style={{ color: 'gray' }}>Количество попыток ответов на вопрос: {randomCard.shots}</p>
       <h3>Answer: {randomCard.answer}</h3>
-      <button onClick={() => updateCardGrade(5)}>Knew the answer</button>
-      <button onClick={() => updateCardGrade(4)}>Confused</button>
-      <button onClick={() => updateCardGrade(3)}>A lot of thought</button>
-      <button onClick={() => updateCardGrade(2)}>Forgot</button>
-      <button onClick={() => updateCardGrade(1)}>Did not know</button>
+
+      <Button type={'primary'}>Show Answer</Button>
+
+      <HiddenSection>
+        <Radio.Group onChange={changeGrade} value={grade}>
+          <Space direction={'vertical'}>
+            <Radio value={5}>Knew the answer</Radio>
+            <Radio value={4}>Confused</Radio>
+            <Radio value={3}>A lot of thought</Radio>
+            <Radio value={2}>Forgot</Radio>
+            <Radio value={1}>Did not know</Radio>
+          </Space>
+        </Radio.Group>
+        <Button onClick={updateCardGrade} type={'primary'}>
+          Next
+        </Button>
+      </HiddenSection>
     </>
   )
 }
+
+const HiddenSection = styled.div`
+  display: flex;
+  flex-direction: column;
+`
