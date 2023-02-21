@@ -6,11 +6,13 @@ import { learnApi } from './learnApi'
 import { multiplyGradesPush } from './utils/multiplyGradesPush'
 
 const initialState: {
+  packName: string
   handledCards: HandledPackType
   ids: GradedCardsIds
   grades: GradesType
   randomCard: CardType
 } = {
+  packName: '',
   handledCards: {},
   ids: {},
   grades: [],
@@ -69,8 +71,10 @@ const slice = createSlice({
   },
   extraReducers: builder => {
     builder.addMatcher(learnApi.endpoints.fetchAllCards.matchFulfilled, (state, { payload }) => {
-      const { cards } = payload
+      const { cards, packName } = payload
       let gradesSet = new Set()
+
+      state.packName = packName
 
       cards.forEach(c => {
         state.handledCards[c.grade] = { ...state.handledCards[c.grade], [c._id]: c }

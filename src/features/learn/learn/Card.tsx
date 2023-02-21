@@ -39,6 +39,8 @@ export const Card: React.FC<CardPropsType> = () => {
   const [isHidden, setIsHidden] = useState(true)
   const dispatch = useAppDispatch()
 
+  const packName = useAppSelector(state => state.learn.packName)
+
   const chooseRandomCardInSlice = () => {
     dispatch(setRandomCard())
   }
@@ -94,6 +96,8 @@ export const Card: React.FC<CardPropsType> = () => {
 
   return (
     <>
+      <h1>{packName}</h1>
+
       <h2 style={{ wordWrap: 'break-word' }}>Question: {randomCard.question}</h2>
       <p style={{ color: 'gray' }}>Количество попыток ответов на вопрос: {randomCard.shots}</p>
 
