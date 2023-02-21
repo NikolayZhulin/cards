@@ -36,7 +36,7 @@ export const Card: React.FC<CardPropsType> = () => {
   const [fetch, { isLoading, data }] = useLazyFetchAllCardsQuery()
   const randomCard = useAppSelector(state => state.learn.randomCard)
   const [trigger] = useUpdateGradeMutation()
-
+  const [isHidden, setIsHidden] = useState(true)
   const dispatch = useAppDispatch()
 
   const chooseRandomCardInSlice = () => {
@@ -45,16 +45,25 @@ export const Card: React.FC<CardPropsType> = () => {
 
   const [grade, setGrade] = useState<1 | 2 | 3 | 4 | 5>(1)
 
+  const changeGrade = (e: RadioChangeEvent) => {
+    setGrade(e.target.value)
+  }
+
   const updateCardGrade = async () => {
     if (randomCard) {
       dispatch(removePrevPlaceCard())
       await trigger({ grade, card_id: randomCard._id })
       chooseRandomCardInSlice()
     }
+    hideAnswer()
   }
 
-  const changeGrade = (e: RadioChangeEvent) => {
-    setGrade(e.target.value)
+  const showAnswer = () => {
+    setIsHidden(false)
+  }
+
+  const hideAnswer = () => {
+    setIsHidden(true)
   }
 
   useEffect(() => {
@@ -85,26 +94,32 @@ export const Card: React.FC<CardPropsType> = () => {
 
   return (
     <>
-      <h2>Question: {randomCard.question}</h2>
+      <h2 style={{ wordWrap: 'break-word' }}>Question: {randomCard.question}</h2>
       <p style={{ color: 'gray' }}>Количество попыток ответов на вопрос: {randomCard.shots}</p>
-      <h3>Answer: {randomCard.answer}</h3>
 
-      <Button type={'primary'}>Show Answer</Button>
-
-      <HiddenSection>
-        <Radio.Group onChange={changeGrade} value={grade}>
-          <Space direction={'vertical'}>
-            <Radio value={5}>Knew the answer</Radio>
-            <Radio value={4}>Confused</Radio>
-            <Radio value={3}>A lot of thought</Radio>
-            <Radio value={2}>Forgot</Radio>
-            <Radio value={1}>Did not know</Radio>
-          </Space>
-        </Radio.Group>
-        <Button onClick={updateCardGrade} type={'primary'}>
-          Next
+      {isHidden && (
+        <Button type={'primary'} style={{ width: '100%' }} onClick={showAnswer}>
+          Show Answer
         </Button>
-      </HiddenSection>
+      )}
+
+      {!isHidden && (
+        <HiddenSection>
+          <h3 style={{ wordWrap: 'break-word' }}>Answer: {randomCard.answer}</h3>
+          <Radio.Group onChange={changeGrade} value={grade}>
+            <Space direction={'vertical'}>
+              <Radio value={5}>Knew the answer</Radio>
+              <Radio value={4}>Confused</Radio>
+              <Radio value={3}>A lot of thought</Radio>
+              <Radio value={2}>Forgot</Radio>
+              <Radio value={1}>Did not know</Radio>
+            </Space>
+          </Radio.Group>
+          <Button onClick={updateCardGrade} type={'primary'}>
+            Next
+          </Button>
+        </HiddenSection>
+      )}
     </>
   )
 }
