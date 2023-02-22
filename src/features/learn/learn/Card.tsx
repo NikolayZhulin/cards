@@ -25,7 +25,7 @@ export type CardPropsType = {
 }
 
 export const Card: React.FC<CardPropsType> = () => {
-  const [fetch, { isLoading, data }] = useLazyFetchAllCardsQuery()
+  const [fetchCards, { isLoading, data }] = useLazyFetchAllCardsQuery()
   const randomCard = useAppSelector(state => state.learn.randomCard)
   const [trigger] = useUpdateGradeMutation()
   const [isHidden, setIsHidden] = useState(true)
@@ -65,7 +65,7 @@ export const Card: React.FC<CardPropsType> = () => {
 
   useEffect(() => {
     const foo = async () => {
-      await fetch({
+      await fetchCards({
         cardsPack_id: cardsPack_id,
         pageCount: 100,
       })
@@ -74,7 +74,7 @@ export const Card: React.FC<CardPropsType> = () => {
         const fetchQty = Math.ceil(data.cardsTotalCount / data.pageCount) - 1
 
         for (let i = 0; i < fetchQty; i++) {
-          await fetch({
+          await fetchCards({
             cardsPack_id: cardsPack_id,
             pageCount: 100,
             page: i + 2,
@@ -126,8 +126,3 @@ export const Card: React.FC<CardPropsType> = () => {
     </>
   )
 }
-
-const HiddenSection = styled.div`
-  display: flex;
-  flex-direction: column;
-`

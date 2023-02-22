@@ -1,9 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, current } from '@reduxjs/toolkit'
 
 import { CardType, NewCard } from '../tables'
 
+import { multiplyGradesPush } from './helpers/multiplyGradesPush'
 import { learnApi } from './learnApi'
-import { multiplyGradesPush } from './utils/multiplyGradesPush'
 
 const initialState: {
   packName: string
@@ -83,6 +83,8 @@ const slice = createSlice({
 
       state.packName = packName
 
+      console.log(current(state))
+
       cards.forEach(c => {
         state.handledCards[c.grade] = { ...state.handledCards[c.grade], [c._id]: c }
         gradesSet.add(c.grade)
@@ -104,6 +106,8 @@ const slice = createSlice({
           multiplyGradesPush(grade, state)
         }
       })
+
+      console.log(current(state))
     })
     builder.addMatcher(learnApi.endpoints.updateGrade.matchFulfilled, (state, { payload }) => {
       const { grade, card_id, cardsPack_id, user_id, shots } = payload.updatedGrade
