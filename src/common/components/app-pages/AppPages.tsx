@@ -9,6 +9,7 @@ import {
   Registration,
   SetNewPassword,
 } from '../../../features/auth'
+import { Learn } from '../../../features/learn/learn'
 import { Profile } from '../../../features/profile'
 import { Cards } from '../../../features/tables/table/Cards'
 import { PacksList } from '../../../features/tables/table/PackList'
@@ -24,6 +25,7 @@ const AppPages = () => {
         <Route path={PATH.PROFILE} element={<Profile />} />
         <Route path={PATH.PACKS_LIST} element={<PacksList />} />
         <Route path={PATH.CARDS} element={<Cards />} />
+        <Route path={PATH.LEARN} element={<Learn />} />
       </Route>
       <Route path={PATH.REGISTRATION} element={<Registration />} />
       <Route path={PATH.LOGIN} element={<Login />} />

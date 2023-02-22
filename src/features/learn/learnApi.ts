@@ -1,4 +1,4 @@
-import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/dist/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
 
 import { FetchCardsRequestType, FetchCardsResponseType } from '../tables'
 
