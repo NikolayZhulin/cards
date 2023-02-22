@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { errorHandler } from '../common/utils'
 import { authAPI } from '../features/auth'
+import { learnApi } from '../features/learn/learnApi'
 
 const initialState = {
   error: null as null | string,
@@ -32,6 +33,12 @@ const slice = createSlice({
       })
       .addMatcher(authAPI.endpoints.me.matchRejected, (state, {}) => {
         state.isInitialized = true
+      })
+      .addMatcher(learnApi.endpoints.updateGrade.matchRejected, (state, { payload }) => {
+        state.error = errorHandler(payload)
+      })
+      .addMatcher(learnApi.endpoints.fetchAllCards.matchRejected, (state, { payload }) => {
+        state.error = errorHandler(payload)
       })
   },
 })

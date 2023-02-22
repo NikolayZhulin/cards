@@ -11,4 +11,5 @@ export const PATH = {
   CARDS: '/full-pack',
   EMPTY_PACK: '/empty-pack',
   ERROR: '/error404',
+  LEARN: '/learn',
 } as const

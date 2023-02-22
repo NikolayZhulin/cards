@@ -2,6 +2,8 @@ import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
 import thunkMiddleware from 'redux-thunk'
 
 import { authAPI, authReducer } from '../features/auth'
+import { learnReducer } from '../features/learn/learn-reducer'
+import { learnApi } from '../features/learn/learnApi'
 import { profileReducer } from '../features/profile'
 import { tablesApi } from '../features/tables'
 import { cardsReducer } from '../features/tables/cards-reducer'
@@ -14,16 +16,19 @@ export const store = configureStore({
     app: appReducer,
     auth: authReducer,
     profile: profileReducer,
+    learn: learnReducer,
     packs: packsReducer,
     cards: cardsReducer,
     [authAPI.reducerPath]: authAPI.reducer,
     [tablesApi.reducerPath]: tablesApi.reducer,
+    [learnApi.reducerPath]: learnApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware()
       .prepend(thunkMiddleware)
       .prepend(authAPI.middleware)
-      .prepend(tablesApi.middleware),
+      .prepend(tablesApi.middleware)
+      .prepend(learnApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

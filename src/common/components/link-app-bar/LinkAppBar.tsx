@@ -32,6 +32,9 @@ export const LinkAppBar = () => {
       <NavLink to={PATH.ERROR} style={{ margin: '5px' }}>
         error
       </NavLink>
+      <NavLink to={PATH.LEARN} style={{ margin: '5px' }}>
+        learn
+      </NavLink>
     </LinkBar>
   )
 }
