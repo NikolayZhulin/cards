@@ -9,9 +9,11 @@ export const TablePageStyle = styled.div`
   margin: 40px auto;
   width: 100%;
   max-width: 1008px;
+  min-height: 480px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   box-shadow: 5px 5px 20px 0 rgba(115, 109, 115, 1);
   padding: 24px;
   border-radius: 8px;

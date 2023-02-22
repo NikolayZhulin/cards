@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { CardType } from '../tables'
+import { CardType, NewCard } from '../tables'
 
 import { learnApi } from './learnApi'
 import { multiplyGradesPush } from './utils/multiplyGradesPush'
@@ -149,4 +149,4 @@ export type GradedCardsIds = {
 
 export type GradesType = number[]
 
-export type CardObjType = { [key: string]: CardType }
+export type CardObjType = { [key: string]: NewCard }

@@ -3,8 +3,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const tablesApi = createApi({
   reducerPath: 'tables/api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:7542/2.0/',
-    // baseUrl: 'https://neko-back.herokuapp.com/2.0/',
+    // baseUrl: 'http://localhost:7542/2.0/',
+    baseUrl: 'https://neko-back.herokuapp.com/2.0/',
     credentials: 'include',
   }),
   tagTypes: ['getCards', 'getCard'],
@@ -86,7 +86,7 @@ export const {
 } = tablesApi
 
 // request types
-type FetchCardsPacksRequestType = {
+export type FetchCardsPacksRequestType = {
   packName?: string
   min?: number | null
   max?: number | null
@@ -97,7 +97,7 @@ type FetchCardsPacksRequestType = {
   block?: boolean
 }
 
-type FetchCardsRequestType = {
+export type FetchCardsRequestType = {
   cardAnswer?: string
   cardQuestion?: string
   cardsPack_id?: string
@@ -108,7 +108,7 @@ type FetchCardsRequestType = {
   pageCount?: number
 }
 
-type AddPackRequestType = {
+export type AddPackRequestType = {
   cardsPack: {
     name: string
     deckCover?: string
@@ -116,14 +116,14 @@ type AddPackRequestType = {
   }
 }
 
-type UpdatePackRequestType = {
+export type UpdatePackRequestType = {
   cardsPack: {
     _id?: string
     name?: string
   }
 }
 
-type AddCardRequestType = {
+export type AddCardRequestType = {
   card: {
     cardsPack_id: string
     question?: string
@@ -136,7 +136,7 @@ type AddCardRequestType = {
     answerVideo?: string
   }
 }
-type UpdateCardRequestType = {
+export type UpdateCardRequestType = {
   card: {
     _id: string
     question?: string
@@ -147,7 +147,7 @@ type UpdateCardRequestType = {
 }
 
 //response types
-type FetchCardsPacksResponseType = {
+export type FetchCardsPacksResponseType = {
   cardPacks: CardPack[]
   page: number
   pageCount: number
@@ -158,7 +158,7 @@ type FetchCardsPacksResponseType = {
   tokenDeathTime: number
   user_id: string
 }
-type CardPack = {
+export type CardPack = {
   _id: string
   user_id: string
   user_name: string
@@ -176,25 +176,25 @@ type CardPack = {
   more_id: string
 }
 
-type AddPackResponseType = {
+export type AddPackResponseType = {
   newCardsPack: CardPack
   token: string
   tokenDeathTime: number
 }
 
-type UpdatePackResponseType = {
+export type UpdatePackResponseType = {
   updatedCardsPack: CardPack & { deckCover?: any }
   token: string
   tokenDeathTime: number
 }
 
-type DeletePackResponseType = {
+export type DeletePackResponseType = {
   deletedCardsPack: CardPack & { deckCover?: any }
   token: string
   tokenDeathTime: number
 }
 
-type FetchCardsResponseType = {
+export type FetchCardsResponseType = {
   cards: CardType[]
   packUserId: string
   packName: string
@@ -211,7 +211,7 @@ type FetchCardsResponseType = {
   tokenDeathTime: number
 }
 
-type NewCard = {
+export type NewCard = {
   answer: string
   question: string
   cardsPack_id: string
@@ -221,30 +221,30 @@ type NewCard = {
   created: string
   updated: string
   _id: string
-  comments: string
-  type: string
-  rating: number
-  more_id: string
-  __v: number
+  comments?: string
+  type?: string
+  rating?: number
+  more_id?: string
+  __v?: number
 }
-type CardType = NewCard & {
-  answerImg: string
-  answerVideo: string
-  questionImg: string
-  questionVideo: string
+export type CardType = NewCard & {
+  answerImg?: string
+  answerVideo?: string
+  questionImg?: string
+  questionVideo?: string
 }
 
-type AddCardResponseType = {
+export type AddCardResponseType = {
   newCard: NewCard
   token: string
   tokenDeathTime: number
 }
-type DeleteCardResponseType = {
+export type DeleteCardResponseType = {
   deletedCard: NewCard
   token: string
   tokenDeathTime: number
 }
-type UpdateCardResponseType = {
+export type UpdateCardResponseType = {
   updatedCard: CardType
   token: string
   tokenDeathTime: number
