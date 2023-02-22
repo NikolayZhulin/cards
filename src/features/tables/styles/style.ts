@@ -9,11 +9,9 @@ export const TablePageStyle = styled.div`
   margin: 40px auto;
   width: 100%;
   max-width: 1008px;
-  min-height: 480px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   box-shadow: 5px 5px 20px 0 rgba(115, 109, 115, 1);
   padding: 24px;
   border-radius: 8px;
@@ -50,9 +48,7 @@ export const Title = styled.h4`
   opacity: 0.8;
 `
 
-export const SearchBlock = styled.div`
-  //background-color: lightgrey;
-`
+export const SearchBlock = styled.div``
 
 export const ToggleAuthorsBlock = styled.div`
   display: flex;

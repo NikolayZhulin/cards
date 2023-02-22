@@ -22,9 +22,9 @@ import {
 export const usePackList = () => {
   const userId = useAppSelector(state => state.auth.userId)
 
-  const [addPack, {}] = useAddPackMutation()
-  const [updatePack, {}] = useUpdatePackMutation()
-  const [deletePack, {}] = useDeletePackMutation()
+  const [addPack, { isLoading: addLoading }] = useAddPackMutation()
+  const [updatePack, { isLoading: updateLoading }] = useUpdatePackMutation()
+  const [deletePack, { isLoading: deleteLoading }] = useDeletePackMutation()
   const [trigger, response] = useLazyFetchCardsPackQuery()
   const dispatch = useAppDispatch()
 
@@ -32,6 +32,11 @@ export const usePackList = () => {
   const minCardsCount = response?.data ? response?.data.minCardsCount : 0
   const emptyParams = {}
   const { setSearchParams, search, searchParams } = useSearch()
+
+  useEffect(() => {
+    console.log({ ...search })
+    trigger({ ...search })
+  }, [searchParams])
 
   const editPackHandler = (packId: string, name: string) => {
     dispatch(savePackForUpdate({ packId, name }))
@@ -41,6 +46,8 @@ export const usePackList = () => {
     dispatch(toggleDeletePackModal({ showModal: true }))
     dispatch(savePackForDelete({ packId, name, insidePack: false }))
   }
+
+  const disable = addLoading || updateLoading || deleteLoading
 
   const rows = response.data?.cardPacks.map(p => {
     const isMyPack = userId === p.user_id
@@ -54,7 +61,7 @@ export const usePackList = () => {
       author: p.user_name,
       actions: (
         <div style={{ display: 'flex', justifyContent: 'start' }}>
-          <LearnButton isCardCount={!!p.cardsCount} />
+          <LearnButton disable={disable} isCardCount={!!p.cardsCount} />
           <UpdateButtons
             isMyItem={isMyPack}
             editHandler={() => editPackHandler(p._id, p.name)}
@@ -77,10 +84,6 @@ export const usePackList = () => {
   const getAllPacks = () => {
     setSearchParams(prevState => ({ ...prevState, ...emptyParams }))
   }
-
-  useEffect(() => {
-    trigger({ ...search })
-  }, [searchParams])
 
   return {
     addNewPack,
