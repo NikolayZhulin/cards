@@ -1,32 +1,25 @@
-import React, { useState } from 'react'
+import { memo } from 'react'
 
-import { Space, Button } from 'antd'
-import Radio, { RadioChangeEvent } from 'antd/es/radio'
-import styled from 'styled-components'
+import { Button, Radio, Space } from 'antd'
 
 import { CardType } from '../../tables'
+import { useToggleGradeSection } from '../hooks'
+import { useUpdateCard } from '../hooks/use-update-card'
+import { HiddenSection } from '../styles'
 
 type Props = {
   randomCard: CardType
-  grade: number
-  changeGrade: (e: RadioChangeEvent) => void
-  updateCardGrade: () => void
+  changeCard: () => void
 }
 
-export const GradeSection: React.FC<Props> = ({
-  grade,
-  randomCard,
-  changeGrade,
-  updateCardGrade,
-}) => {
-  const [isHidden, setIsHidden] = useState(true)
+export const GradeSection = memo(({ randomCard, changeCard }: Props) => {
+  const { isHidden, hideAnswer, showAnswer } = useToggleGradeSection()
 
-  const showAnswer = () => {
-    setIsHidden(false)
-  }
+  const { grade, changeGrade, updateCardGrade } = useUpdateCard(randomCard, changeCard)
 
-  const hideAnswer = () => {
-    setIsHidden(true)
+  const changeCardHandler = () => {
+    updateCardGrade()
+    hideAnswer()
   }
 
   if (isHidden) {
@@ -49,14 +42,9 @@ export const GradeSection: React.FC<Props> = ({
           <Radio value={1}>Did not know</Radio>
         </Space>
       </Radio.Group>
-      <Button onClick={updateCardGrade} type={'primary'}>
+      <Button onClick={changeCardHandler} type={'primary'}>
         Next
       </Button>
     </HiddenSection>
   )
-}
-
-const HiddenSection = styled.div`
-  display: flex;
-  flex-direction: column;
-`
+})
