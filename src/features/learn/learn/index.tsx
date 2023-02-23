@@ -1,19 +1,19 @@
 import React from 'react'
 
-import { CardWrapper, StyledCard } from '../../../common/style'
 import { BackToPacksButton } from '../../tables/table/Cards/cards-blocks/BackToPacksButton'
+import { LearnCardWrapper, LearnStyledCard, LearnWrapper } from '../styles'
 
-import { Card } from './Card'
+import { Card } from './CardCopy'
 
 export const Learn = () => {
   return (
-    <>
+    <LearnWrapper>
       <BackToPacksButton />
-      <CardWrapper>
-        <StyledCard>
+      <LearnCardWrapper>
+        <LearnStyledCard>
           <Card />
-        </StyledCard>
-      </CardWrapper>
-    </>
+        </LearnStyledCard>
+      </LearnCardWrapper>
+    </LearnWrapper>
   )
 }
