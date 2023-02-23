@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import { CardType, NewCard } from '../tables'
 
+import { setRandomCard } from './helpers/setRandomCard'
 import { setTransformedCards } from './helpers/setTransformedCards'
 import { setUpdatedCard } from './helpers/setUpdatedCard'
 import { learnApi } from './learnApi'
@@ -54,19 +55,11 @@ const slice = createSlice({
         throw new Error('removePrevPlaceError')
       }
     },
-    setRandomCard: state => {
-      if (
-        JSON.stringify(state.handledCards) !== '{}' &&
-        JSON.stringify(state.ids) !== '{}' &&
-        state.grades.length
-      ) {
-        const randomGradeIdx = state.grades[Math.floor(Math.random() * state.grades.length)]
-        const gradedCards = state.handledCards[randomGradeIdx]
-        const gradedIds = state.ids[randomGradeIdx]
+    chooseRandomCard: state => {
+      const changedCard = setRandomCard(state.handledCards, state.ids, state.grades)
 
-        const randomCardId = gradedIds[Math.floor(Math.random() * gradedIds.length)]
-
-        state.randomCard = gradedCards[randomCardId]
+      if (changedCard) {
+        state.randomCard = changedCard
       }
     },
     clearAllState: state => {
@@ -93,7 +86,7 @@ const slice = createSlice({
 })
 
 export const learnReducer = slice.reducer
-export const { removePrevPlaceCard, setRandomCard, clearAllState } = slice.actions
+export const { removePrevPlaceCard, chooseRandomCard, clearAllState } = slice.actions
 
 export type HandledPackType = {
   [key: string]: CardObjType
