@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 
 import { Checkbox, Input } from 'antd'
 
-import { ModalFC } from '../../../common/components/modal/ModalFC'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
-import { toggleAddNewPackModal } from '../packs-reducer'
-import { useAddPackMutation } from '../tablesApi'
+import { toggleAddNewPackModal } from '../../../features/packs/packs-reducer'
+import { useAddPackMutation } from '../../../features/tables/tablesApi'
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+
+import { ModalFC } from './ModalFC'
 
 export const AddNewPackModal = () => {
   const openModal = useAppSelector(state => state.packs.isAddNewPackModalOpen)

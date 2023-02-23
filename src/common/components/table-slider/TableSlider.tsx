@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { SliderInput, SliderWrapper, StyledSlider } from '../styles/style'
+import { SliderInput, SliderWrapper, StyledSlider } from '../../style/table-style'
 
 type TableSliderPropsType = {
   maxCardsCount: number

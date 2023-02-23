@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { useAppDispatch } from '../../../../../common/hooks/reduxHooks'
-import { FormTitle } from '../../../../../common/style'
-import { toggleAddNewPackModal } from '../../../packs-reducer'
-import { AddNewItemButton, TopSection } from '../../../styles'
+import { useAppDispatch } from '../../../common/hooks/reduxHooks'
+import { FormTitle } from '../../../common/style'
+import { AddNewItemButton, TopSection } from '../../tables/styles'
+import { toggleAddNewPackModal } from '../packs-reducer'
 
 type PackListTopSectionPropsType = {
   formTitle: string

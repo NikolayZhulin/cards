@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { Input, Select } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 
-import { ModalFC } from '../../../common/components/modal/ModalFC'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
-import { toggleUpdateCardModal } from '../cards-reducer'
-import { useUpdateCardMutation } from '../tablesApi'
+import { toggleUpdateCardModal } from '../../../features/tables/cards-reducer'
+import { useUpdateCardMutation } from '../../../features/tables/tablesApi'
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+
+import { ModalFC } from './ModalFC'
 
 export const UpdateCardModal = () => {
   const cardId = useAppSelector(state => state.cards.cardForUpdate.id)

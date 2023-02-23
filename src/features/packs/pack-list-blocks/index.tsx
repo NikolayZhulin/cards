@@ -1,9 +1,8 @@
 import React from 'react'
 
-import { Preloader } from '../../../../../common/components'
-import { PaginationFC } from '../../../../../common/components/pagination/PaginationFC'
-import { columnsForPacks } from '../../../helpers'
-import { usePackList } from '../../../hooks'
+import { PaginationFC } from '../../../common/components/pagination/PaginationFC'
+import { usePackList } from '../../tables/hooks'
+import { columnsForPacks } from '../helpers/data-for-packs-list'
 
 import { PackListMiddleSection } from './PackListMiddleSection'
 import { PackListTable } from './PackListTable'
@@ -19,9 +18,8 @@ export const PacksListBlocks = () => {
     response,
     search,
     rows,
+    isLoading,
   } = usePackList()
-
-  if (response.isLoading) return <Preloader />
 
   return (
     <>
@@ -36,6 +34,7 @@ export const PacksListBlocks = () => {
       />
       <PackListTable
         {...{ name: 'Packs', columns: columnsForPacks, sortType: 'sortPacks', rows }}
+        isLoading={isLoading}
       />
       <PaginationFC
         current={response.data?.page}

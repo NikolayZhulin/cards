@@ -2,11 +2,12 @@ import React from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
-import { ModalFC } from '../../../common/components/modal/ModalFC'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
-import { PATH } from '../../../common/utils'
-import { toggleDeletePackModal } from '../packs-reducer'
-import { useDeletePackMutation } from '../tablesApi'
+import { toggleDeletePackModal } from '../../../features/packs/packs-reducer'
+import { useDeletePackMutation } from '../../../features/tables/tablesApi'
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+import { PATH } from '../../utils'
+
+import { ModalFC } from './ModalFC'
 
 export const DeletePackModal = () => {
   const showModal = useAppSelector(state => state.packs.isDeletePackModalOpen)

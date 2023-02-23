@@ -2,8 +2,8 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import Input from 'antd/es/input/Input'
 
-import { useDebounce } from '../../../common/hooks/useDebounce'
-import { useSearch } from '../../../common/hooks/useSearch'
+import { useDebounce } from '../../hooks/useDebounce'
+import { useSearch } from '../../hooks/useSearch'
 
 type SearchInputPropsType = {
   type: 'packName' | 'cardQuestion'

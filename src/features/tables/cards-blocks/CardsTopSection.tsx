@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { useAppDispatch } from '../../../../../common/hooks/reduxHooks'
-import { FormTitle } from '../../../../../common/style'
-import { savePackIdForNewCard, toggleAddNewCardModal } from '../../../cards-reducer'
-import { DropDown } from '../../../components/DropDown'
+import { useAppDispatch } from '../../../common/hooks/reduxHooks'
+import { FormTitle } from '../../../common/style'
 import { AddNewItemButton, TopSection } from '../../../styles'
+import { savePackIdForNewCard, toggleAddNewCardModal } from '../cards-reducer'
+import { DropDown } from '../components/DropDown'
 
 type CardsTopSectionType = {
   packName?: string

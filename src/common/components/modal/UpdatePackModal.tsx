@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 
 import { Input } from 'antd'
 
-import { ModalFC } from '../../../common/components/modal/ModalFC'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
-import { toggleUpdatePackModal } from '../packs-reducer'
-import { useUpdatePackMutation } from '../tablesApi'
+import { toggleUpdatePackModal } from '../../../features/packs/packs-reducer'
+import { useUpdatePackMutation } from '../../../features/tables'
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+
+import { ModalFC } from './ModalFC'
 
 export const UpdatePackModal = () => {
   const showModal = useAppSelector(state => state.packs.isUpdatePackModalOpen)

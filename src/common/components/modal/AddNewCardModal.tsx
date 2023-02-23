@@ -3,10 +3,11 @@ import React, { useState } from 'react'
 import { Input, Select } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 
-import { ModalFC } from '../../../common/components/modal/ModalFC'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
-import { toggleAddNewCardModal } from '../cards-reducer'
-import { useAddCardMutation } from '../tablesApi'
+import { toggleAddNewCardModal } from '../../../features/tables/cards-reducer'
+import { useAddCardMutation } from '../../../features/tables/tablesApi'
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+
+import { ModalFC } from './ModalFC'
 
 export const AddNewCardModal = () => {
   const openModal = useAppSelector(state => state.cards.isAddNewCardModalOpen)

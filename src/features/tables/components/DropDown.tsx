@@ -10,7 +10,7 @@ import {
   savePackForUpdate,
   toggleDeletePackModal,
   toggleUpdatePackModal,
-} from '../packs-reducer'
+} from '../../packs/packs-reducer'
 
 type PropsType = {
   cardsPackId?: string

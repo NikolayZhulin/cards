@@ -1,3 +1,3 @@
 export * from './use-cards'
-export * from './use-pack-list'
-export * from './use-table-sort'
+export * from '../../packs/hooks/use-pack-list'
+export * from '../../../common/hooks/use-table-sort'

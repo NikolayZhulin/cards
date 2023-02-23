@@ -4,10 +4,10 @@ import thunkMiddleware from 'redux-thunk'
 import { authAPI, authReducer } from '../features/auth'
 import { learnReducer } from '../features/learn/learn-reducer'
 import { learnApi } from '../features/learn/learnApi'
+import { packsReducer } from '../features/packs/packs-reducer'
 import { profileReducer } from '../features/profile'
 import { tablesApi } from '../features/tables'
 import { cardsReducer } from '../features/tables/cards-reducer'
-import { packsReducer } from '../features/tables/packs-reducer'
 
 import { appReducer } from './app-reducer'
 

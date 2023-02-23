@@ -1,1 +1,1 @@
-export * from './dataForTables'
+export * from './data-for-cards-table'

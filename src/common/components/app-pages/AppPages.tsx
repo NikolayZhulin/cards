@@ -10,9 +10,9 @@ import {
   SetNewPassword,
 } from '../../../features/auth'
 import { Learn } from '../../../features/learn/learn'
+import { PacksList } from '../../../features/packs'
 import { Profile } from '../../../features/profile'
-import { Cards } from '../../../features/tables/table/Cards'
-import { PacksList } from '../../../features/tables/table/PackList'
+import { Cards } from '../../../features/tables/cards-blocks'
 import { PATH } from '../../utils'
 import { Error404 } from '../error404/Error404'
 import { PrivateRoutes } from '../private-routes/PrivateRoutes'

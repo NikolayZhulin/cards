@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { TablePageStyle } from '../../styles'
+import { TablePageStyle } from '../tables/styles'
 
 import { PacksListBlocks } from './pack-list-blocks'
 

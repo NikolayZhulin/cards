@@ -79,6 +79,16 @@ export const UseCards = () => {
   const onChangePaginationHandler = (newPage: number, newPageCount: number) => {
     setSearchParams({ ...search, page: newPage.toString(), pageCount: newPageCount.toString() })
   }
+  const isLoading = response.isLoading || response.isFetching
 
-  return { onChangePaginationHandler, addNewCard, deleteCard, updateCard, response, search, rows }
+  return {
+    onChangePaginationHandler,
+    addNewCard,
+    deleteCard,
+    updateCard,
+    response,
+    search,
+    rows,
+    isLoading,
+  }
 }

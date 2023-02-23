@@ -6,7 +6,7 @@ import { SortOrder } from 'antd/es/table/interface'
 import emptyStar from '../../../assets/pictures/emptyStar.png'
 import fullStar from '../../../assets/pictures/fullStar.png'
 import halfStar from '../../../assets/pictures/halfStar.png'
-import { StyledIcon } from '../styles/style'
+import { StyledIcon } from '../styles'
 
 export type PackListDataType = {
   key: React.Key
@@ -18,7 +18,7 @@ export type PackListDataType = {
   actions?: ReactElement
 }
 
-export type PackDataType = {
+export type CardDataType = {
   key: React.Key
   question: string
   answer: string
@@ -28,57 +28,7 @@ export type PackDataType = {
   render?: () => ReactElement
 }
 
-export const columnsForPacks: ColumnsType<PackDataType | PackListDataType> = [
-  {
-    title: 'Name',
-    width: 200,
-    dataIndex: 'name',
-    key: 'name',
-    fixed: 'left',
-    ellipsis: true,
-    sorter: true,
-  },
-  {
-    title: 'Author',
-    width: 150,
-    dataIndex: 'author',
-    key: 'user_name',
-    fixed: 'left',
-    ellipsis: true,
-    sorter: true,
-  },
-  {
-    title: 'Cards',
-    width: 140,
-    dataIndex: 'cards',
-    key: 'cardsCount',
-    fixed: 'left',
-    sorter: true,
-  },
-  {
-    title: 'Last Updated',
-    dataIndex: 'updated',
-    key: 'updated',
-    width: 150,
-    sorter: true,
-  },
-  {
-    title: 'Created by',
-    dataIndex: 'created',
-    key: 'created',
-    width: 200,
-    sorter: true,
-  },
-  {
-    title: 'Action',
-    dataIndex: 'actions',
-    key: 'actions',
-    fixed: 'right',
-    width: 150,
-  },
-]
-
-export const columnsForCards: ColumnsType<PackDataType | PackListDataType> = [
+export const columnsForCards: ColumnsType<CardDataType | PackListDataType> = [
   {
     title: 'Question',
     width: 318,

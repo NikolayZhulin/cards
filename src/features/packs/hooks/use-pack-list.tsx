@@ -5,26 +5,26 @@ import { NavLink } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
 import { useSearch } from '../../../common/hooks/useSearch'
 import { formatDate, PATH } from '../../../common/utils'
-import { LearnButton, UpdateButtons } from '../components'
+import { LearnButton, UpdateButtons } from '../../tables/components'
+import {
+  useAddPackMutation,
+  useDeletePackMutation,
+  useLazyFetchCardsPackQuery,
+  useUpdatePackMutation,
+} from '../../tables/tablesApi'
 import {
   savePackForDelete,
   savePackForUpdate,
   toggleDeletePackModal,
   toggleUpdatePackModal,
 } from '../packs-reducer'
-import {
-  useAddPackMutation,
-  useDeletePackMutation,
-  useLazyFetchCardsPackQuery,
-  useUpdatePackMutation,
-} from '../tablesApi'
 
 export const usePackList = () => {
   const userId = useAppSelector(state => state.auth.userId)
 
-  const [addPack, {}] = useAddPackMutation()
-  const [updatePack, {}] = useUpdatePackMutation()
-  const [deletePack, {}] = useDeletePackMutation()
+  const [addPack, { isLoading: addPackLoading }] = useAddPackMutation()
+  const [updatePack, { isLoading: updatePackLoading }] = useUpdatePackMutation()
+  const [deletePack, { isLoading: deletePackLoading }] = useDeletePackMutation()
   const [trigger, response] = useLazyFetchCardsPackQuery()
   const dispatch = useAppDispatch()
 
@@ -32,6 +32,10 @@ export const usePackList = () => {
   const minCardsCount = response?.data ? response?.data.minCardsCount : 0
   const emptyParams = {}
   const { setSearchParams, search, searchParams } = useSearch()
+
+  useEffect(() => {
+    trigger({ ...search })
+  }, [searchParams])
 
   const editPackHandler = (packId: string, name: string) => {
     dispatch(savePackForUpdate({ packId, name }))
@@ -78,9 +82,12 @@ export const usePackList = () => {
     setSearchParams(prevState => ({ ...prevState, ...emptyParams }))
   }
 
-  useEffect(() => {
-    trigger({ ...search })
-  }, [searchParams])
+  const isLoading =
+    addPackLoading ||
+    updatePackLoading ||
+    deletePackLoading ||
+    response.isLoading ||
+    response.isFetching
 
   return {
     addNewPack,
@@ -94,5 +101,6 @@ export const usePackList = () => {
     response,
     search,
     rows,
+    isLoading,
   }
 }

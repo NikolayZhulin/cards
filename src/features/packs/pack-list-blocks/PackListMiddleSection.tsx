@@ -2,9 +2,10 @@ import React from 'react'
 
 import { FilterOutlined } from '@ant-design/icons'
 import { Button, Radio, Tooltip } from 'antd'
+import styled from 'styled-components'
 
-import { useSearch } from '../../../../../common/hooks/useSearch'
-import { SearchInput, TableSlider } from '../../../components'
+import { useSearch } from '../../../common/hooks/useSearch'
+import { SearchInput, TableSlider } from '../../tables/components'
 import {
   MiddleSection,
   SearchBlock,
@@ -12,7 +13,7 @@ import {
   Title,
   ToggleAuthorsBlock,
   ToggleOwnerButton,
-} from '../../../styles'
+} from '../../tables/styles'
 
 type PackListMiddleSectionPropsType = {
   getMyPacks: () => void
@@ -44,9 +45,13 @@ export const PackListMiddleSection = ({
       </SearchBlock>
       <ToggleAuthorsBlock>
         <Title>Show packs cards</Title>
-        <Radio.Group>
-          <ToggleOwnerButton onClick={getMyPacks}>My</ToggleOwnerButton>
-          <ToggleOwnerButton onClick={getAllPacks}>All</ToggleOwnerButton>
+        <Radio.Group defaultValue={'all'} buttonStyle="solid">
+          <ToggleOwnerButton value={'my'} onClick={getMyPacks}>
+            My
+          </ToggleOwnerButton>
+          <ToggleOwnerButton value={'all'} onClick={getAllPacks}>
+            All
+          </ToggleOwnerButton>
         </Radio.Group>
       </ToggleAuthorsBlock>
       <SliderBlock>

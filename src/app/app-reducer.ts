@@ -40,6 +40,21 @@ const slice = createSlice({
       .addMatcher(learnApi.endpoints.fetchAllCards.matchRejected, (state, { payload }) => {
         state.error = errorHandler(payload)
       })
+    //     .addMatcher(learnApi.endpoints.fetchAllCards.matchRejected, (state, { payload }) => {
+    //       state.error = errorHandler(payload)
+    //     })
+    //     .addMatcher(learnApi.endpoints.fetchAllCards.matchRejected, (state, { payload }) => {
+    //       state.error = errorHandler(payload)
+    //     })
+    //     .addMatcher(learnApi.endpoints.fetchAllCards.matchRejected, (state, { payload }) => {
+    //       state.error = errorHandler(payload)
+    //     })
+    //     .addMatcher(learnApi.endpoints.fetchAllCards.matchRejected, (state, { payload }) => {
+    //       state.error = errorHandler(payload)
+    //     })
+    //     .addMatcher(learnApi.endpoints.fetchAllCards.matchRejected, (state, { payload }) => {
+    //       state.error = errorHandler(payload)
+    //     })
   },
 })
 

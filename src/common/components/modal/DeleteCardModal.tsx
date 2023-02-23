@@ -1,9 +1,10 @@
 import React from 'react'
 
-import { ModalFC } from '../../../common/components/modal/ModalFC'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
-import { toggleDeleteCardModal } from '../cards-reducer'
-import { useDeleteCardMutation } from '../tablesApi'
+import { toggleDeleteCardModal } from '../../../features/tables/cards-reducer'
+import { useDeleteCardMutation } from '../../../features/tables/tablesApi'
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+
+import { ModalFC } from './ModalFC'
 
 export const DeleteCardModal = () => {
   const showModal = useAppSelector(state => state.cards.isDeleteCardModalOpen)

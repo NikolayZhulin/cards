@@ -1,19 +1,20 @@
 import { TableProps } from 'antd'
 import { SorterResult } from 'antd/es/table/interface'
 
-import { useSearch } from '../../../common/hooks/useSearch'
-import { PackDataType, PackListDataType } from '../helpers'
+import { CardDataType, PackListDataType } from '../../features/tables/helpers'
+
+import { useSearch } from './useSearch'
 
 export const UseTableSort = (sortType: string, name: string) => {
   const titleForEmptyTable = `${name} with that name does not exist`
   const { setSearchParams, search } = useSearch()
 
-  const onChangeTableHandler: TableProps<PackDataType | PackListDataType>['onChange'] = (
+  const onChangeTableHandler: TableProps<CardDataType | PackListDataType>['onChange'] = (
     pagination,
     filters,
     sorter
   ) => {
-    const srt = sorter as SorterResult<PackDataType | PackListDataType>
+    const srt = sorter as SorterResult<CardDataType | PackListDataType>
     const order = srt.order
     const field = srt.columnKey
 
