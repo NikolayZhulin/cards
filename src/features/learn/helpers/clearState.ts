@@ -1,5 +1,5 @@
 import { CardType } from '../../tables'
-import { State } from '../learn-reducer-copy'
+import { State } from '../learn-reducer'
 
 export const clearState = (state: State) => {
   state.packName = ''

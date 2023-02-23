@@ -1,4 +1,4 @@
-import { State } from '../learn-reducer-copy'
+import { State } from '../learn-reducer'
 
 export const removeObsoleteCard = (state: State) => {
   const { handledCards, ids, grades, randomCard } = state

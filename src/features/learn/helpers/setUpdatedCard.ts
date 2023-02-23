@@ -1,21 +1,15 @@
-import { CardType } from '../../tables'
-import { GradedCardsIds, GradesType, HandledPackType } from '../learn-reducer-copy'
+import { State } from '../learn-reducer'
 import { UpdateGradeResponseType } from '../learnApi'
 
 import { multiplyGradesPush } from './multiplyGradesPush'
 
-export const setUpdatedCard = (
-  cards: HandledPackType,
-  idValues: GradedCardsIds,
-  grades: GradesType,
-  { updatedGrade }: UpdateGradeResponseType,
-  randomCard: CardType
-) => {
+export const setUpdatedCard = (state: State, { updatedGrade }: UpdateGradeResponseType) => {
   const { grade, card_id, cardsPack_id, user_id, shots } = updatedGrade
+  const { handledCards, ids, grades, randomCard } = state
   const { answer, question, created, updated } = randomCard
 
-  cards[grade] = {
-    ...cards[grade],
+  handledCards[grade] = {
+    ...handledCards[grade],
     [card_id]: {
       _id: card_id,
       grade,
@@ -28,11 +22,11 @@ export const setUpdatedCard = (
       updated,
     },
   }
-  if (!idValues[grade]) {
-    idValues[grade] = []
+  if (!ids[grade]) {
+    ids[grade] = []
   }
 
-  idValues[grade].push(card_id)
+  ids[grade].push(card_id)
 
   if (!grades.includes(grade)) {
     multiplyGradesPush(grade, grades)
