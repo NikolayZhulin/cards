@@ -1,22 +1,20 @@
 import React, { useState } from 'react'
 
+import NiceModal, { useModal } from '@ebay/nice-modal-react'
 import { Checkbox, Input } from 'antd'
 
 import { ModalFC } from '../../../common/components/modal/ModalFC'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
-import { toggleAddNewPackModal } from '../packs-reducer'
 import { useAddPackMutation } from '../tablesApi'
 
-export const AddNewPackModal = () => {
-  const openModal = useAppSelector(state => state.packs.isAddNewPackModalOpen)
-  const dispatch = useAppDispatch()
+export const AddNewPackModal = NiceModal.create(() => {
+  const modal = useModal()
   const [name, setName] = useState<string>('')
   const [isPrivate, setIsPrivate] = useState<boolean>(false)
   const [addPack, { isLoading: packIsAdding }] = useAddPackMutation()
 
   const closeModal = () => {
     setName('')
-    dispatch(toggleAddNewPackModal({ showModal: false }))
+    modal.hide()
   }
   const addNewPackHandler = async () => {
     try {
@@ -31,7 +29,7 @@ export const AddNewPackModal = () => {
     <ModalFC
       okText={'Save'}
       danger={false}
-      isOpen={openModal}
+      isOpen={modal.visible}
       isLoading={packIsAdding}
       handleOk={addNewPackHandler}
       handleCancel={closeModal}
@@ -52,4 +50,4 @@ export const AddNewPackModal = () => {
       </div>
     </ModalFC>
   )
-}
+})

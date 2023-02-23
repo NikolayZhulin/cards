@@ -10,13 +10,18 @@ import reportWebVitals from './reportWebVitals'
 
 import './index.css'
 
+// eslint-disable-next-line import/order
+import NiceModal from '@ebay/nice-modal-react'
+
 const container = document.getElementById('root')!
 const root = createRoot(container)
 
 root.render(
   <Provider store={store}>
     <HashRouter>
-      <App />
+      <NiceModal.Provider>
+        <App />
+      </NiceModal.Provider>
     </HashRouter>
   </Provider>
 )

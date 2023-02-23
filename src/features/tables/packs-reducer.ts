@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState = {
   isUpdatePackModalOpen: false,
-  isAddNewPackModalOpen: false,
   isDeletePackModalOpen: false,
   packForUpdate: { id: '', name: '' },
   packForDelete: { id: '', name: '', insidePack: false },
@@ -14,9 +13,6 @@ const slice = createSlice({
   reducers: {
     toggleUpdatePackModal(state, action: PayloadAction<{ showModal: boolean }>) {
       state.isUpdatePackModalOpen = action.payload.showModal
-    },
-    toggleAddNewPackModal(state, action: PayloadAction<{ showModal: boolean }>) {
-      state.isAddNewPackModalOpen = action.payload.showModal
     },
     toggleDeletePackModal(state, action: PayloadAction<{ showModal: boolean }>) {
       state.isDeletePackModalOpen = action.payload.showModal
@@ -39,7 +35,6 @@ const slice = createSlice({
 export const packsReducer = slice.reducer
 export const {
   toggleUpdatePackModal,
-  toggleAddNewPackModal,
   toggleDeletePackModal,
   savePackForUpdate,
   savePackForDelete,
