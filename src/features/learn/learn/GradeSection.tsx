@@ -5,7 +5,7 @@ import { Button, Radio, Space } from 'antd'
 import { CardType } from '../../tables'
 import { useToggleGradeSection } from '../hooks'
 import { useUpdateCard } from '../hooks/use-update-card'
-import { HiddenSection } from '../styles'
+import { HiddenSection, NextCardButton } from '../styles'
 
 type Props = {
   randomCard: CardType
@@ -42,9 +42,9 @@ export const GradeSection = memo(({ randomCard, changeCard }: Props) => {
           <Radio value={1}>Did not know</Radio>
         </Space>
       </Radio.Group>
-      <Button onClick={changeCardHandler} type={'primary'}>
+      <NextCardButton onClick={changeCardHandler} type={'primary'}>
         Next
-      </Button>
+      </NextCardButton>
     </HiddenSection>
   )
 })
