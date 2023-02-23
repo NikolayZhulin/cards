@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { memo } from 'react'
+
+import { useAppSelector } from '../../../common/hooks/reduxHooks'
 
 type Props = {
-  packName: string
   question: string
   shots: number
 }
 
-export const CardContent = ({ packName, question, shots }: Props) => {
+export const CardContent = memo(({ question, shots }: Props) => {
+  const packName = useAppSelector(state => state.learn.packName)
+
   return (
     <>
       <h1>{packName}</h1>
@@ -15,4 +18,4 @@ export const CardContent = ({ packName, question, shots }: Props) => {
       <p style={{ color: 'gray' }}>Количество попыток ответов на вопрос: {shots}</p>
     </>
   )
-}
+})
