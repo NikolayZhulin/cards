@@ -1,12 +1,9 @@
-import { createSlice, current } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 import { CardType, NewCard } from '../tables'
 
-import { multiplyGradesPush } from './helpers/multiplyGradesPush'
-import { setGrades } from './helpers/setGrades'
-import { setIdValues } from './helpers/setIdValues'
-import { setSortedCards } from './helpers/setSortedCards'
 import { setTransformedCards } from './helpers/setTransformedCards'
+import { setUpdatedCard } from './helpers/setUpdatedCard'
 import { learnApi } from './learnApi'
 
 const initialState: {
@@ -83,38 +80,14 @@ const slice = createSlice({
   extraReducers: builder => {
     builder.addMatcher(learnApi.endpoints.fetchAllCards.matchFulfilled, (state, { payload }) => {
       const { cards, packName } = payload
+      const { handledCards, ids, grades } = state
 
       state.packName = packName
 
-      setTransformedCards(cards, state.handledCards, state.ids, state.grades)
+      setTransformedCards(cards, handledCards, ids, grades)
     })
     builder.addMatcher(learnApi.endpoints.updateGrade.matchFulfilled, (state, { payload }) => {
-      const { grade, card_id, cardsPack_id, user_id, shots } = payload.updatedGrade
-      const { answer, question, created, updated } = state.randomCard
-
-      state.handledCards[grade] = {
-        ...state.handledCards[grade],
-        [card_id]: {
-          _id: card_id,
-          grade,
-          cardsPack_id,
-          user_id,
-          shots: shots,
-          answer,
-          question,
-          created,
-          updated,
-        },
-      }
-      if (!state.ids[grade]) {
-        state.ids[grade] = []
-      }
-
-      state.ids[grade].push(card_id)
-
-      if (!state.grades.includes(grade)) {
-        multiplyGradesPush(grade, state.grades)
-      }
+      setUpdatedCard(state.handledCards, state.ids, state.grades, payload, state.randomCard)
     })
   },
 })
