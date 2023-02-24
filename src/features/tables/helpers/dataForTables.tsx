@@ -105,8 +105,8 @@ export const columnsForCards: ColumnsType<PackDataType | PackListDataType> = [
   },
   {
     title: 'Created by',
-    dataIndex: 'updated',
-    key: 'updated',
+    dataIndex: 'created',
+    key: 'created',
     width: 200,
     sorter: true,
   },
