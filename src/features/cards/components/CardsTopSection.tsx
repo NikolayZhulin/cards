@@ -18,8 +18,8 @@ type CardsTopSectionType = {
 export const CardsTopSection = ({ packName, cardsPackId, userId }: CardsTopSectionType) => {
   // const dispatch = useAppDispatch()
   // const modal = useModal('add-card-modal')
-  const modal = useModal(AddNewCardModal)
-  const addCard = async () => {
+
+  const addCard = () => {
     // dispatch(toggleAddNewCardModal({ showModal: true }))
     // dispatch(savePackIdForNewCard({ packId: cardsPackId }))
     // await show('add-card-modal', { cardsPack_id: cardsPackId })
@@ -32,7 +32,7 @@ export const CardsTopSection = ({ packName, cardsPackId, userId }: CardsTopSecti
         {packName}
         <DropDown packName={packName} packUserId={userId} cardsPackId={cardsPackId} />
       </FormTitle>
-      <AddNewItemButton type="primary" onClick={addCard}>
+      <AddNewItemButton type="primary" onClick={() => show(AddNewCardModal)}>
         Add new card
       </AddNewItemButton>
       {/*<AddNewCardModal cardsPack_id={cardsPackId} />*/}

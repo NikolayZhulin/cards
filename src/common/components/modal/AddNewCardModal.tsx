@@ -53,9 +53,10 @@ export const AddNewCardModal = NiceModal.create(({ cardsPack_id }: Props) => {
     <MyNiceModal
       okText={'Save'}
       danger={false}
-      // isOpen={openModal}
+      isOpen={modal.visible}
       isLoading={cardIsAdding}
       handleOk={addNewCardHandler}
+      handleCancel={() => modal.hide()}
       // handleCancel={closeModal}
     >
       <div>

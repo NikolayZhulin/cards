@@ -6,23 +6,30 @@ import { Modal } from 'antd'
 type Props = {
   children?: ReactNode
   handleOk: () => void
-  // handleCancel: () => void
+  handleCancel: () => void
   isLoading: boolean
-  // isOpen: boolean
+  isOpen: boolean
   okText: string
   danger: boolean
 }
 
-export const MyNiceModal = ({ children, isLoading, okText, danger, handleOk }: Props) => {
+export const MyNiceModal = ({
+  children,
+  isLoading,
+  okText,
+  danger,
+  handleOk,
+  handleCancel,
+  isOpen,
+}: Props) => {
   // Use a hook to manage the modal state
-  const modal = useModal()
 
   return (
     <Modal
-      open={modal.visible}
+      open={isOpen}
       onOk={handleOk}
       confirmLoading={isLoading}
-      onCancel={() => modal.hide()}
+      onCancel={handleCancel}
       okText={okText}
       okButtonProps={{ danger: danger, disabled: isLoading }}
       cancelButtonProps={{ disabled: isLoading }}
