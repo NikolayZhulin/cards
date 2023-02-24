@@ -1,11 +1,10 @@
 import React from 'react'
 
-import NiceModal, { show, useModal } from '@ebay/nice-modal-react'
+import NiceModal, { show } from '@ebay/nice-modal-react'
 
 import { AddNewCardModal } from '../../../common/components/modal/AddNewCardModal'
-import { useAppDispatch } from '../../../common/hooks/reduxHooks'
-import { FormTitle, AddNewItemButton, TopSection } from '../../../common/style'
-import { savePackIdForNewCard, toggleAddNewCardModal } from '../cards-reducer'
+import { AddNewPackModal } from '../../../common/components/modal/AddNewPackModal'
+import { AddNewItemButton, FormTitle, TopSection } from '../../../common/style'
 
 import { DropDown } from './DropDown'
 
@@ -16,14 +15,8 @@ type CardsTopSectionType = {
 }
 
 export const CardsTopSection = ({ packName, cardsPackId, userId }: CardsTopSectionType) => {
-  // const dispatch = useAppDispatch()
-  // const modal = useModal('add-card-modal')
-
   const addCard = () => {
-    // dispatch(toggleAddNewCardModal({ showModal: true }))
-    // dispatch(savePackIdForNewCard({ packId: cardsPackId }))
-    // await show('add-card-modal', { cardsPack_id: cardsPackId })
-    // cardsPackId && modal.show()
+    show('add-card-modal', { cardsPack_id: cardsPackId })
   }
 
   return (
@@ -32,10 +25,9 @@ export const CardsTopSection = ({ packName, cardsPackId, userId }: CardsTopSecti
         {packName}
         <DropDown packName={packName} packUserId={userId} cardsPackId={cardsPackId} />
       </FormTitle>
-      <AddNewItemButton type="primary" onClick={() => show(AddNewCardModal)}>
+      <AddNewItemButton type="primary" onClick={addCard}>
         Add new card
       </AddNewItemButton>
-      {/*<AddNewCardModal cardsPack_id={cardsPackId} />*/}
     </TopSection>
   )
 }

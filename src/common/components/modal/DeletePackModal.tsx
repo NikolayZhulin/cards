@@ -1,30 +1,29 @@
 import React from 'react'
 
+import NiceModal, { useModal } from '@ebay/nice-modal-react'
 import { useNavigate } from 'react-router-dom'
 
-import { toggleDeletePackModal } from '../../../features/packs/packs-reducer'
-import { useDeletePackMutation } from '../../../features/packs/packsApi'
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+import { useDeletePackMutation } from '../../../features/packs'
 import { PATH } from '../../utils'
 
 import { ModalFC } from './ModalFC'
 
-export const DeletePackModal = () => {
-  const showModal = useAppSelector(state => state.packs.isDeletePackModalOpen)
-  const id = useAppSelector(state => state.packs.packForDelete.id)
-  const packName = useAppSelector(state => state.packs.packForDelete.name)
-  const insidePack = useAppSelector(state => state.packs.packForDelete.insidePack)
+type Props = {
+  cardsPack_id?: string
+  packName?: string
+  insidePack?: boolean
+}
+
+export const DeletePackModal = NiceModal.create(({ cardsPack_id, packName, insidePack }: Props) => {
+  const modal = useModal()
   const [deletePack, { isLoading: packIsDeleting }] = useDeletePackMutation()
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
-
-  const closeModal = () => dispatch(toggleDeletePackModal({ showModal: false }))
 
   const deletePackHandler = async () => {
     try {
-      await deletePack(id).unwrap()
-      closeModal()
+      await deletePack(cardsPack_id as string).unwrap()
       insidePack && navigate(PATH.PACKS_LIST)
+      modal.hide()
     } catch (e) {
       console.log(e)
     }
@@ -34,10 +33,11 @@ export const DeletePackModal = () => {
     <ModalFC
       okText={'Delete'}
       danger={true}
-      isOpen={showModal}
+      isOpen={modal.visible}
       isLoading={packIsDeleting}
       handleOk={deletePackHandler}
-      handleCancel={closeModal}
+      handleCancel={() => modal.hide()}
+      afterClose={() => modal.remove()}
     >
       <div>
         <h3>Delete pack</h3>
@@ -49,4 +49,4 @@ export const DeletePackModal = () => {
       </div>
     </ModalFC>
   )
-}
+})

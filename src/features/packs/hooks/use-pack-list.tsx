@@ -1,18 +1,13 @@
 import React, { useEffect } from 'react'
 
+import { show } from '@ebay/nice-modal-react'
 import { NavLink } from 'react-router-dom'
 
 import { LearnButton } from '../../../common/components/learn-buttons/LearnButton'
 import { UpdateButtons } from '../../../common/components/update-buttons/UpdateButtons'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
+import { useAppSelector } from '../../../common/hooks/reduxHooks'
 import { useSearch } from '../../../common/hooks/useSearch'
 import { formatDate, PATH } from '../../../common/utils'
-import {
-  savePackForDelete,
-  savePackForUpdate,
-  toggleDeletePackModal,
-  toggleUpdatePackModal,
-} from '../packs-reducer'
 import {
   useAddPackMutation,
   useDeletePackMutation,
@@ -22,12 +17,10 @@ import {
 
 export const usePackList = () => {
   const userId = useAppSelector(state => state.auth.userId)
-
   const [addPack, { isLoading: addPackLoading }] = useAddPackMutation()
   const [updatePack, { isLoading: updatePackLoading }] = useUpdatePackMutation()
   const [deletePack, { isLoading: deletePackLoading }] = useDeletePackMutation()
   const [trigger, response] = useLazyFetchCardsPackQuery()
-  const dispatch = useAppDispatch()
 
   const maxCardsCount = response?.data ? response?.data.maxCardsCount : 0
   const minCardsCount = response?.data ? response?.data.minCardsCount : 0
@@ -39,12 +32,10 @@ export const usePackList = () => {
   }, [searchParams])
 
   const editPackHandler = (packId: string, name: string) => {
-    dispatch(savePackForUpdate({ packId, name }))
-    dispatch(toggleUpdatePackModal({ showModal: true }))
+    show('update-pack-modal', { cardsPack_id: packId, prevName: name })
   }
   const deletePackHandler = (packId: string, name: string) => {
-    dispatch(toggleDeletePackModal({ showModal: true }))
-    dispatch(savePackForDelete({ packId, name, insidePack: false }))
+    show('delete-pack-modal', { cardsPack_id: packId, packName: name })
   }
 
   const rows = response.data?.cardPacks.map(p => {

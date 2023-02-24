@@ -1,30 +1,26 @@
 import React, { useEffect, useState } from 'react'
 
+import NiceModal, { useModal } from '@ebay/nice-modal-react'
 import { Input } from 'antd'
 
-import { toggleUpdatePackModal } from '../../../features/packs/packs-reducer'
-import { useUpdatePackMutation } from '../../../features/packs/packsApi'
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+import { useUpdatePackMutation } from '../../../features/packs'
 
 import { ModalFC } from './ModalFC'
 
-export const UpdatePackModal = () => {
-  const showModal = useAppSelector(state => state.packs.isUpdatePackModalOpen)
-  const packId = useAppSelector(state => state.packs.packForUpdate.id)
-  const prevName = useAppSelector(state => state.packs.packForUpdate.name)
-  const dispatch = useAppDispatch()
-  const [updatePack, { isLoading: packIsUpdating }] = useUpdatePackMutation()
-  const [value, setValue] = useState<string>(prevName)
+type Props = {
+  prevName?: string
+  cardsPack_id?: string
+}
 
-  const closeModal = () => dispatch(toggleUpdatePackModal({ showModal: false }))
+export const UpdatePackModal = NiceModal.create(({ prevName, cardsPack_id }: Props) => {
+  const modal = useModal()
+  const [updatePack, { isLoading: packIsUpdating }] = useUpdatePackMutation()
+  const [value, setValue] = useState<string | undefined>(prevName)
 
   const updatePackHandler = async () => {
-    try {
-      await updatePack({ cardsPack: { _id: packId, name: value } }).unwrap()
-      closeModal()
-    } catch (e) {
-      console.log(e)
-    }
+    await updatePack({ cardsPack: { _id: cardsPack_id, name: value } })
+    modal.hide()
+    setValue('')
   }
 
   useEffect(() => setValue(prevName), [prevName])
@@ -33,10 +29,11 @@ export const UpdatePackModal = () => {
     <ModalFC
       okText={'Save'}
       danger={false}
-      isOpen={showModal}
+      isOpen={modal.visible}
       isLoading={packIsUpdating}
       handleOk={updatePackHandler}
-      handleCancel={closeModal}
+      handleCancel={() => modal.hide()}
+      afterClose={() => modal.remove()}
     >
       <div>
         <h3>Edit pack</h3>
@@ -51,4 +48,4 @@ export const UpdatePackModal = () => {
       </div>
     </ModalFC>
   )
-}
+})

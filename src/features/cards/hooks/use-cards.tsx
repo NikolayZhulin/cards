@@ -1,19 +1,12 @@
 import React, { useEffect } from 'react'
 
-import emptyStar from '../../../assets/pictures/emptyStar.png'
-import fullStar from '../../../assets/pictures/fullStar.png'
-import halfStar from '../../../assets/pictures/halfStar.png'
+import { show } from '@ebay/nice-modal-react'
+import { Rate } from 'antd'
+
 import { UpdateButtons } from '../../../common/components/update-buttons/UpdateButtons'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
+import { useAppSelector } from '../../../common/hooks/reduxHooks'
 import { useSearch } from '../../../common/hooks/useSearch'
-import { StyledIcon } from '../../../common/style'
 import { formatDate } from '../../../common/utils'
-import {
-  saveCardForDelete,
-  saveCardForUpdate,
-  toggleDeleteCardModal,
-  toggleUpdateCardModal,
-} from '../cards-reducer'
 import {
   useAddCardMutation,
   useDeleteCardMutation,
@@ -28,19 +21,16 @@ export const UseCards = () => {
   const [trigger, response] = useLazyFetchCardsQuery()
   const userId = useAppSelector(state => state.auth.userId)
   const { search, setSearchParams, searchParams } = useSearch()
-  const dispatch = useAppDispatch()
 
   useEffect(() => {
     trigger({ ...search })
   }, [searchParams])
 
   const deleteCardHandler = (id: string, question: string) => {
-    dispatch(toggleDeleteCardModal({ showModal: true }))
-    dispatch(saveCardForDelete({ id, question }))
+    show('delete-card-modal', { cardId: id, cardQuestion: question })
   }
-  const updateCardHandler = (id: string, question: string, answer: string) => {
-    dispatch(saveCardForUpdate({ id, question, answer }))
-    dispatch(toggleUpdateCardModal({ showModal: true }))
+  const updateCardHandler = (id: string, answer: string, question: string) => {
+    show('update-card-modal', { cardId: id, prevAnswer: answer, prevQuestion: question })
   }
   const rows = response.data?.cards.map(c => {
     const isMyPack = c.user_id === userId
@@ -50,21 +40,12 @@ export const UseCards = () => {
       question: c.question,
       answer: c.answer,
       updated: formatDate(c.updated),
-      grade: c.grade,
-      render: () => (
-        <div>
-          <StyledIcon src={fullStar} alt={'full star'} />
-          <StyledIcon src={fullStar} alt={'full star'} />
-          <StyledIcon src={fullStar} alt={'full star'} />
-          <StyledIcon src={halfStar} alt={'half star'} />
-          <StyledIcon src={emptyStar} alt={'empty star'} />
-        </div>
-      ),
+      grade: <Rate disabled defaultValue={c.grade} style={{ fontSize: '13px' }} />,
       actions: (
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           <UpdateButtons
             isMyItem={isMyPack}
-            editHandler={() => updateCardHandler(c._id, c.question, c.answer)}
+            editHandler={() => updateCardHandler(c._id, c.answer, c.question)}
             deleteHandler={() => deleteCardHandler(c._id, c.question)}
           />
         </div>

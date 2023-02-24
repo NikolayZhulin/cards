@@ -1,28 +1,24 @@
 import React, { useState } from 'react'
 
+import NiceModal, { useModal } from '@ebay/nice-modal-react'
 import { Checkbox, Input } from 'antd'
 
-import { toggleAddNewPackModal } from '../../../features/packs/packs-reducer'
-import { useAddPackMutation } from '../../../features/packs/packsApi'
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+import { useAddPackMutation } from '../../../features/packs'
 
 import { ModalFC } from './ModalFC'
 
-export const AddNewPackModal = () => {
-  const openModal = useAppSelector(state => state.packs.isAddNewPackModalOpen)
-  const dispatch = useAppDispatch()
+export const AddNewPackModal = NiceModal.create(() => {
+  const modal = useModal()
   const [name, setName] = useState<string>('')
   const [isPrivate, setIsPrivate] = useState<boolean>(false)
   const [addPack, { isLoading: packIsAdding }] = useAddPackMutation()
 
-  const closeModal = () => {
-    setName('')
-    dispatch(toggleAddNewPackModal({ showModal: false }))
-  }
   const addNewPackHandler = async () => {
     try {
       await addPack({ cardsPack: { name, private: isPrivate } }).unwrap()
-      closeModal()
+      setName('')
+      setIsPrivate(false)
+      modal.hide()
     } catch (e) {
       console.log(e)
     }
@@ -32,10 +28,11 @@ export const AddNewPackModal = () => {
     <ModalFC
       okText={'Save'}
       danger={false}
-      isOpen={openModal}
+      isOpen={modal.visible}
       isLoading={packIsAdding}
       handleOk={addNewPackHandler}
-      handleCancel={closeModal}
+      handleCancel={() => modal.hide()}
+      afterClose={() => modal.remove()}
     >
       <div>
         <h3>Add new pack</h3>
@@ -53,4 +50,4 @@ export const AddNewPackModal = () => {
       </div>
     </ModalFC>
   )
-}
+})

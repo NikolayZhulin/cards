@@ -64,15 +64,6 @@ export const columnsForCards: ColumnsType<CardDataType | PackListDataType> = [
     key: 'grade',
     fixed: 'right',
     width: 150,
-    render: () => (
-      <div>
-        <StyledIcon src={fullStar} alt={'full star'} />
-        <StyledIcon src={fullStar} alt={'full star'} />
-        <StyledIcon src={fullStar} alt={'full star'} />
-        <StyledIcon src={halfStar} alt={'half star'} />
-        <StyledIcon src={emptyStar} alt={'empty star'} />
-      </div>
-    ),
   },
   {
     title: '',

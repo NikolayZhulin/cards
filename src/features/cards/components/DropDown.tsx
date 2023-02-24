@@ -1,16 +1,11 @@
 import React from 'react'
 
 import { DeleteOutlined, DownCircleOutlined, EditOutlined, ReadOutlined } from '@ant-design/icons'
+import { show } from '@ebay/nice-modal-react'
 import type { MenuProps } from 'antd'
 import { Dropdown, Space } from 'antd'
 
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
-import {
-  savePackForDelete,
-  savePackForUpdate,
-  toggleDeletePackModal,
-  toggleUpdatePackModal,
-} from '../../packs'
+import { useAppSelector } from '../../../common/hooks/reduxHooks'
 
 type PropsType = {
   cardsPackId?: string
@@ -19,7 +14,6 @@ type PropsType = {
 }
 export const DropDown = ({ cardsPackId, packUserId, packName }: PropsType) => {
   const myID = useAppSelector(state => state.auth.userId)
-  const dispatch = useAppDispatch()
 
   const items: MenuProps['items'] = [
     {
@@ -27,8 +21,10 @@ export const DropDown = ({ cardsPackId, packUserId, packName }: PropsType) => {
       key: '0',
       disabled: packUserId !== myID,
       onClick: () => {
-        dispatch(toggleUpdatePackModal({ showModal: true }))
-        dispatch(savePackForUpdate({ packId: cardsPackId, name: packName }))
+        show('update-pack-modal', {
+          cardsPack_id: cardsPackId,
+          prevName: packName,
+        })
       },
       icon: <EditOutlined />,
     },
@@ -37,12 +33,11 @@ export const DropDown = ({ cardsPackId, packUserId, packName }: PropsType) => {
       key: '1',
       disabled: packUserId !== myID,
       onClick: async () => {
-        if (cardsPackId) {
-          await dispatch(toggleDeletePackModal({ showModal: true }))
-          await dispatch(
-            savePackForDelete({ packId: cardsPackId, name: packName, insidePack: true })
-          )
-        }
+        show('delete-pack-modal', {
+          cardsPack_id: cardsPackId,
+          packName: packName,
+          insidePack: true,
+        })
       },
       icon: <DeleteOutlined />,
     },

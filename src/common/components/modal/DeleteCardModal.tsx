@@ -1,24 +1,24 @@
 import React from 'react'
 
+import NiceModal, { useModal } from '@ebay/nice-modal-react'
+
 import { useDeleteCardMutation } from '../../../features/cards'
-import { toggleDeleteCardModal } from '../../../features/cards/cards-reducer'
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 
 import { ModalFC } from './ModalFC'
 
-export const DeleteCardModal = () => {
-  const showModal = useAppSelector(state => state.cards.isDeleteCardModalOpen)
-  const id = useAppSelector(state => state.cards.cardForDelete.id)
-  const cardQuestion = useAppSelector(state => state.cards.cardForDelete.question)
-  const [deleteCard, { isLoading: cardIsDeleting }] = useDeleteCardMutation()
-  const dispatch = useAppDispatch()
+type Props = {
+  cardId?: string
+  cardQuestion?: string
+}
 
-  const closeModal = () => dispatch(toggleDeleteCardModal({ showModal: false }))
+export const DeleteCardModal = NiceModal.create(({ cardId, cardQuestion }: Props) => {
+  const modal = useModal()
+  const [deleteCard, { isLoading: cardIsDeleting }] = useDeleteCardMutation()
 
   const deleteCardHandler = async () => {
     try {
-      await deleteCard(id).unwrap()
-      closeModal()
+      await deleteCard(cardId as string)
+      modal.hide()
     } catch (e) {
       console.log(e)
     }
@@ -28,10 +28,11 @@ export const DeleteCardModal = () => {
     <ModalFC
       okText={'Delete'}
       danger={true}
-      isOpen={showModal}
+      isOpen={modal.visible}
       isLoading={cardIsDeleting}
       handleOk={deleteCardHandler}
-      handleCancel={closeModal}
+      handleCancel={() => modal.hide()}
+      afterClose={() => modal.remove()}
     >
       <div>
         <h3>Delete pack</h3>
@@ -42,4 +43,4 @@ export const DeleteCardModal = () => {
       </div>
     </ModalFC>
   )
-}
+})

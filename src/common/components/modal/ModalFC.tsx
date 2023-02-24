@@ -10,29 +10,32 @@ type PropsType = {
   isOpen: boolean
   okText: string
   danger: boolean
+  afterClose?: () => void
 }
 
 export const ModalFC = ({
   children,
   isLoading,
   handleOk,
-  // isOpen,
+  isOpen,
   okText,
+  handleCancel,
   danger,
-}: // handleCancel,
-PropsType) => {
+  afterClose,
+}: PropsType) => {
   return (
     <Modal
-      // open={isOpen}
+      open={isOpen}
       onOk={handleOk}
       confirmLoading={isLoading}
-      // onCancel={handleCancel}
+      onCancel={handleCancel}
       okText={okText}
       okButtonProps={{ danger: danger, disabled: isLoading }}
       cancelButtonProps={{ disabled: isLoading }}
       closable={false}
-      // centered={true}
+      centered={true}
       style={{ width: '400px' }}
+      afterClose={afterClose}
     >
       {children}
     </Modal>

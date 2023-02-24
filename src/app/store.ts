@@ -3,11 +3,9 @@ import thunkMiddleware from 'redux-thunk'
 
 import { authAPI, authReducer } from '../features/auth'
 import { cardsApi } from '../features/cards'
-import { cardsReducer } from '../features/cards/cards-reducer'
 import { learnReducer } from '../features/learn/learn-reducer'
 import { learnApi } from '../features/learn/learnApi'
-import { packsReducer } from '../features/packs/packs-reducer'
-import { packsApi } from '../features/packs/packsApi'
+import { packsApi } from '../features/packs'
 import { profileReducer } from '../features/profile'
 
 import { appReducer } from './app-reducer'
@@ -18,8 +16,6 @@ export const store = configureStore({
     auth: authReducer,
     profile: profileReducer,
     learn: learnReducer,
-    packs: packsReducer,
-    cards: cardsReducer,
     [authAPI.reducerPath]: authAPI.reducer,
     [cardsApi.reducerPath]: cardsApi.reducer,
     [learnApi.reducerPath]: learnApi.reducer,
