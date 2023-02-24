@@ -37,6 +37,7 @@ export const ModalFC = ({
       closable={false}
       centered={true}
       afterClose={afterClose}
+      bodyStyle={{ minHeight: 200 }}
     >
       {children}
     </StyledModal>

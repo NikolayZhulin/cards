@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import { show } from '@ebay/nice-modal-react'
 import { Rate } from 'antd'
@@ -21,7 +21,6 @@ export const UseCards = () => {
   const [trigger, response] = useLazyFetchCardsQuery()
   const userId = useAppSelector(state => state.auth.userId)
   const { search, setSearchParams, searchParams } = useSearch()
-  let isMyPack
 
   useEffect(() => {
     trigger({ ...search })
@@ -33,7 +32,7 @@ export const UseCards = () => {
   const updateCardHandler = (id: string, answer: string, question: string) => {
     show('update-card-modal', { cardId: id, prevAnswer: answer, prevQuestion: question })
   }
-
+  let isMyPack
   const rows = response.data?.cards.map(c => {
     isMyPack = c.user_id === userId
 

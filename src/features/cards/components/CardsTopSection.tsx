@@ -1,10 +1,7 @@
 import React from 'react'
 
-import NiceModal, { show } from '@ebay/nice-modal-react'
-import { bool } from 'yup'
+import { show } from '@ebay/nice-modal-react'
 
-import { AddNewCardModal } from '../../../common/components/modal/AddNewCardModal'
-import { AddNewPackModal } from '../../../common/components/modal/AddNewPackModal'
 import { AddNewItemButton, FormTitle, TopSection } from '../../../common/style'
 
 import { DropDown } from './DropDown'
@@ -32,13 +29,11 @@ export const CardsTopSection = ({
         {packName}
         <DropDown packName={packName} packUserId={userId} cardsPackId={cardsPackId} />
       </FormTitle>
-      {isMyPack ? (
+      {
         <AddNewItemButton type="primary" onClick={addCard}>
           Add new card
         </AddNewItemButton>
-      ) : (
-        ''
-      )}
+      }
     </TopSection>
   )
 }

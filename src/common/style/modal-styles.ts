@@ -1,9 +1,14 @@
-import { Checkbox, Modal } from 'antd'
+import { Checkbox, Modal, Select } from 'antd'
 import Input from 'antd/es/input/Input'
+import TextArea from 'antd/es/input/TextArea'
 import Title from 'antd/lib/typography/Title'
 import styled from 'styled-components'
 
 export const StyledInput = styled(Input)`
+  padding: 0;
+  font-size: 14px;
+`
+export const StyledTextArea = styled(TextArea)`
   padding: 0;
   font-size: 14px;
 `
@@ -22,7 +27,6 @@ export const StyledTitle = styled.div`
 `
 
 export const StyledModal = styled(Modal)`
-  max-height: 500px;
   max-width: 400px;
   display: flex;
 `
