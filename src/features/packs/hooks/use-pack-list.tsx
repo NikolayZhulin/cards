@@ -51,7 +51,7 @@ export const usePackList = () => {
       actions: (
         <div style={{ display: 'flex', justifyContent: 'start' }}>
           <NavLink to={`${PATH.LEARN}?cardsPack_id=` + p._id}>
-            <LearnButton disable={isLoading} isCardCount={!!p.cardsCount} />
+            <LearnButton isCardCount={!!p.cardsCount} />
           </NavLink>
           <UpdateButtons
             isMyItem={isMyPack}
