@@ -18,6 +18,7 @@ export const UseTableSort = (sortType: string, name: string) => {
     const order = srt.order
     const field = srt.columnKey
 
+    console.log(sorter)
     switch (order) {
       case 'ascend':
         setSearchParams({ ...search, [sortType]: `1${field}` })

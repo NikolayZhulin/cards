@@ -30,7 +30,6 @@ export const columnsForPacks: ColumnsType<CardDataType | PackListDataType> = [
     key: 'name',
     fixed: 'left',
     ellipsis: true,
-    sorter: true,
   },
   {
     title: 'Author',

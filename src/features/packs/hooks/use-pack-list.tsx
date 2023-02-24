@@ -28,6 +28,7 @@ export const usePackList = () => {
   const { setSearchParams, search, searchParams } = useSearch()
 
   useEffect(() => {
+    console.log('request search params')
     trigger({ ...search })
   }, [searchParams])
 
