@@ -10,7 +10,7 @@ import { UpdatePackModal } from './UpdatePackModal'
 export const AppModals = () => {
   return (
     <>
-      <AddNewPackModal id={'add-pack-modal'} />
+      {/*<AddNewPackModal id={'add-pack-modal'} />*/}
       <AddNewCardModal id={'add-card-modal'} />
       <UpdatePackModal id={'update-pack-modal'} />
       <UpdateCardModal id={'update-card-modal'} />
