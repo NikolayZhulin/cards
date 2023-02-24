@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Skeleton } from 'antd'
+
 import { PaginationFC } from '../../../common/components/pagination/PaginationFC'
 import { usePackList } from '../../cards/hooks'
 import { columnsForPacks } from '../helpers/data-for-packs-list'
@@ -32,10 +34,14 @@ export const PacksListBlocks = () => {
         min={+search.min}
         max={+search.max}
       />
-      <PackListTable
-        {...{ name: 'Packs', columns: columnsForPacks, sortType: 'sortPacks', rows }}
-        isLoading={isLoading}
-      />
+      {!isLoading ? (
+        <PackListTable
+          {...{ name: 'Packs', columns: columnsForPacks, sortType: 'sortPacks', rows }}
+          isLoading={isLoading}
+        />
+      ) : (
+        <Skeleton />
+      )}
       <PaginationFC
         current={response.data?.page}
         pageSize={response.data?.pageCount}

@@ -32,12 +32,10 @@ export const CardsTopSection = ({
         {packName}
         <DropDown packName={packName} packUserId={userId} cardsPackId={cardsPackId} />
       </FormTitle>
-      {isMyPack ? (
+      {isMyPack && (
         <AddNewItemButton type="primary" onClick={addCard}>
           Add new card
         </AddNewItemButton>
-      ) : (
-        ''
       )}
     </TopSection>
   )
