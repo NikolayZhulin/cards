@@ -1,4 +1,4 @@
-export const multiplyGradesPush = (grade: number, state: any) => {
+export const multiplyGradesPush = (grade: number, grades: any) => {
   let qty
 
   if (grade === 0) {
@@ -8,6 +8,6 @@ export const multiplyGradesPush = (grade: number, state: any) => {
   }
 
   for (let i = 0; i < qty; i++) {
-    state.grades.push(grade)
+    grades.push(grade)
   }
 }
