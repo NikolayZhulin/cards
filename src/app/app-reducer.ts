@@ -2,7 +2,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { errorHandler } from '../common/utils'
 import { authAPI } from '../features/auth'
+import { cardsApi } from '../features/cards'
 import { learnApi } from '../features/learn/learnApi'
+import { packsApi } from '../features/packs'
 
 const initialState = {
   error: null as null | string,
@@ -38,6 +40,30 @@ const slice = createSlice({
         state.error = errorHandler(payload)
       })
       .addMatcher(learnApi.endpoints.fetchAllCards.matchRejected, (state, { payload }) => {
+        state.error = errorHandler(payload)
+      })
+      .addMatcher(cardsApi.endpoints.fetchCards.matchRejected, (state, { payload }) => {
+        state.error = errorHandler(payload)
+      })
+      .addMatcher(cardsApi.endpoints.addCard.matchRejected, (state, { payload }) => {
+        state.error = errorHandler(payload)
+      })
+      .addMatcher(cardsApi.endpoints.updateCard.matchRejected, (state, { payload }) => {
+        state.error = errorHandler(payload)
+      })
+      .addMatcher(cardsApi.endpoints.deleteCard.matchRejected, (state, { payload }) => {
+        state.error = errorHandler(payload)
+      })
+      .addMatcher(packsApi.endpoints.fetchCardsPack.matchRejected, (state, { payload }) => {
+        state.error = errorHandler(payload)
+      })
+      .addMatcher(packsApi.endpoints.addPack.matchRejected, (state, { payload }) => {
+        state.error = errorHandler(payload)
+      })
+      .addMatcher(packsApi.endpoints.updatePack.matchRejected, (state, { payload }) => {
+        state.error = errorHandler(payload)
+      })
+      .addMatcher(packsApi.endpoints.deletePack.matchRejected, (state, { payload }) => {
         state.error = errorHandler(payload)
       })
   },

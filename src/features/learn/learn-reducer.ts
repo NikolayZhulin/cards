@@ -1,143 +1,56 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { CardType, NewCard } from '../tables'
+import { CardType, NewCard } from '../cards'
 
+import { clearState } from './helpers/clearState'
+import { removeObsoleteCard } from './helpers/removeObsoleteCard'
+import { setRandomCard } from './helpers/setRandomCard'
+import { setTransformedCards } from './helpers/setTransformedCards'
+import { setUpdatedCard } from './helpers/setUpdatedCard'
 import { learnApi } from './learnApi'
-import { multiplyGradesPush } from './utils/multiplyGradesPush'
-
-const initialState: {
-  packName: string
-  handledCards: HandledPackType
-  ids: GradedCardsIds
-  grades: GradesType
-  randomCard: CardType
-} = {
-  packName: '',
-  handledCards: {},
-  ids: {},
-  grades: [],
-  randomCard: {} as CardType,
-}
 
 const slice = createSlice({
   name: 'learn',
-  initialState,
+  initialState: {
+    packName: '',
+    handledCards: {} as HandledPackType,
+    ids: {} as GradedCardsIds,
+    grades: [] as GradesType,
+    randomCard: {} as CardType,
+  },
   reducers: {
     removePrevPlaceCard: state => {
-      const { grade, _id } = state.randomCard
-
-      delete state.handledCards[grade][_id]
-      state.ids[grade].splice(
-        state.ids[grade].findIndex(id => id === _id),
-        1
-      )
-
-      if (
-        JSON.stringify(state.handledCards[grade]) === '{}' &&
-        JSON.stringify(state.ids[grade]) === '[]'
-      ) {
-        delete state.handledCards[grade]
-        delete state.ids[grade]
-        state.grades = state.grades.filter(g => g !== grade)
-      }
-      if (
-        JSON.stringify(state.handledCards[grade]) === '{}' &&
-        JSON.stringify(state.ids[grade]) !== '[]'
-      ) {
-        throw new Error('removePrevPlaceError')
-      }
-      if (
-        JSON.stringify(state.handledCards[grade]) !== '{}' &&
-        JSON.stringify(state.ids[grade]) === '[]'
-      ) {
-        throw new Error('removePrevPlaceError')
-      }
+      removeObsoleteCard(state)
     },
-    setRandomCard: state => {
-      if (
-        JSON.stringify(state.handledCards) !== '{}' &&
-        JSON.stringify(state.ids) !== '{}' &&
-        state.grades.length
-      ) {
-        const randomGradeIdx = state.grades[Math.floor(Math.random() * state.grades.length)]
-        const gradedCards = state.handledCards[randomGradeIdx]
-        const gradedIds = state.ids[randomGradeIdx]
+    chooseRandomCard: state => {
+      const changedCard = setRandomCard(state.handledCards, state.ids, state.grades)
 
-        const randomCardId = gradedIds[Math.floor(Math.random() * gradedIds.length)]
-
-        state.randomCard = gradedCards[randomCardId]
+      if (changedCard) {
+        state.randomCard = changedCard
       }
     },
     clearAllState: state => {
-      state.packName = ''
-      state.handledCards = {}
-      state.ids = {}
-      state.grades = []
-      state.randomCard = {} as CardType
+      clearState(state)
     },
   },
   extraReducers: builder => {
     builder.addMatcher(learnApi.endpoints.fetchAllCards.matchFulfilled, (state, { payload }) => {
       const { cards, packName } = payload
-      let gradesSet = new Set()
 
       state.packName = packName
 
-      cards.forEach(c => {
-        state.handledCards[c.grade] = { ...state.handledCards[c.grade], [c._id]: c }
-        gradesSet.add(c.grade)
-
-        // eslint-disable-next-line no-prototype-builtins
-        if (state.ids.hasOwnProperty(c.grade)) {
-          if (!state.ids[c.grade].includes(c._id)) {
-            state.ids[c.grade].push(c._id)
-          }
-        } else {
-          state.ids[c.grade] = [c._id]
-        }
-      })
-
-      gradesSet.forEach(g => {
-        const grade = Number(g)
-
-        if (!state.grades.includes(grade)) {
-          multiplyGradesPush(grade, state)
-        }
-      })
+      setTransformedCards(cards, state)
     })
     builder.addMatcher(learnApi.endpoints.updateGrade.matchFulfilled, (state, { payload }) => {
-      const { grade, card_id, cardsPack_id, user_id, shots } = payload.updatedGrade
-      const { answer, question, created, updated } = state.randomCard
-
-      state.handledCards[grade] = {
-        ...state.handledCards[grade],
-        [card_id]: {
-          _id: card_id,
-          grade,
-          cardsPack_id,
-          user_id,
-          shots: shots,
-          answer,
-          question,
-          created,
-          updated,
-        },
-      }
-      if (!state.ids[grade]) {
-        state.ids[grade] = []
-      }
-
-      state.ids[grade].push(card_id)
-
-      if (!state.grades.includes(grade)) {
-        multiplyGradesPush(grade, state)
-      }
+      setUpdatedCard(state, payload)
     })
   },
 })
 
 export const learnReducer = slice.reducer
-export const { removePrevPlaceCard, setRandomCard, clearAllState } = slice.actions
+export const { removePrevPlaceCard, chooseRandomCard, clearAllState } = slice.actions
+
+export type State = ReturnType<typeof slice.getInitialState>
 
 export type HandledPackType = {
   [key: string]: CardObjType

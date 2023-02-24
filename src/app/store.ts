@@ -2,12 +2,11 @@ import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
 import thunkMiddleware from 'redux-thunk'
 
 import { authAPI, authReducer } from '../features/auth'
+import { cardsApi } from '../features/cards'
 import { learnReducer } from '../features/learn/learn-reducer'
 import { learnApi } from '../features/learn/learnApi'
+import { packsApi } from '../features/packs'
 import { profileReducer } from '../features/profile'
-import { tablesApi } from '../features/tables'
-import { cardsReducer } from '../features/tables/cards-reducer'
-import { packsReducer } from '../features/tables/packs-reducer'
 
 import { appReducer } from './app-reducer'
 
@@ -17,17 +16,17 @@ export const store = configureStore({
     auth: authReducer,
     profile: profileReducer,
     learn: learnReducer,
-    packs: packsReducer,
-    cards: cardsReducer,
     [authAPI.reducerPath]: authAPI.reducer,
-    [tablesApi.reducerPath]: tablesApi.reducer,
+    [cardsApi.reducerPath]: cardsApi.reducer,
     [learnApi.reducerPath]: learnApi.reducer,
+    [packsApi.reducerPath]: packsApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware()
       .prepend(thunkMiddleware)
       .prepend(authAPI.middleware)
-      .prepend(tablesApi.middleware)
+      .prepend(cardsApi.middleware)
+      .prepend(packsApi.middleware)
       .prepend(learnApi.middleware),
 })
 

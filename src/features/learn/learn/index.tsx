@@ -1,15 +1,23 @@
 import React from 'react'
 
-import { CardWrapper, StyledCard } from '../../../common/style'
+import { useAppSelector } from '../../../common/hooks/reduxHooks'
+import { BackToPacksButton } from '../../cards/components/BackToPacksButton'
+import { LearnCardWrapper, LearnStyledCard, LearnWrapper } from '../styles'
 
 import { Card } from './Card'
 
 export const Learn = () => {
+  const packName = useAppSelector(state => state.learn.packName)
+
   return (
-    <CardWrapper>
-      <StyledCard>
-        <Card />
-      </StyledCard>
-    </CardWrapper>
+    <LearnWrapper>
+      <BackToPacksButton />
+      <LearnCardWrapper>
+        <h1>{packName}</h1>
+        <LearnStyledCard>
+          <Card />
+        </LearnStyledCard>
+      </LearnCardWrapper>
+    </LearnWrapper>
   )
 }

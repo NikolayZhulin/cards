@@ -1,21 +1,21 @@
 import React from 'react'
 
-import { AddNewCardModal } from '../../../features/tables/components/AddNewCardModal'
-import { AddNewPackModal } from '../../../features/tables/components/AddNewPackModal'
-import { DeleteCardModal } from '../../../features/tables/components/DeleteCardModal'
-import { DeletePackModal } from '../../../features/tables/components/DeletePackModal'
-import { UpdateCardModal } from '../../../features/tables/components/UpdateCardModal'
-import { UpdatePackModal } from '../../../features/tables/components/UpdatePackModal'
+import { AddNewCardModal } from './AddNewCardModal'
+import { AddNewPackModal } from './AddNewPackModal'
+import { DeleteCardModal } from './DeleteCardModal'
+import { DeletePackModal } from './DeletePackModal'
+import { UpdateCardModal } from './UpdateCardModal'
+import { UpdatePackModal } from './UpdatePackModal'
 
 export const AppModals = () => {
   return (
     <>
-      <AddNewPackModal />
-      <AddNewCardModal />
-      <UpdatePackModal />
-      <UpdateCardModal />
-      <DeletePackModal />
-      <DeleteCardModal />
+      <AddNewPackModal id={'add-pack-modal'} />
+      <AddNewCardModal id={'add-card-modal'} />
+      <UpdatePackModal id={'update-pack-modal'} />
+      <UpdateCardModal id={'update-card-modal'} />
+      <DeletePackModal id={'delete-pack-modal'} />
+      <DeleteCardModal id={'delete-card-modal'} />
     </>
   )
 }
