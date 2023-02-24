@@ -21,7 +21,6 @@ export const usePackList = () => {
   const [updatePack, { isLoading: updatePackLoading }] = useUpdatePackMutation()
   const [deletePack, { isLoading: deletePackLoading }] = useDeletePackMutation()
   const [trigger, response] = useLazyFetchCardsPackQuery()
-  const navigate = useNavigate()
 
   const maxCardsCount = response?.data ? response?.data.maxCardsCount : 0
   const minCardsCount = response?.data ? response?.data.minCardsCount : 0
@@ -52,7 +51,7 @@ export const usePackList = () => {
       actions: (
         <div style={{ display: 'flex', justifyContent: 'start' }}>
           <NavLink to={`${PATH.LEARN}?cardsPack_id=` + p._id}>
-            <LearnButton isCardCount={!!p.cardsCount} />
+            <LearnButton disable={isLoading} isCardCount={!!p.cardsCount} />
           </NavLink>
           <UpdateButtons
             isMyItem={isMyPack}
