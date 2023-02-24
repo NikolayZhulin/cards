@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 
-import emptyStar from '../../../assets/pictures/emptyStar.png'
-import fullStar from '../../../assets/pictures/fullStar.png'
-import halfStar from '../../../assets/pictures/halfStar.png'
+import { Rate } from 'antd'
+
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
 import { useSearch } from '../../../common/hooks/useSearch'
 import { formatDate } from '../../../common/utils'
@@ -13,7 +12,6 @@ import {
   toggleUpdateCardModal,
 } from '../cards-reducer'
 import { UpdateButtons } from '../components'
-import { StyledIcon } from '../styles'
 import {
   useAddCardMutation,
   useDeleteCardMutation,
@@ -42,6 +40,7 @@ export const UseCards = () => {
     dispatch(saveCardForUpdate({ id, question, answer }))
     dispatch(toggleUpdateCardModal({ showModal: true }))
   }
+
   const rows = response.data?.cards.map(c => {
     const isMyPack = c.user_id === userId
 
@@ -51,15 +50,6 @@ export const UseCards = () => {
       answer: c.answer,
       updated: formatDate(c.updated),
       grade: c.grade,
-      render: () => (
-        <div>
-          <StyledIcon src={fullStar} alt={'full star'} />
-          <StyledIcon src={fullStar} alt={'full star'} />
-          <StyledIcon src={fullStar} alt={'full star'} />
-          <StyledIcon src={halfStar} alt={'half star'} />
-          <StyledIcon src={emptyStar} alt={'empty star'} />
-        </div>
-      ),
       actions: (
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           <UpdateButtons

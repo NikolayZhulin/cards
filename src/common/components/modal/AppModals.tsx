@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Rate } from 'antd'
+
 import { AddNewCardModal } from '../../../features/tables/components/AddNewCardModal'
 import { DeleteCardModal } from '../../../features/tables/components/DeleteCardModal'
 import { DeletePackModal } from '../../../features/tables/components/DeletePackModal'
