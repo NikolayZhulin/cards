@@ -1,6 +1,7 @@
 import React from 'react'
 
 import NiceModal, { show } from '@ebay/nice-modal-react'
+import { bool } from 'yup'
 
 import { AddNewCardModal } from '../../../common/components/modal/AddNewCardModal'
 import { AddNewPackModal } from '../../../common/components/modal/AddNewPackModal'
@@ -12,9 +13,15 @@ type CardsTopSectionType = {
   packName?: string
   cardsPackId?: string
   userId?: string
+  isMyPack?: boolean
 }
 
-export const CardsTopSection = ({ packName, cardsPackId, userId }: CardsTopSectionType) => {
+export const CardsTopSection = ({
+  packName,
+  cardsPackId,
+  userId,
+  isMyPack,
+}: CardsTopSectionType) => {
   const addCard = () => {
     show('add-card-modal', { cardsPack_id: cardsPackId })
   }
@@ -25,9 +32,13 @@ export const CardsTopSection = ({ packName, cardsPackId, userId }: CardsTopSecti
         {packName}
         <DropDown packName={packName} packUserId={userId} cardsPackId={cardsPackId} />
       </FormTitle>
-      <AddNewItemButton type="primary" onClick={addCard}>
-        Add new card
-      </AddNewItemButton>
+      {isMyPack ? (
+        <AddNewItemButton type="primary" onClick={addCard}>
+          Add new card
+        </AddNewItemButton>
+      ) : (
+        ''
+      )}
     </TopSection>
   )
 }

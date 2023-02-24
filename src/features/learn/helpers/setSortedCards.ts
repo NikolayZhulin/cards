@@ -1,4 +1,4 @@
-import { NewCard } from '../../tables'
+import { NewCard } from '../../cards'
 import { HandledPackType } from '../learn-reducer'
 
 export const setSortedCards = (cards: HandledPackType, card: NewCard) => {

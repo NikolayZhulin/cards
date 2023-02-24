@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import { show } from '@ebay/nice-modal-react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 import { LearnButton } from '../../../common/components/learn-buttons/LearnButton'
 import { UpdateButtons } from '../../../common/components/update-buttons/UpdateButtons'
@@ -21,6 +21,7 @@ export const usePackList = () => {
   const [updatePack, { isLoading: updatePackLoading }] = useUpdatePackMutation()
   const [deletePack, { isLoading: deletePackLoading }] = useDeletePackMutation()
   const [trigger, response] = useLazyFetchCardsPackQuery()
+  const navigate = useNavigate()
 
   const maxCardsCount = response?.data ? response?.data.maxCardsCount : 0
   const minCardsCount = response?.data ? response?.data.minCardsCount : 0
@@ -50,7 +51,9 @@ export const usePackList = () => {
       author: p.user_name,
       actions: (
         <div style={{ display: 'flex', justifyContent: 'start' }}>
-          <LearnButton isCardCount={!!p.cardsCount} />
+          <NavLink to={`${PATH.LEARN}?cardsPack_id=` + p._id}>
+            <LearnButton isCardCount={!!p.cardsCount} />
+          </NavLink>
           <UpdateButtons
             isMyItem={isMyPack}
             editHandler={() => editPackHandler(p._id, p.name)}

@@ -2,7 +2,7 @@ import { memo } from 'react'
 
 import { Button, Radio, Space } from 'antd'
 
-import { CardType } from '../../tables'
+import { CardType } from '../../cards'
 import { useToggleGradeSection } from '../hooks'
 import { useUpdateCard } from '../hooks/use-update-card'
 import { HiddenSection, NextCardButton } from '../styles'

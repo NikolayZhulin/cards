@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { RadioChangeEvent } from 'antd'
 
 import { useAppDispatch } from '../../../common/hooks/reduxHooks'
-import { CardType } from '../../tables'
+import { CardType } from '../../cards'
 import { removePrevPlaceCard } from '../learn-reducer'
 import { useUpdateGradeMutation } from '../learnApi'
 

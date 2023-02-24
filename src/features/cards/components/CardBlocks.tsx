@@ -13,7 +13,7 @@ import CardMiddleSection from './CardMiddleSection'
 import { CardsTopSection } from './CardsTopSection'
 
 export const CardsBlocks = () => {
-  const { onChangePaginationHandler, rows, response, isLoading } = UseCards()
+  const { onChangePaginationHandler, rows, response, isLoading, isMyPack } = UseCards()
 
   return (
     <>
@@ -22,6 +22,7 @@ export const CardsBlocks = () => {
         packName={response?.data?.packName}
         cardsPackId={response?.originalArgs?.cardsPack_id}
         userId={response?.data?.packUserId}
+        isMyPack={isMyPack}
       />
       <CardMiddleSection />
       <PackListTable

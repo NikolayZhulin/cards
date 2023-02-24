@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useAppSelector } from '../../../common/hooks/reduxHooks'
-import { BackToPacksButton } from '../../tables/table/Cards/cards-blocks/BackToPacksButton'
+import { BackToPacksButton } from '../../cards/components/BackToPacksButton'
 import { LearnCardWrapper, LearnStyledCard, LearnWrapper } from '../styles'
 
 import { Card } from './Card'

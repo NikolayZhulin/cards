@@ -1,4 +1,4 @@
-import { CardType } from '../../tables'
+import { CardType } from '../../cards'
 import { State } from '../learn-reducer'
 
 export const clearState = (state: State) => {
