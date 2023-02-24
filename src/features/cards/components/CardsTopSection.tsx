@@ -18,7 +18,7 @@ type CardsTopSectionType = {
 export const CardsTopSection = ({ packName, cardsPackId, userId }: CardsTopSectionType) => {
   // const dispatch = useAppDispatch()
   // const modal = useModal('add-card-modal')
-  // const modal = useModal(AddNewCardModal)
+  const modal = useModal(AddNewCardModal)
   const addCard = async () => {
     // dispatch(toggleAddNewCardModal({ showModal: true }))
     // dispatch(savePackIdForNewCard({ packId: cardsPackId }))
