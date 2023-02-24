@@ -2,9 +2,8 @@ import React from 'react'
 
 import ArrowLeftOutlined from '@ant-design/icons/lib/icons/ArrowLeftOutlined'
 
+import { LinkBackWrapper, StyledLink } from '../../../common/style'
 import { PATH } from '../../../common/utils'
-
-import { LinkBackWrapper, StyledLink } from './../../../common/style'
 
 export const BackToPacksButton = () => {
   return (

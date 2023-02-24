@@ -1,12 +1,11 @@
 import React, { ReactElement } from 'react'
 
 import { ColumnsType } from 'antd/es/table'
-import { SortOrder } from 'antd/es/table/interface'
 
 import emptyStar from '../../../assets/pictures/emptyStar.png'
 import fullStar from '../../../assets/pictures/fullStar.png'
 import halfStar from '../../../assets/pictures/halfStar.png'
-import { StyledIcon } from '../styles'
+import { StyledIcon } from '../../../common/style'
 
 export type PackListDataType = {
   key: React.Key

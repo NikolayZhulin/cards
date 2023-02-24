@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { MiddleSection, Title, WideSearchBlock } from '../../../styles'
-import { SearchInput } from '../components'
+import SearchInput from '../../../common/components/table-search-input/SearchInput'
+import { Title, WideSearchBlock, MiddleSection } from '../../../common/style'
 
 const CardMiddleSection = () => {
   return (

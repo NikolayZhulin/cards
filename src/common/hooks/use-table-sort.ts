@@ -1,7 +1,7 @@
 import { TableProps } from 'antd'
 import { SorterResult } from 'antd/es/table/interface'
 
-import { CardDataType, PackListDataType } from '../../features/tables/helpers'
+import { CardDataType, PackListDataType } from '../../features/cards/helpers'
 
 import { useSearch } from './useSearch'
 

@@ -16,17 +16,17 @@ export const ModalFC = ({
   children,
   isLoading,
   handleOk,
-  isOpen,
+  // isOpen,
   okText,
   danger,
-  handleCancel,
-}: PropsType) => {
+}: // handleCancel,
+PropsType) => {
   return (
     <Modal
-      open={isOpen}
+      // open={isOpen}
       onOk={handleOk}
       confirmLoading={isLoading}
-      onCancel={handleCancel}
+      // onCancel={handleCancel}
       okText={okText}
       okButtonProps={{ danger: danger, disabled: isLoading }}
       cancelButtonProps={{ disabled: isLoading }}

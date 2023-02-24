@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Checkbox, Input } from 'antd'
 
 import { toggleAddNewPackModal } from '../../../features/packs/packs-reducer'
-import { useAddPackMutation } from '../../../features/tables/tablesApi'
+import { useAddPackMutation } from '../../../features/packs/packsApi'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 
 import { ModalFC } from './ModalFC'

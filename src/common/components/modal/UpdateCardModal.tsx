@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { Input, Select } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 
-import { toggleUpdateCardModal } from '../../../features/tables/cards-reducer'
-import { useUpdateCardMutation } from '../../../features/tables/tablesApi'
+import { useUpdateCardMutation } from '../../../features/cards'
+import { toggleUpdateCardModal } from '../../../features/cards/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 
 import { ModalFC } from './ModalFC'

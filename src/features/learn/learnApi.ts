@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
 
-import { FetchCardsRequestType, FetchCardsResponseType } from '../tables'
+import { FetchCardsRequestType, FetchCardsResponseType } from '../cards'
 
 export const learnApi = createApi({
   reducerPath: 'learn/api',

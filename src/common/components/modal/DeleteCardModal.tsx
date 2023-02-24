@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { toggleDeleteCardModal } from '../../../features/tables/cards-reducer'
-import { useDeleteCardMutation } from '../../../features/tables/tablesApi'
+import { useDeleteCardMutation } from '../../../features/cards'
+import { toggleDeleteCardModal } from '../../../features/cards/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 
 import { ModalFC } from './ModalFC'

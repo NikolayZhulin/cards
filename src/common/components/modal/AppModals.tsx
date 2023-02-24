@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { AddNewCardModal } from './AddNewCardModal'
 import { AddNewPackModal } from './AddNewPackModal'
 import { DeleteCardModal } from './DeleteCardModal'
 import { DeletePackModal } from './DeletePackModal'
@@ -11,7 +10,7 @@ export const AppModals = () => {
   return (
     <>
       <AddNewPackModal />
-      <AddNewCardModal />
+      {/*<AddNewCardModal />*/}
       <UpdatePackModal />
       <UpdateCardModal />
       <DeletePackModal />

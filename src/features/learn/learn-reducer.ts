@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { CardType, NewCard } from '../tables'
+import { CardType, NewCard } from '../cards'
 
 import { learnApi } from './learnApi'
 import { multiplyGradesPush } from './utils/multiplyGradesPush'

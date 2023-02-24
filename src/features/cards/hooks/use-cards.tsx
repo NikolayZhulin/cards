@@ -3,8 +3,10 @@ import React, { useEffect } from 'react'
 import emptyStar from '../../../assets/pictures/emptyStar.png'
 import fullStar from '../../../assets/pictures/fullStar.png'
 import halfStar from '../../../assets/pictures/halfStar.png'
+import { UpdateButtons } from '../../../common/components/update-buttons/UpdateButtons'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
 import { useSearch } from '../../../common/hooks/useSearch'
+import { StyledIcon } from '../../../common/style'
 import { formatDate } from '../../../common/utils'
 import {
   saveCardForDelete,
@@ -12,14 +14,12 @@ import {
   toggleDeleteCardModal,
   toggleUpdateCardModal,
 } from '../cards-reducer'
-import { UpdateButtons } from '../components'
-import { StyledIcon } from '../styles'
 import {
   useAddCardMutation,
   useDeleteCardMutation,
   useLazyFetchCardsQuery,
   useUpdateCardMutation,
-} from '../tablesApi'
+} from '../cardsApi'
 
 export const UseCards = () => {
   const [addCard] = useAddCardMutation()

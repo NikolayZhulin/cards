@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Input } from 'antd'
 
 import { toggleUpdatePackModal } from '../../../features/packs/packs-reducer'
-import { useUpdatePackMutation } from '../../../features/tables'
+import { useUpdatePackMutation } from '../../../features/packs/packsApi'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 
 import { ModalFC } from './ModalFC'

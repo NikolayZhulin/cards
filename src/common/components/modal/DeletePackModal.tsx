@@ -3,7 +3,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { toggleDeletePackModal } from '../../../features/packs/packs-reducer'
-import { useDeletePackMutation } from '../../../features/tables/tablesApi'
+import { useDeletePackMutation } from '../../../features/packs/packsApi'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 import { PATH } from '../../utils'
 

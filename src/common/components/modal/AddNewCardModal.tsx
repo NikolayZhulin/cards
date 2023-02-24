@@ -3,34 +3,44 @@ import React, { useState } from 'react'
 import { Input, Select } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 
-import { toggleAddNewCardModal } from '../../../features/tables/cards-reducer'
-import { useAddCardMutation } from '../../../features/tables/tablesApi'
+import { useAddCardMutation } from '../../../features/cards'
+import { toggleAddNewCardModal } from '../../../features/cards/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 
 import { ModalFC } from './ModalFC'
+import { MyNiceModal } from './NiceModal'
 
-export const AddNewCardModal = () => {
-  const openModal = useAppSelector(state => state.cards.isAddNewCardModalOpen)
-  const cardsPack_id = useAppSelector(state => state.cards.packIdForNewCard)
-  const dispatch = useAppDispatch()
+type Props = {
+  cardsPack_id?: string
+  // question: string
+  // answer: string
+}
+
+export const AddNewCardModal = ({ cardsPack_id }: Props) => {
+  // const openModal = useAppSelector(state => state.cards.isAddNewCardModalOpen)
+  // const cardsPack_id = useAppSelector(state => state.cards.packIdForNewCard)
+  // const dispatch = useAppDispatch()
   const [question, setQuestion] = useState<string>('')
   const [answer, setAnswer] = useState<string>('')
   const [format, setFormat] = useState<string>('text')
   const [addCard, { isLoading: cardIsAdding }] = useAddCardMutation()
 
-  const closeModal = () => {
-    setAnswer('')
-    setQuestion('')
-    setFormat('text')
-    dispatch(toggleAddNewCardModal({ showModal: false }))
-  }
-  const addNewCardHandler = async () => {
-    try {
-      if (format === 'text') await addCard({ card: { cardsPack_id, question, answer } }).unwrap()
-      closeModal()
-    } catch (e) {
-      console.log(e)
-    }
+  // const closeModal = () => {
+  //   setAnswer('')
+  //   setQuestion('')
+  //   setFormat('text')
+  //   dispatch(toggleAddNewCardModal({ showModal: false }))
+  // }
+  const addNewCardHandler = () => {
+    // try {
+    //   if (format === 'text') await addCard({ card: { cardsPack_id, question, answer } }).unwrap()
+    //   closeModal()
+    // } catch (e) {
+    //   console.log(e)
+    // }
+    debugger
+    console.log(cardsPack_id)
+    addCard({ card: { cardsPack_id, question, answer } })
   }
 
   const handleChange = (value: string) => {
@@ -38,13 +48,14 @@ export const AddNewCardModal = () => {
   }
 
   return (
-    <ModalFC
+    <MyNiceModal
+      id={'add-card-modal'}
       okText={'Save'}
       danger={false}
-      isOpen={openModal}
+      // isOpen={openModal}
       isLoading={cardIsAdding}
       handleOk={addNewCardHandler}
-      handleCancel={closeModal}
+      // handleCancel={closeModal}
     >
       <div>
         <h3>Add new card</h3>
@@ -74,6 +85,6 @@ export const AddNewCardModal = () => {
           bordered={false}
         />
       </div>
-    </ModalFC>
+    </MyNiceModal>
   )
 }

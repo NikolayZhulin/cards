@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { PaginationFC } from '../../../common/components/pagination/PaginationFC'
-import { usePackList } from '../../tables/hooks'
+import { usePackList } from '../../cards/hooks'
 import { columnsForPacks } from '../helpers/data-for-packs-list'
 
 import { PackListMiddleSection } from './PackListMiddleSection'

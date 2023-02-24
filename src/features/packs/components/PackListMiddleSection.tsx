@@ -2,10 +2,10 @@ import React from 'react'
 
 import { FilterOutlined } from '@ant-design/icons'
 import { Button, Radio, Tooltip } from 'antd'
-import styled from 'styled-components'
 
+import SearchInput from '../../../common/components/table-search-input/SearchInput'
+import TableSlider from '../../../common/components/table-slider/TableSlider'
 import { useSearch } from '../../../common/hooks/useSearch'
-import { SearchInput, TableSlider } from '../../tables/components'
 import {
   MiddleSection,
   SearchBlock,
@@ -13,7 +13,7 @@ import {
   Title,
   ToggleAuthorsBlock,
   ToggleOwnerButton,
-} from '../../tables/styles'
+} from '../../../common/style'
 
 type PackListMiddleSectionPropsType = {
   getMyPacks: () => void

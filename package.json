@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
+    "@ebay/nice-modal-react": "^1.2.8",
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^2.9.11",
     "@reduxjs/toolkit": "^1.9.2",

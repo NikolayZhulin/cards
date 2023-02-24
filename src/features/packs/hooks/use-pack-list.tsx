@@ -2,22 +2,23 @@ import React, { useEffect } from 'react'
 
 import { NavLink } from 'react-router-dom'
 
+import { LearnButton } from '../../../common/components/learn-buttons/LearnButton'
+import { UpdateButtons } from '../../../common/components/update-buttons/UpdateButtons'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
 import { useSearch } from '../../../common/hooks/useSearch'
 import { formatDate, PATH } from '../../../common/utils'
-import { LearnButton, UpdateButtons } from '../../tables/components'
-import {
-  useAddPackMutation,
-  useDeletePackMutation,
-  useLazyFetchCardsPackQuery,
-  useUpdatePackMutation,
-} from '../../tables/tablesApi'
 import {
   savePackForDelete,
   savePackForUpdate,
   toggleDeletePackModal,
   toggleUpdatePackModal,
 } from '../packs-reducer'
+import {
+  useAddPackMutation,
+  useDeletePackMutation,
+  useLazyFetchCardsPackQuery,
+  useUpdatePackMutation,
+} from '../packsApi'
 
 export const usePackList = () => {
   const userId = useAppSelector(state => state.auth.userId)

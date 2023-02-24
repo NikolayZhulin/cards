@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { TablePageStyle } from '../tables/styles'
+import { TablePageStyle } from '../../../common/style'
 
-import { PacksListBlocks } from './pack-list-blocks'
+import { PacksListBlocks } from './PackListBlocks'
 
 export const PacksList = () => {
   return (
