@@ -3,6 +3,7 @@ import React from 'react'
 import NiceModal, { useModal } from '@ebay/nice-modal-react'
 
 import { useDeleteCardMutation } from '../../../features/cards'
+import { StyledTitle } from '../../style/modal-styles'
 
 import { ModalFC } from './ModalFC'
 
@@ -35,7 +36,7 @@ export const DeleteCardModal = NiceModal.create(({ cardId, cardQuestion }: Props
       afterClose={() => modal.remove()}
     >
       <div>
-        <h3>Delete pack</h3>
+        <StyledTitle>Delete pack</StyledTitle>
         <hr />
         <div>
           Do yo really want to delete <b>{cardQuestion}</b>?
