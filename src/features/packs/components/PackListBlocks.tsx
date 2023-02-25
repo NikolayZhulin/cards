@@ -34,14 +34,10 @@ export const PacksListBlocks = () => {
         min={+search.min}
         max={+search.max}
       />
-      {!isLoading ? (
-        <PackListTable
-          {...{ name: 'Packs', columns: columnsForPacks, sortType: 'sortPacks', rows }}
-          isLoading={isLoading}
-        />
-      ) : (
-        <Skeleton />
-      )}
+      <PackListTable
+        {...{ name: 'Packs', columns: columnsForPacks, sortType: 'sortPacks', rows }}
+        isLoading={isLoading}
+      />
       <PaginationFC
         current={response.data?.page}
         pageSize={response.data?.pageCount}

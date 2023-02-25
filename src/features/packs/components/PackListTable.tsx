@@ -17,8 +17,9 @@ type PackListTablePropsType = {
 
 export const PackListTable = memo(
   ({ name, columns, sortType, rows, isLoading }: PackListTablePropsType) => {
-    // if (isLoading) return <Skeleton active paragraph={{ rows: 8 }} />
     const { titleForEmptyTable, onChangeTableHandler } = UseTableSort(sortType, name)
+
+    if (isLoading) return <Skeleton active paragraph={{ rows: 8 }} />
 
     if (!rows?.length) {
       return <Title style={{ margin: '30px 0', minHeight: '210px' }}>{titleForEmptyTable}</Title>
