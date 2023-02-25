@@ -1,11 +1,10 @@
 import { memo } from 'react'
 
-import { Button, Radio, Space } from 'antd'
+import { Radio, Space } from 'antd'
 
-import { CardType } from '../../cards'
-import { useToggleGradeSection } from '../hooks'
-import { useUpdateCard } from '../hooks/use-update-card'
-import { HiddenSection, NextCardButton } from '../styles'
+import { CardType } from '../../../../cards'
+import { useToggleGradeSection, useUpdateCard } from '../../../hooks'
+import { Answer, AnswerButton, HiddenSection, NextCardButton } from '../../../styles'
 
 type Props = {
   randomCard: CardType
@@ -24,15 +23,17 @@ export const GradeSection = memo(({ randomCard, changeCard }: Props) => {
 
   if (isHidden) {
     return (
-      <Button type={'primary'} style={{ width: '100%' }} onClick={showAnswer}>
+      <AnswerButton type={'primary'} style={{ width: '100%' }} onClick={showAnswer}>
         Show Answer
-      </Button>
+      </AnswerButton>
     )
   }
 
   return (
     <HiddenSection>
-      <h3 style={{ wordWrap: 'break-word' }}>Answer: {randomCard.answer}</h3>
+      <Answer>
+        <strong>Answer:</strong> {randomCard.answer}
+      </Answer>
       <Radio.Group onChange={changeGrade} value={grade}>
         <Space direction={'vertical'}>
           <Radio value={5}>Knew the answer</Radio>

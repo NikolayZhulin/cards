@@ -1,6 +1,5 @@
-import { GradesType } from '../learn-reducer'
-
-import { multiplyGradesPush } from './multiplyGradesPush'
+import { GradesType } from '../../../models'
+import { multiplyGradesPush } from '../../multiply-grades-push'
 
 export const setGrades = (gradesSet: any, grades: GradesType) => {
   gradesSet.forEach((g: number) => {

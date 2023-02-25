@@ -1,4 +1,4 @@
-import { GradedCardsIds, GradesType, HandledPackType } from '../learn-reducer'
+import { GradedCardsIds, GradesType, HandledPackType } from '../../models'
 
 export const setRandomCard = (
   cards: HandledPackType,
