@@ -9,9 +9,9 @@ import {
   Registration,
   SetNewPassword,
 } from '../../../features/auth'
-import { Cards } from '../../../features/cards/components'
-import { Learn } from '../../../features/learn/learn'
-import { PacksList } from '../../../features/packs/components'
+import { Cards } from '../../../features/cards'
+import { Learn } from '../../../features/learn'
+import { PacksList } from '../../../features/packs'
 import { Profile } from '../../../features/profile'
 import { PATH } from '../../utils'
 import { Error404 } from '../error404/Error404'

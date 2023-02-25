@@ -3,8 +3,7 @@ import thunkMiddleware from 'redux-thunk'
 
 import { authAPI, authReducer } from '../features/auth'
 import { cardsApi } from '../features/cards'
-import { learnReducer } from '../features/learn/learn-reducer'
-import { learnApi } from '../features/learn/learnApi'
+import { learnReducer, learnApi } from '../features/learn'
 import { packsApi } from '../features/packs'
 import { profileReducer } from '../features/profile'
 
