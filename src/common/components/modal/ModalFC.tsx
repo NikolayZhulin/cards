@@ -2,6 +2,8 @@ import React, { ReactNode, useState } from 'react'
 
 import { Modal } from 'antd'
 
+import { StyledModal } from '../../style/modal-styles'
+
 type PropsType = {
   children?: ReactNode
   handleOk: () => void
@@ -24,7 +26,7 @@ export const ModalFC = ({
   afterClose,
 }: PropsType) => {
   return (
-    <Modal
+    <StyledModal
       open={isOpen}
       onOk={handleOk}
       confirmLoading={isLoading}
@@ -34,10 +36,9 @@ export const ModalFC = ({
       cancelButtonProps={{ disabled: isLoading }}
       closable={false}
       centered={true}
-      style={{ width: '400px' }}
       afterClose={afterClose}
     >
       {children}
-    </Modal>
+    </StyledModal>
   )
 }

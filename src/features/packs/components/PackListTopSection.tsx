@@ -9,14 +9,10 @@ type PackListTopSectionPropsType = {
 }
 
 export const PackListTopSection = ({ formTitle }: PackListTopSectionPropsType) => {
-  const addNewItemHandler = () => {
-    show('add-pack-modal')
-  }
-
   return (
     <TopSection>
       <FormTitle>{formTitle}</FormTitle>
-      <AddNewItemButton type="primary" onClick={addNewItemHandler}>
+      <AddNewItemButton type="primary" onClick={() => show('add-pack-modal')}>
         Add new pack
       </AddNewItemButton>
     </TopSection>

@@ -4,6 +4,7 @@ import NiceModal, { useModal } from '@ebay/nice-modal-react'
 import { useNavigate } from 'react-router-dom'
 
 import { useDeletePackMutation } from '../../../features/packs'
+import { StyledTitle } from '../../style/modal-styles'
 import { PATH } from '../../utils'
 
 import { ModalFC } from './ModalFC'
@@ -40,7 +41,7 @@ export const DeletePackModal = NiceModal.create(({ cardsPack_id, packName, insid
       afterClose={() => modal.remove()}
     >
       <div>
-        <h3>Delete pack</h3>
+        <StyledTitle>Delete pack</StyledTitle>
         <hr />
         <div>
           Do yo really want to remove <b>{packName}</b>?

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
-import NiceModal, { useModal } from '@ebay/nice-modal-react'
-import { Input } from 'antd'
+import { create, useModal } from '@ebay/nice-modal-react'
 
 import { useUpdatePackMutation } from '../../../features/packs'
+import { StyledDiv, StyledInput, StyledTitle } from '../../style/modal-styles'
 
 import { ModalFC } from './ModalFC'
 
@@ -12,13 +12,13 @@ type Props = {
   cardsPack_id?: string
 }
 
-export const UpdatePackModal = NiceModal.create(({ prevName, cardsPack_id }: Props) => {
+export const UpdatePackModal = create(({ prevName, cardsPack_id }: Props) => {
   const modal = useModal()
   const [updatePack, { isLoading: packIsUpdating }] = useUpdatePackMutation()
   const [value, setValue] = useState<string | undefined>(prevName)
 
   const updatePackHandler = async () => {
-    await updatePack({ cardsPack: { _id: cardsPack_id, name: value } })
+    await updatePack({ cardsPack: { _id: cardsPack_id, name: value } }).unwrap()
     modal.hide()
     setValue('')
   }
@@ -36,15 +36,16 @@ export const UpdatePackModal = NiceModal.create(({ prevName, cardsPack_id }: Pro
       afterClose={() => modal.remove()}
     >
       <div>
-        <h3>Edit pack</h3>
+        <StyledTitle>Edit pack</StyledTitle>
         <hr />
-        <div>Name pack</div>
-        <Input
+        <StyledDiv>Name pack</StyledDiv>
+        <StyledInput
           value={value}
           onChange={e => setValue(e.currentTarget.value)}
           placeholder="Enter name"
           bordered={false}
         />
+        <hr />
       </div>
     </ModalFC>
   )

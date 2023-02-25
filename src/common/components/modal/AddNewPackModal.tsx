@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
 import NiceModal, { useModal } from '@ebay/nice-modal-react'
-import { Checkbox, Input } from 'antd'
 
 import { useAddPackMutation } from '../../../features/packs'
+import { StyledCheckbox, StyledDiv, StyledInput, StyledTitle } from '../../style/modal-styles'
 
 import { ModalFC } from './ModalFC'
 
@@ -35,18 +35,19 @@ export const AddNewPackModal = NiceModal.create(() => {
       afterClose={() => modal.remove()}
     >
       <div>
-        <h3>Add new pack</h3>
+        <StyledTitle>Add new pack</StyledTitle>
         <hr />
-        <div>Name pack</div>
-        <Input
+        <StyledDiv>Name pack</StyledDiv>
+        <StyledInput
           value={name}
           onChange={e => setName(e.currentTarget.value)}
           placeholder="Enter name"
           bordered={false}
         />
-        <Checkbox checked={isPrivate} onChange={e => setIsPrivate(e.target.checked)}>
+        <hr />
+        <StyledCheckbox checked={isPrivate} onChange={e => setIsPrivate(e.target.checked)}>
           Private pack
-        </Checkbox>
+        </StyledCheckbox>
       </div>
     </ModalFC>
   )

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 
-import NiceModal, { useModal } from '@ebay/nice-modal-react'
-import { Input, Select } from 'antd'
-import TextArea from 'antd/es/input/TextArea'
+import { create, useModal } from '@ebay/nice-modal-react'
+import { Select } from 'antd'
 
 import { useAddCardMutation } from '../../../features/cards'
+import { StyledDiv, StyledInput, StyledTextArea, StyledTitle } from '../../style/modal-styles'
 
 import { ModalFC } from './ModalFC'
 
@@ -12,7 +12,7 @@ type Props = {
   cardsPack_id?: string
 }
 
-export const AddNewCardModal = NiceModal.create(({ cardsPack_id }: Props) => {
+export const AddNewCardModal = create(({ cardsPack_id }: Props) => {
   const modal = useModal()
   const [question, setQuestion] = useState<string>('')
   const [answer, setAnswer] = useState<string>('')
@@ -44,35 +44,36 @@ export const AddNewCardModal = NiceModal.create(({ cardsPack_id }: Props) => {
       handleOk={addNewCardHandler}
       handleCancel={() => modal.hide()}
       afterClose={() => modal.remove()}
-      // handleCancel={closeModal}
     >
       <div>
-        <h3>Add new card</h3>
+        <StyledTitle>Add new card</StyledTitle>
         <hr />
-        <div>Choose a question format</div>
+        <StyledDiv>Choose a question format</StyledDiv>
         <Select
           value={format}
-          style={{ width: 120 }}
+          style={{ width: '100%' }}
           onChange={handleChange}
           options={[
             { value: 'text', label: 'text' },
             { value: 'image', label: 'image' },
           ]}
         />
-        <div>Question</div>
-        <Input
+        <StyledDiv>Question</StyledDiv>
+        <StyledInput
           value={question}
           onChange={e => setQuestion(e.currentTarget.value)}
           placeholder="Enter your question"
           bordered={false}
         />
-        <div>Answer</div>
-        <TextArea
+        <hr />
+        <StyledDiv>Answer</StyledDiv>
+        <StyledTextArea
           value={answer}
           onChange={e => setAnswer(e.currentTarget.value)}
           placeholder="Enter your answer"
           bordered={false}
         />
+        <hr />
       </div>
     </ModalFC>
   )

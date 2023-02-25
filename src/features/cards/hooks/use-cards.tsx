@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import { show } from '@ebay/nice-modal-react'
 import { Rate } from 'antd'
@@ -34,7 +34,7 @@ export const UseCards = () => {
   }
   const isMyPack = response?.data?.packUserId === userId
   const rows = response.data?.cards.map(c => {
-    // const isMyPack = c.user_id === userId
+
 
     return {
       key: c._id,
