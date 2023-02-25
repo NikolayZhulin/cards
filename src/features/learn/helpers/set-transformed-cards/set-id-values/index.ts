@@ -1,4 +1,4 @@
-import { GradedCardsIds } from '../learn-reducer'
+import { GradedCardsIds } from '../../../models'
 
 export const setIdValues = (idValues: GradedCardsIds, grade: number, id: string) => {
   // eslint-disable-next-line no-prototype-builtins

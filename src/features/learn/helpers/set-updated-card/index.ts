@@ -1,7 +1,6 @@
-import { State } from '../learn-reducer'
-import { UpdateGradeResponseType } from '../learnApi'
-
-import { multiplyGradesPush } from './multiplyGradesPush'
+import { UpdateGradeResponseType } from '../../api'
+import { State } from '../../models'
+import { multiplyGradesPush } from '../multiply-grades-push'
 
 export const setUpdatedCard = (state: State, { updatedGrade }: UpdateGradeResponseType) => {
   const { grade, card_id, cardsPack_id, user_id, shots } = updatedGrade

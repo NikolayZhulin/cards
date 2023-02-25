@@ -2,9 +2,9 @@ import React from 'react'
 
 import { useAppSelector } from '../../../common/hooks/reduxHooks'
 import { BackToPacksButton } from '../../cards/components/BackToPacksButton'
-import { LearnCardWrapper, LearnStyledCard, LearnWrapper } from '../styles'
+import { LearnCardWrapper, LearnStyledCard, LearnWrapper, PackName } from '../styles'
 
-import { Card } from './Card'
+import { Card } from './card'
 
 export const Learn = () => {
   const packName = useAppSelector(state => state.learn.packName)
@@ -13,7 +13,7 @@ export const Learn = () => {
     <LearnWrapper>
       <BackToPacksButton />
       <LearnCardWrapper>
-        <h1>{packName}</h1>
+        <PackName>{packName}</PackName>
         <LearnStyledCard>
           <Card />
         </LearnStyledCard>
