@@ -32,7 +32,7 @@ export const DropDown = ({ cardsPackId, packUserId, packName }: PropsType) => {
       label: 'Delete',
       key: '1',
       disabled: packUserId !== myID,
-      onClick: async () => {
+      onClick: () => {
         show('delete-pack-modal', {
           cardsPack_id: cardsPackId,
           packName: packName,
