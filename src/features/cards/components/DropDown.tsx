@@ -4,17 +4,19 @@ import { DeleteOutlined, DownCircleOutlined, EditOutlined, ReadOutlined } from '
 import { show } from '@ebay/nice-modal-react'
 import type { MenuProps } from 'antd'
 import { Dropdown, Space } from 'antd'
+import { NavLink } from 'react-router-dom'
 
 import { useAppSelector } from '../../../common/hooks/reduxHooks'
+import { PATH } from '../../../common/utils'
 
 type PropsType = {
   cardsPackId?: string
   packUserId: string | undefined
   packName: string | undefined
+  packId?: string
 }
-export const DropDown = ({ cardsPackId, packUserId, packName }: PropsType) => {
+export const DropDown = ({ cardsPackId, packUserId, packName, packId }: PropsType) => {
   const myID = useAppSelector(state => state.auth.userId)
-
   const items: MenuProps['items'] = [
     {
       label: 'Edit',
@@ -44,10 +46,11 @@ export const DropDown = ({ cardsPackId, packUserId, packName }: PropsType) => {
     {
       label: 'Learn',
       key: '2',
-      onClick: () => {
-        alert('Learn')
-      },
-      icon: <ReadOutlined />,
+      icon: (
+        <NavLink to={`${PATH.LEARN}?cardsPack_id=` + packId}>
+          <ReadOutlined />
+        </NavLink>
+      ),
     },
   ]
 

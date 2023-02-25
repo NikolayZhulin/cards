@@ -34,8 +34,6 @@ export const UseCards = () => {
   }
   const isMyPack = response?.data?.packUserId === userId
   const rows = response.data?.cards.map(c => {
-
-
     return {
       key: c._id,
       question: c.question,
@@ -62,6 +60,7 @@ export const UseCards = () => {
     setSearchParams({ ...search, page: newPage.toString(), pageCount: newPageCount.toString() })
   }
   const isLoading = response.isLoading || response.isFetching
+  const packId = response?.data?.packUserId
 
   return {
     onChangePaginationHandler,
@@ -73,5 +72,6 @@ export const UseCards = () => {
     rows,
     isLoading,
     isMyPack,
+    packId,
   }
 }

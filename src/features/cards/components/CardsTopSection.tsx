@@ -11,6 +11,7 @@ type CardsTopSectionType = {
   cardsPackId?: string
   userId?: string
   isMyPack?: boolean
+  packId?: string
 }
 
 export const CardsTopSection = ({
@@ -18,6 +19,7 @@ export const CardsTopSection = ({
   cardsPackId,
   userId,
   isMyPack,
+  packId,
 }: CardsTopSectionType) => {
   const addCard = () => {
     show('add-card-modal', { cardsPack_id: cardsPackId })
@@ -27,7 +29,12 @@ export const CardsTopSection = ({
     <TopSection>
       <FormTitle>
         {packName}
-        <DropDown packName={packName} packUserId={userId} cardsPackId={cardsPackId} />
+        <DropDown
+          packId={packId}
+          packName={packName}
+          packUserId={userId}
+          cardsPackId={cardsPackId}
+        />
       </FormTitle>
       {isMyPack && (
         <AddNewItemButton type="primary" onClick={addCard}>
