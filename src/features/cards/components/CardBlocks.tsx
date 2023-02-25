@@ -1,8 +1,5 @@
 import React from 'react'
 
-import { useModal } from '@ebay/nice-modal-react'
-
-import { AddNewCardModal } from '../../../common/components/modal/AddNewCardModal'
 import { PaginationFC } from '../../../common/components/pagination/PaginationFC'
 import { PackListTable } from '../../packs/components/PackListTable'
 import { columnsForCards } from '../helpers'

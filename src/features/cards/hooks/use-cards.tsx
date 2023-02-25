@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import { show } from '@ebay/nice-modal-react'
 import { Rate } from 'antd'

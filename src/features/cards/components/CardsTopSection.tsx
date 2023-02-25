@@ -1,10 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-import NiceModal, { show } from '@ebay/nice-modal-react'
-import { bool } from 'yup'
+import { show } from '@ebay/nice-modal-react'
 
-import { AddNewCardModal } from '../../../common/components/modal/AddNewCardModal'
-import { AddNewPackModal } from '../../../common/components/modal/AddNewPackModal'
 import { AddNewItemButton, FormTitle, TopSection } from '../../../common/style'
 
 import { DropDown } from './DropDown'
@@ -22,9 +19,7 @@ export const CardsTopSection = ({
   userId,
   isMyPack,
 }: CardsTopSectionType) => {
-  const addCard = () => {
-    show('add-card-modal', { cardsPack_id: cardsPackId })
-  }
+  useEffect(() => {}, [isMyPack])
 
   return (
     <TopSection>
@@ -33,7 +28,10 @@ export const CardsTopSection = ({
         <DropDown packName={packName} packUserId={userId} cardsPackId={cardsPackId} />
       </FormTitle>
       {isMyPack ? (
-        <AddNewItemButton type="primary" onClick={addCard}>
+        <AddNewItemButton
+          type="primary"
+          onClick={() => show('add-card-modal', { cardsPack_id: cardsPackId })}
+        >
           Add new card
         </AddNewItemButton>
       ) : (
