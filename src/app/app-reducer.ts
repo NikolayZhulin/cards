@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { errorHandler } from '../common/utils'
 import { authAPI } from '../features/auth'
 import { cardsApi } from '../features/cards'
-import { learnApi } from '../features/learn/learnApi'
+import { learnApi } from '../features/learn'
 import { packsApi } from '../features/packs'
 
 const initialState = {

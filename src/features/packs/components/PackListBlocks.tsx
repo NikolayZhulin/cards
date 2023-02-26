@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Skeleton } from 'antd'
+
 import { PaginationFC } from '../../../common/components/pagination/PaginationFC'
 import { usePackList } from '../../cards/hooks'
 import { columnsForPacks } from '../helpers/data-for-packs-list'

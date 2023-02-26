@@ -4,7 +4,7 @@ import { ColumnsType } from 'antd/es/table'
 
 export type PackListDataType = {
   key: React.Key
-  name: ReactElement
+  name: string
   cards: number
   updated: string
   created: string
@@ -22,7 +22,7 @@ export type CardDataType = {
   render?: () => ReactElement
 }
 
-export const columnsForPacks: ColumnsType<CardDataType | PackListDataType> = [
+export const columnsForPacks: ColumnsType<PackListDataType | CardDataType> = [
   {
     title: 'Name',
     width: 200,

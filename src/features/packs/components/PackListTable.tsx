@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { Skeleton, Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
@@ -15,28 +15,24 @@ type PackListTablePropsType = {
   isLoading: boolean
 }
 
-export const PackListTable = ({
-  name,
-  columns,
-  sortType,
-  rows,
-  isLoading,
-}: PackListTablePropsType) => {
-  const { titleForEmptyTable, onChangeTableHandler } = UseTableSort(sortType, name)
+export const PackListTable = memo(
+  ({ name, columns, sortType, rows, isLoading }: PackListTablePropsType) => {
+    const { titleForEmptyTable, onChangeTableHandler } = UseTableSort(sortType, name)
 
-  if (isLoading) return <Skeleton active paragraph={{ rows: 8 }} />
+    if (isLoading) return <Skeleton active paragraph={{ rows: 8 }} />
 
-  if (!rows?.length) {
-    return <Title style={{ margin: '30px 0', minHeight: '210px' }}>{titleForEmptyTable}</Title>
+    if (!rows?.length) {
+      return <Title style={{ margin: '30px 0', minHeight: '210px' }}>{titleForEmptyTable}</Title>
+    }
+
+    return (
+      <Table<CardDataType | PackListDataType>
+        columns={columns}
+        dataSource={rows}
+        pagination={false}
+        onChange={onChangeTableHandler}
+        style={{ minHeight: '300px' }}
+      />
+    )
   }
-
-  return (
-    <Table<CardDataType | PackListDataType>
-      columns={columns}
-      dataSource={rows}
-      pagination={false}
-      onChange={onChangeTableHandler}
-      style={{ minHeight: '300px' }}
-    />
-  )
-}
+)

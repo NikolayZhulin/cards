@@ -1,15 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { CardType, NewCard } from '../cards'
+import { CardType } from '../../cards'
+import { learnApi } from '../api'
+import {
+  clearState,
+  removeObsoleteCard,
+  setRandomCard,
+  setTransformedCards,
+  setUpdatedCard,
+} from '../helpers'
+import { GradedCardsIds, GradesType, HandledPackType } from '../models'
 
-import { clearState } from './helpers/clearState'
-import { removeObsoleteCard } from './helpers/removeObsoleteCard'
-import { setRandomCard } from './helpers/setRandomCard'
-import { setTransformedCards } from './helpers/setTransformedCards'
-import { setUpdatedCard } from './helpers/setUpdatedCard'
-import { learnApi } from './learnApi'
-
-const slice = createSlice({
+export const slice = createSlice({
   name: 'learn',
   initialState: {
     packName: '',
@@ -49,17 +51,3 @@ const slice = createSlice({
 
 export const learnReducer = slice.reducer
 export const { removePrevPlaceCard, chooseRandomCard, clearAllState } = slice.actions
-
-export type State = ReturnType<typeof slice.getInitialState>
-
-export type HandledPackType = {
-  [key: string]: CardObjType
-}
-
-export type GradedCardsIds = {
-  [key: string]: string[]
-}
-
-export type GradesType = number[]
-
-export type CardObjType = { [key: string]: NewCard }

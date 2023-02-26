@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 
-import { useAppDispatch } from '../../../common/hooks/reduxHooks'
-import { clearAllState } from '../learn-reducer'
-import { useLazyFetchAllCardsQuery } from '../learnApi'
+import { useAppDispatch } from '../../../../common/hooks/reduxHooks'
+import { useLazyFetchAllCardsQuery } from '../../api'
+import { clearAllState } from '../../slice'
 
 export const useFetchAllCards = (id: string, chooseRandomCard: () => void) => {
   const [fetchCards, { isLoading, data }] = useLazyFetchAllCardsQuery()

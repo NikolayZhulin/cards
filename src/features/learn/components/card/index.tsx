@@ -1,12 +1,13 @@
 import { useCallback } from 'react'
 
-import { Preloader } from '../../../common/components'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reduxHooks'
-import { useFetchAllCards, useLearnCardSearchParams } from '../hooks'
-import { chooseRandomCard } from '../learn-reducer'
+import { Preloader } from '../../../../common/components'
+import { useAppDispatch, useAppSelector } from '../../../../common/hooks/reduxHooks'
+import { useFetchAllCards, useLearnCardSearchParams } from '../../hooks'
+import { chooseRandomCard } from '../../slice'
+import { PreloaderCenterWrapper } from '../../styles'
 
-import { CardContent } from './CardContent'
-import { GradeSection } from './GradeSection'
+import { CardContent } from './card-content'
+import { GradeSection } from './grade-section'
 
 export const Card = () => {
   const randomCard = useAppSelector(state => state.learn.randomCard)
@@ -20,7 +21,12 @@ export const Card = () => {
 
   const { isLoading } = useFetchAllCards(cardsPack_id, changeCard)
 
-  if (isLoading) return <Preloader />
+  if (isLoading)
+    return (
+      <PreloaderCenterWrapper>
+        <Preloader />
+      </PreloaderCenterWrapper>
+    )
 
   return (
     <>

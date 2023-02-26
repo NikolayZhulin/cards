@@ -1,5 +1,5 @@
-import { CardType } from '../../cards'
-import { State } from '../learn-reducer'
+import { CardType } from '../../../cards'
+import { State } from '../../models'
 
 export const clearState = (state: State) => {
   state.packName = ''

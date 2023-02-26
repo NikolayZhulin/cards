@@ -2,10 +2,10 @@ import { useState } from 'react'
 
 import { RadioChangeEvent } from 'antd'
 
-import { useAppDispatch } from '../../../common/hooks/reduxHooks'
-import { CardType } from '../../cards'
-import { removePrevPlaceCard } from '../learn-reducer'
-import { useUpdateGradeMutation } from '../learnApi'
+import { useAppDispatch } from '../../../../common/hooks/reduxHooks'
+import { CardType } from '../../../cards'
+import { useUpdateGradeMutation } from '../../api'
+import { removePrevPlaceCard } from '../../slice'
 
 export const useUpdateCard = (randomCard: CardType, changeCard: () => void) => {
   const [trigger] = useUpdateGradeMutation()

@@ -1,9 +1,9 @@
-import { CardType } from '../../cards'
-import { State } from '../learn-reducer'
+import { CardType } from '../../../cards'
+import { State } from '../../models'
 
-import { setGrades } from './setGrades'
-import { setIdValues } from './setIdValues'
-import { setSortedCards } from './setSortedCards'
+import { setGrades } from './set-grades'
+import { setIdValues } from './set-id-values'
+import { setSortedCards } from './set-sorted-cards'
 
 export const setTransformedCards = (cards: CardType[], state: State) => {
   const { handledCards, ids, grades } = state

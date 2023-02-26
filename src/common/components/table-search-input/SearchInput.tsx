@@ -12,7 +12,7 @@ type SearchInputPropsType = {
 export const SearchInput = ({ type }: SearchInputPropsType) => {
   const [searchInputValue, setSearchInputValue] = useState('')
   const debouncedValue = useDebounce(searchInputValue, 700)
-  const { search, setSearchParams } = useSearch()
+  const { search, setSearchParams, searchParams } = useSearch()
 
   useEffect(() => {
     if (debouncedValue) {
@@ -26,10 +26,10 @@ export const SearchInput = ({ type }: SearchInputPropsType) => {
   }, [debouncedValue])
 
   useEffect(() => {
-    if (!search.type) {
+    if (!search.packName) {
       setSearchInputValue('')
     }
-  }, [search.type])
+  }, [search.packName])
 
   const setPackName = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInputValue(e.currentTarget.value)
