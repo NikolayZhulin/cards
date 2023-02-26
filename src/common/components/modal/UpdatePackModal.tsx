@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import NiceModal, { useModal } from '@ebay/nice-modal-react'
 import { Input } from 'antd'
@@ -24,6 +24,14 @@ export const UpdatePackModal = NiceModal.create(({ prevName, cardsPack_id }: Pro
     modal.hide()
     setValue('')
   }
+  const inputTagRef = useRef(null)
+
+  useEffect(() => {
+    if (inputTagRef.current) {
+      // @ts-ignore
+      inputTagRef.current.focus()
+    }
+  }, [inputTagRef.current])
 
   return (
     <ModalFC
@@ -44,6 +52,8 @@ export const UpdatePackModal = NiceModal.create(({ prevName, cardsPack_id }: Pro
           onChange={e => setValue(e.currentTarget.value)}
           placeholder="Enter name"
           bordered={false}
+          autoFocus={true}
+          ref={inputTagRef}
         />
       </div>
     </ModalFC>

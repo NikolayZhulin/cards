@@ -20,8 +20,9 @@ export const App = () => {
   return (
     <>
       <AppHeader />
-      <AppModals />
+
       <AppPages />
+      <AppModals />
       <LinkAppBar />
       <ErrorSnackBar />
     </>
