@@ -1,6 +1,6 @@
 import React from 'react'
 
-import NiceModal, { useModal } from '@ebay/nice-modal-react'
+import { create, useModal } from '@ebay/nice-modal-react'
 
 import { useDeleteCardMutation } from '../../../features/cards'
 import { StyledTitle } from '../../style/modal-styles'
@@ -12,14 +12,14 @@ type Props = {
   cardQuestion?: string
 }
 
-export const DeleteCardModal = NiceModal.create(({ cardId, cardQuestion }: Props) => {
+export const DeleteCardModal = create(({ cardId, cardQuestion }: Props) => {
   const modal = useModal()
   const [deleteCard, { isLoading: cardIsDeleting }] = useDeleteCardMutation()
 
   const deleteCardHandler = async () => {
     try {
       await deleteCard(cardId as string)
-      modal.hide()
+      await modal.hide()
     } catch (e) {
       console.log(e)
     }

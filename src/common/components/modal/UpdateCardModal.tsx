@@ -4,6 +4,7 @@ import { create, useModal } from '@ebay/nice-modal-react'
 import { Select } from 'antd'
 
 import { useUpdateCardMutation } from '../../../features/cards'
+import { useAutoFocus } from '../../hooks/useAutoFocus'
 import { StyledDiv, StyledInput, StyledTextArea, StyledTitle } from '../../style/modal-styles'
 
 import { ModalFC } from './ModalFC'
@@ -17,6 +18,7 @@ type Props = {
 
 export const UpdateCardModal = create(({ cardId, prevAnswer, prevQuestion, prevFormat }: Props) => {
   const modal = useModal()
+  const inputTagRef = useAutoFocus()
   const [question, setQuestion] = useState<string>(prevQuestion as string)
   const [answer, setAnswer] = useState<string>(prevAnswer as string)
   const [format, setFormat] = useState<string>((prevFormat as string) || 'text')
@@ -24,10 +26,8 @@ export const UpdateCardModal = create(({ cardId, prevAnswer, prevQuestion, prevF
 
   const updateCardHandler = async () => {
     try {
-      if (format === 'text') {
-        await updateCard({ card: { _id: cardId as string, question, answer } }).unwrap()
-        modal.hide()
-      }
+      format === 'text' && (await updateCard({ card: { _id: cardId as string, question, answer } }))
+      await modal.hide()
     } catch (e) {
       console.log(e)
     }
@@ -66,6 +66,7 @@ export const UpdateCardModal = create(({ cardId, prevAnswer, prevQuestion, prevF
           onChange={e => setQuestion(e.currentTarget.value)}
           placeholder="Enter your question"
           bordered={false}
+          ref={inputTagRef}
         />
         <hr />
         <StyledDiv>Answer</StyledDiv>
@@ -74,6 +75,7 @@ export const UpdateCardModal = create(({ cardId, prevAnswer, prevQuestion, prevF
           onChange={e => setAnswer(e.currentTarget.value)}
           placeholder="Enter your answer"
           bordered={false}
+          autoSize
         />
         <hr />
       </div>

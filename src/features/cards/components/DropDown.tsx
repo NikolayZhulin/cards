@@ -26,6 +26,7 @@ export const DropDown = ({ cardsPackId, packUserId, packName, packId }: PropsTyp
         show('update-pack-modal', {
           cardsPack_id: cardsPackId,
           prevName: packName,
+          insidePack: true,
         })
       },
       icon: <EditOutlined />,

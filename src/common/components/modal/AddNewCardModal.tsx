@@ -4,6 +4,7 @@ import { create, useModal } from '@ebay/nice-modal-react'
 import { Select } from 'antd'
 
 import { useAddCardMutation } from '../../../features/cards'
+import { useAutoFocus } from '../../hooks/useAutoFocus'
 import { StyledDiv, StyledInput, StyledTextArea, StyledTitle } from '../../style/modal-styles'
 
 import { ModalFC } from './ModalFC'
@@ -14,6 +15,7 @@ type Props = {
 
 export const AddNewCardModal = create(({ cardsPack_id }: Props) => {
   const modal = useModal()
+  const inputTagRef = useAutoFocus()
   const [question, setQuestion] = useState<string>('')
   const [answer, setAnswer] = useState<string>('')
   const [format, setFormat] = useState<string>('text')
@@ -21,18 +23,11 @@ export const AddNewCardModal = create(({ cardsPack_id }: Props) => {
 
   const addNewCardHandler = async () => {
     try {
-      await addCard({ card: { cardsPack_id, question, answer } })
-      setAnswer('')
-      setQuestion('')
-      setFormat('text')
-      modal.hide()
+      format === 'text' && (await addCard({ card: { cardsPack_id, question, answer } }))
+      await modal.hide()
     } catch (e) {
       console.log(e)
     }
-  }
-
-  const handleChange = (value: string) => {
-    setFormat(value)
   }
 
   return (
@@ -52,7 +47,7 @@ export const AddNewCardModal = create(({ cardsPack_id }: Props) => {
         <Select
           value={format}
           style={{ width: '100%' }}
-          onChange={handleChange}
+          onChange={e => setFormat(e)}
           options={[
             { value: 'text', label: 'text' },
             { value: 'image', label: 'image' },
@@ -64,6 +59,7 @@ export const AddNewCardModal = create(({ cardsPack_id }: Props) => {
           onChange={e => setQuestion(e.currentTarget.value)}
           placeholder="Enter your question"
           bordered={false}
+          ref={inputTagRef}
         />
         <hr />
         <StyledDiv>Answer</StyledDiv>
@@ -72,6 +68,7 @@ export const AddNewCardModal = create(({ cardsPack_id }: Props) => {
           onChange={e => setAnswer(e.currentTarget.value)}
           placeholder="Enter your answer"
           bordered={false}
+          autoSize
         />
         <hr />
       </div>
