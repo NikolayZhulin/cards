@@ -27,7 +27,6 @@ export const PackListTable = ({
   if (!rows?.length && !isLoading) {
     return <Title style={{ margin: '30px 0', minHeight: '210px' }}>{titleForEmptyTable}</Title>
   }
-  console.log(isLoading)
 
   return (
     <div style={{ position: 'relative' }}>
