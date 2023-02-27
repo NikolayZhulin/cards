@@ -1,22 +1,52 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 
-import { useAppSelector } from '../../../common/hooks/reduxHooks'
+import { useSelector } from 'react-redux'
+
+import { Preloader } from '../../../common/components'
+import { useAppDispatch } from '../../../common/hooks/reduxHooks'
 import { BackToPacksButton } from '../../cards/components/BackToPacksButton'
-import { LearnCardWrapper, LearnStyledCard, LearnWrapper, PackName } from '../styles'
+import { useFetchAllCards, useLearnCardSearchParams } from '../hooks'
+import { packNameSelector } from '../selectors'
+import { chooseRandomCard } from '../slice'
+import {
+  LearnCardWrapper,
+  LearnStyledCard,
+  LearnWrapper,
+  PackName,
+  PreloaderMarginTopWrapper,
+} from '../styles'
 
 import { Card } from './card'
 
 export const Learn = () => {
-  const packName = useAppSelector(state => state.learn.packName)
+  const packName = useSelector(packNameSelector)
+
+  const dispatch = useAppDispatch()
+  const { cardsPack_id } = useLearnCardSearchParams()
+
+  const changeCard = useCallback(() => {
+    dispatch(chooseRandomCard())
+  }, [dispatch])
+
+  const { isFetching } = useFetchAllCards(cardsPack_id, changeCard)
 
   return (
     <LearnWrapper>
       <BackToPacksButton />
       <LearnCardWrapper>
-        <PackName>{packName}</PackName>
-        <LearnStyledCard>
-          <Card />
-        </LearnStyledCard>
+        {isFetching && (
+          <PreloaderMarginTopWrapper>
+            <Preloader />
+          </PreloaderMarginTopWrapper>
+        )}
+        {!isFetching && (
+          <>
+            <PackName>{packName}</PackName>
+            <LearnStyledCard>
+              <Card changeCard={changeCard} />
+            </LearnStyledCard>
+          </>
+        )}
       </LearnCardWrapper>
     </LearnWrapper>
   )

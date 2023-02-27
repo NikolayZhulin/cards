@@ -5,7 +5,7 @@ import { useLazyFetchAllCardsQuery } from '../../api'
 import { clearAllState } from '../../slice'
 
 export const useFetchAllCards = (id: string, chooseRandomCard: () => void) => {
-  const [fetchCards, { isLoading, data }] = useLazyFetchAllCardsQuery()
+  const [fetchCards, { isLoading, data, isFetching }] = useLazyFetchAllCardsQuery()
 
   const dispatch = useAppDispatch()
 
@@ -33,9 +33,10 @@ export const useFetchAllCards = (id: string, chooseRandomCard: () => void) => {
     asyncFecth()
 
     return () => {
+      console.log('unmount')
       dispatch(clearAllState())
     }
   }, [isLoading])
 
-  return { isLoading }
+  return { isLoading, isFetching }
 }

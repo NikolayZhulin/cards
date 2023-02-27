@@ -23,6 +23,7 @@ export const LearnStyledCard = styled(StyledCard)`
   max-width: 100%;
   max-height: fit-content;
   min-height: 204px;
+  justify-content: flex-start;
 `
 
 export const NextCardButton = styled(Button)`
@@ -39,6 +40,7 @@ export const Answer = styled(Question)`
 `
 
 export const Shots = styled.p`
+  margin-top: 35px;
   font-size: 14px;
   color: gray;
 `
@@ -52,8 +54,13 @@ export const PreloaderCenterWrapper = styled.div`
 
 export const AnswerButton = styled(Button)`
   margin-top: 20px;
+  width: 100%;
 `
 
 export const PackName = styled.h1`
   height: 43px;
+`
+
+export const PreloaderMarginTopWrapper = styled.div`
+  margin-top: 80px;
 `
