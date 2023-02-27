@@ -1,14 +1,13 @@
 import React from 'react'
 
-import { Skeleton } from 'antd'
-
-import { PaginationFC } from '../../../common/components/pagination/PaginationFC'
 import { usePackList } from '../../cards/hooks'
 import { columnsForPacks } from '../helpers/data-for-packs-list'
 
 import { PackListMiddleSection } from './PackListMiddleSection'
 import { PackListTable } from './PackListTable'
 import { PackListTopSection } from './PackListTopSection'
+
+import { PaginationFC } from 'common/components/pagination/PaginationFC'
 
 export const PacksListBlocks = () => {
   const {

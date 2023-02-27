@@ -32,6 +32,7 @@ export const UseCards = () => {
   const updateCardHandler = (id: string, answer: string, question: string) => {
     show('update-card-modal', { cardId: id, prevAnswer: answer, prevQuestion: question })
   }
+
   const isMyPack = response?.data?.packUserId === userId
   const rows = response.data?.cards.map(c => {
     return {
@@ -60,7 +61,6 @@ export const UseCards = () => {
     setSearchParams({ ...search, page: newPage.toString(), pageCount: newPageCount.toString() })
   }
   const isLoading = response.isLoading || response.isFetching
-  const packId = response?.data?.packUserId
 
   return {
     onChangePaginationHandler,
@@ -72,6 +72,5 @@ export const UseCards = () => {
     rows,
     isLoading,
     isMyPack,
-    packId,
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { show } from '@ebay/nice-modal-react'
 
@@ -11,7 +11,6 @@ type CardsTopSectionType = {
   cardsPackId?: string
   userId?: string
   isMyPack?: boolean
-  packId?: string
 }
 
 export const CardsTopSection = ({
@@ -19,25 +18,20 @@ export const CardsTopSection = ({
   cardsPackId,
   userId,
   isMyPack,
-  packId,
 }: CardsTopSectionType) => {
-  const addCard = () => {
-    show('add-card-modal', { cardsPack_id: cardsPackId })
-  }
+  useEffect(() => {}, [isMyPack])
 
   return (
     <TopSection>
       <FormTitle>
         {packName}
-        <DropDown
-          packId={packId}
-          packName={packName}
-          packUserId={userId}
-          cardsPackId={cardsPackId}
-        />
+        <DropDown packName={packName} packUserId={userId} cardsPackId={cardsPackId} />
       </FormTitle>
       {isMyPack && (
-        <AddNewItemButton type="primary" onClick={addCard}>
+        <AddNewItemButton
+          type="primary"
+          onClick={() => show('add-card-modal', { cardsPack_id: cardsPackId })}
+        >
           Add new card
         </AddNewItemButton>
       )}

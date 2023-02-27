@@ -5,16 +5,15 @@ import { bool } from 'yup'
 
 type LearnButtonPropsType = {
   isCardCount: boolean
-  // disable: boolean
+  startLearnHandler: () => void
 }
 
-export const LearnButton = ({ isCardCount }: LearnButtonPropsType) => {
+export const LearnButton = ({ isCardCount, startLearnHandler }: LearnButtonPropsType) => {
   if (!isCardCount) {
     return <FolderTwoTone style={{ fontSize: '20px', margin: '5px' }} />
   }
-  // if (disable) {
-  //   return <FolderOutlined disabled style={{ fontSize: '20px', margin: '5px' }} />
-  // }
 
-  return <FolderOpenTwoTone disabled={true} style={{ fontSize: '20px', margin: '5px' }} />
+  return (
+    <FolderOpenTwoTone style={{ fontSize: '20px', margin: '5px' }} onClick={startLearnHandler} />
+  )
 }

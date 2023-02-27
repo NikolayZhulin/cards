@@ -3,7 +3,6 @@ import React, { useEffect } from 'react'
 import { show } from '@ebay/nice-modal-react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-import { LearnButton } from '../../../common/components/learn-buttons/LearnButton'
 import { UpdateButtons } from '../../../common/components/update-buttons/UpdateButtons'
 import { useAppSelector } from '../../../common/hooks/reduxHooks'
 import { useSearch } from '../../../common/hooks/useSearch'
@@ -15,12 +14,15 @@ import {
   useUpdatePackMutation,
 } from '../packsApi'
 
+import { LearnButton } from 'common/components/learn-buttons/LearnButton'
+
 export const usePackList = () => {
   const userId = useAppSelector(state => state.auth.userId)
   const [addPack, { isLoading: addPackLoading }] = useAddPackMutation()
   const [updatePack, { isLoading: updatePackLoading }] = useUpdatePackMutation()
   const [deletePack, { isLoading: deletePackLoading }] = useDeletePackMutation()
   const [trigger, response] = useLazyFetchCardsPackQuery()
+  const navigate = useNavigate()
 
   const maxCardsCount = response?.data ? response?.data.maxCardsCount : 0
   const minCardsCount = response?.data ? response?.data.minCardsCount : 0
@@ -37,6 +39,9 @@ export const usePackList = () => {
   const deletePackHandler = (packId: string, name: string) => {
     show('delete-pack-modal', { cardsPack_id: packId, packName: name })
   }
+  const startLearnHandler = (packId: string) => {
+    navigate(PATH.LEARN + '?cardsPack_id=' + packId)
+  }
 
   const rows = response.data?.cardPacks.map(p => {
     const isMyPack = userId === p.user_id
@@ -50,9 +55,10 @@ export const usePackList = () => {
       author: p.user_name,
       actions: (
         <div style={{ display: 'flex', justifyContent: 'start' }}>
-          <NavLink to={`${PATH.LEARN}?cardsPack_id=` + p._id}>
-            <LearnButton isCardCount={!!p.cardsCount} />
-          </NavLink>
+          <LearnButton
+            isCardCount={!!p.cardsCount}
+            startLearnHandler={() => startLearnHandler(p._id)}
+          />
           <UpdateButtons
             isMyItem={isMyPack}
             editHandler={() => editPackHandler(p._id, p.name)}
