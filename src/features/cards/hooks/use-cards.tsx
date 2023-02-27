@@ -62,6 +62,8 @@ export const UseCards = () => {
   }
   const isLoading = response.isLoading || response.isFetching
 
+  const isEmptyPack = !response?.data?.cards.length
+
   return {
     onChangePaginationHandler,
     addNewCard,
@@ -72,5 +74,6 @@ export const UseCards = () => {
     rows,
     isLoading,
     isMyPack,
+    isEmptyPack,
   }
 }

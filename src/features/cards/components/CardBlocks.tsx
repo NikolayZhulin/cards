@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { PaginationFC } from '../../../common/components/pagination/PaginationFC'
-import { PackListTable } from '../../packs/components/PackListTable'
+import { CustomTable } from '../../../common/components/table/CustomTable'
 import { columnsForCards } from '../helpers'
 import { UseCards } from '../hooks'
 
@@ -10,7 +10,7 @@ import CardMiddleSection from './CardMiddleSection'
 import { CardsTopSection } from './CardsTopSection'
 
 export const CardsBlocks = () => {
-  const { onChangePaginationHandler, rows, response, isLoading, isMyPack } = UseCards()
+  const { onChangePaginationHandler, rows, response, isLoading, isMyPack, isEmptyPack } = UseCards()
 
   return (
     <>
@@ -20,9 +20,10 @@ export const CardsBlocks = () => {
         cardsPackId={response?.originalArgs?.cardsPack_id}
         userId={response?.data?.packUserId}
         isMyPack={isMyPack}
+        isEmptyPack={isEmptyPack}
       />
       <CardMiddleSection />
-      <PackListTable
+      <CustomTable
         {...{
           name: 'Cards',
           columns: columnsForCards,

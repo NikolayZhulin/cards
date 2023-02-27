@@ -11,6 +11,7 @@ type CardsTopSectionType = {
   cardsPackId?: string
   userId?: string
   isMyPack?: boolean
+  isEmptyPack: boolean
 }
 
 export const CardsTopSection = ({
@@ -18,6 +19,7 @@ export const CardsTopSection = ({
   cardsPackId,
   userId,
   isMyPack,
+  isEmptyPack,
 }: CardsTopSectionType) => {
   useEffect(() => {}, [isMyPack])
 
@@ -25,7 +27,12 @@ export const CardsTopSection = ({
     <TopSection>
       <FormTitle>
         {packName}
-        <DropDown packName={packName} packUserId={userId} cardsPackId={cardsPackId} />
+        <DropDown
+          packName={packName}
+          packUserId={userId}
+          cardsPackId={cardsPackId}
+          isEmptyPack={isEmptyPack}
+        />
       </FormTitle>
       {isMyPack && (
         <AddNewItemButton

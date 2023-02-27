@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { FolderOpenTwoTone, FolderOutlined, FolderTwoTone } from '@ant-design/icons'
-import { bool } from 'yup'
+import { FolderOpenTwoTone, FolderOutlined } from '@ant-design/icons'
 
 type LearnButtonPropsType = {
   isCardCount: boolean
@@ -10,7 +9,7 @@ type LearnButtonPropsType = {
 
 export const LearnButton = ({ isCardCount, startLearnHandler }: LearnButtonPropsType) => {
   if (!isCardCount) {
-    return <FolderTwoTone style={{ fontSize: '20px', margin: '5px' }} />
+    return <FolderOutlined style={{ fontSize: '20px', margin: '5px' }} />
   }
 
   return (

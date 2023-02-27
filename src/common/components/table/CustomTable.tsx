@@ -3,9 +3,9 @@ import React from 'react'
 import { Skeleton, Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 
-import { Title } from '../../../common/style'
-import { CardDataType, PackListDataType } from '../../cards/helpers'
-import { UseTableSort } from '../../cards/hooks'
+import { CardDataType, PackListDataType } from '../../../features/cards/helpers'
+import { UseTableSort } from '../../../features/cards/hooks'
+import { Title } from '../../style'
 
 type PackListTablePropsType = {
   name: string
@@ -15,7 +15,7 @@ type PackListTablePropsType = {
   isLoading: boolean
 }
 
-export const PackListTable = ({
+export const CustomTable = ({
   name,
   columns,
   sortType,
