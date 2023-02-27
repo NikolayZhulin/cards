@@ -1,25 +1,21 @@
-import { useCallback } from 'react'
+import { useSelector } from 'react-redux'
 
+import { randomCardSelector } from '../..'
 import { Preloader } from '../../../../common/components'
-import { useAppDispatch, useAppSelector } from '../../../../common/hooks/reduxHooks'
-import { useFetchAllCards, useLearnCardSearchParams } from '../../hooks'
-import { chooseRandomCard } from '../../slice'
+import { useUpdateCard } from '../../hooks'
 import { PreloaderCenterWrapper } from '../../styles'
 
 import { CardContent } from './card-content'
 import { GradeSection } from './grade-section'
 
-export const Card = () => {
-  const randomCard = useAppSelector(state => state.learn.randomCard)
+type Props = {
+  changeCard: () => void
+}
 
-  const dispatch = useAppDispatch()
-  const { cardsPack_id } = useLearnCardSearchParams()
+export const Card = ({ changeCard }: Props) => {
+  const randomCard = useSelector(randomCardSelector)
 
-  const changeCard = useCallback(() => {
-    dispatch(chooseRandomCard())
-  }, [dispatch])
-
-  const { isLoading } = useFetchAllCards(cardsPack_id, changeCard)
+  const { grade, changeGrade, updateCardGrade, isLoading } = useUpdateCard(randomCard, changeCard)
 
   if (isLoading)
     return (
@@ -31,7 +27,14 @@ export const Card = () => {
   return (
     <>
       <CardContent question={randomCard.question} shots={randomCard.shots} />
-      <GradeSection randomCard={randomCard} changeCard={changeCard} />
+
+      {/*case doesn't need memo, because everytime randomCard is new*/}
+      <GradeSection
+        randomCard={randomCard}
+        changeGrade={changeGrade}
+        grade={grade}
+        updateCardGrade={updateCardGrade}
+      />
     </>
   )
 }

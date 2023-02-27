@@ -1,20 +1,20 @@
-import { memo } from 'react'
-
-import { Radio, Space } from 'antd'
+import { Radio, RadioChangeEvent, Space } from 'antd'
 
 import { CardType } from '../../../../cards'
-import { useToggleGradeSection, useUpdateCard } from '../../../hooks'
+import { useToggleGradeSection } from '../../../hooks'
 import { Answer, AnswerButton, HiddenSection, NextCardButton } from '../../../styles'
 
 type Props = {
   randomCard: CardType
-  changeCard: () => void
+  grade: 1 | 2 | 3 | 4 | 5
+  updateCardGrade: () => void
+  changeGrade: (e: RadioChangeEvent) => void
 }
 
-export const GradeSection = memo(({ randomCard, changeCard }: Props) => {
-  const { isHidden, hideAnswer, showAnswer } = useToggleGradeSection()
+// case doesn't need memo, because everytime randomCard is new
 
-  const { grade, changeGrade, updateCardGrade } = useUpdateCard(randomCard, changeCard)
+export const GradeSection = ({ randomCard, grade, updateCardGrade, changeGrade }: Props) => {
+  const { isHidden, hideAnswer, showAnswer } = useToggleGradeSection()
 
   const changeCardHandler = () => {
     updateCardGrade()
@@ -48,4 +48,4 @@ export const GradeSection = memo(({ randomCard, changeCard }: Props) => {
       </NextCardButton>
     </HiddenSection>
   )
-})
+}
