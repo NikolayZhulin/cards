@@ -57,3 +57,7 @@ export const AnswerButton = styled(Button)`
 export const PackName = styled.h1`
   height: 43px;
 `
+
+export const PreloaderMarginTopWrapper = styled.div`
+  margin-top: 80px;
+`
