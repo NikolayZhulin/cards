@@ -5,13 +5,13 @@ import { useLazyFetchAllCardsQuery } from '../../api'
 import { clearAllState } from '../../slice'
 
 export const useFetchAllCards = (id: string, chooseRandomCard: () => void) => {
-  const [fetchCards, { isLoading, data, isFetching }] = useLazyFetchAllCardsQuery()
+  const [fetchCards, { isFetching }] = useLazyFetchAllCardsQuery()
 
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     const asyncFecth = async () => {
-      await fetchCards({
+      const { data } = await fetchCards({
         cardsPack_id: id,
         pageCount: 100,
       })
@@ -33,10 +33,9 @@ export const useFetchAllCards = (id: string, chooseRandomCard: () => void) => {
     asyncFecth()
 
     return () => {
-      console.log('unmount')
       dispatch(clearAllState())
     }
-  }, [isLoading])
+  }, [])
 
-  return { isLoading, isFetching }
+  return { isFetching }
 }
