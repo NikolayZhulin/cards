@@ -12,9 +12,6 @@ export const LearnButton = ({ isCardCount, startLearnHandler }: LearnButtonProps
   if (!isCardCount) {
     return <FolderTwoTone style={{ fontSize: '20px', margin: '5px' }} />
   }
-  // if (disable) {
-  //   return <FolderOutlined disabled style={{ fontSize: '20px', margin: '5px' }} />
-  // }
 
   return (
     <FolderOpenTwoTone style={{ fontSize: '20px', margin: '5px' }} onClick={startLearnHandler} />

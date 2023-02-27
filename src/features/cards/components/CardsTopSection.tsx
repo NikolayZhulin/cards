@@ -27,15 +27,13 @@ export const CardsTopSection = ({
         {packName}
         <DropDown packName={packName} packUserId={userId} cardsPackId={cardsPackId} />
       </FormTitle>
-      {isMyPack ? (
+      {isMyPack && (
         <AddNewItemButton
           type="primary"
           onClick={() => show('add-card-modal', { cardsPack_id: cardsPackId })}
         >
           Add new card
         </AddNewItemButton>
-      ) : (
-        ''
       )}
     </TopSection>
   )

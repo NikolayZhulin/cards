@@ -54,7 +54,6 @@ export const usePackList = () => {
       author: p.user_name,
       actions: (
         <div style={{ display: 'flex', justifyContent: 'start' }}>
-          {/*<NavLink to={`${PATH.LEARN}?cardsPack_id=` + p._id}>*/}
           <LearnButton
             isCardCount={!!p.cardsCount}
             startLearnHandler={() => startLearnHandler(p._id)}
