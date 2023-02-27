@@ -23,7 +23,7 @@ export const GradeSection = ({ randomCard, grade, updateCardGrade, changeGrade }
 
   if (isHidden) {
     return (
-      <AnswerButton type={'primary'} style={{ width: '100%' }} onClick={showAnswer}>
+      <AnswerButton type={'primary'} onClick={showAnswer}>
         Show Answer
       </AnswerButton>
     )
