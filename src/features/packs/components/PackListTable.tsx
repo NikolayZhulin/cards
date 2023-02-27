@@ -24,7 +24,7 @@ export const PackListTable = ({
 }: PackListTablePropsType) => {
   const { titleForEmptyTable, onChangeTableHandler } = UseTableSort(sortType, name)
 
-  if (!rows?.length) {
+  if (!rows?.length && !isLoading) {
     return <Title style={{ margin: '30px 0', minHeight: '210px' }}>{titleForEmptyTable}</Title>
   }
   console.log(isLoading)

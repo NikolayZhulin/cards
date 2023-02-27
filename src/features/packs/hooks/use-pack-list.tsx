@@ -21,6 +21,7 @@ export const usePackList = () => {
   const [updatePack, { isLoading: updatePackLoading }] = useUpdatePackMutation()
   const [deletePack, { isLoading: deletePackLoading }] = useDeletePackMutation()
   const [trigger, response] = useLazyFetchCardsPackQuery()
+  const navigate = useNavigate()
 
   const maxCardsCount = response?.data ? response?.data.maxCardsCount : 0
   const minCardsCount = response?.data ? response?.data.minCardsCount : 0
@@ -37,6 +38,9 @@ export const usePackList = () => {
   const deletePackHandler = (packId: string, name: string) => {
     show('delete-pack-modal', { cardsPack_id: packId, packName: name })
   }
+  const startLearnHandler = (packId: string) => {
+    navigate(PATH.LEARN + '?cardsPack_id=' + packId)
+  }
 
   const rows = response.data?.cardPacks.map(p => {
     const isMyPack = userId === p.user_id
@@ -50,9 +54,11 @@ export const usePackList = () => {
       author: p.user_name,
       actions: (
         <div style={{ display: 'flex', justifyContent: 'start' }}>
-          <NavLink to={`${PATH.LEARN}?cardsPack_id=` + p._id}>
-            <LearnButton isCardCount={!!p.cardsCount} />
-          </NavLink>
+          {/*<NavLink to={`${PATH.LEARN}?cardsPack_id=` + p._id}>*/}
+          <LearnButton
+            isCardCount={!!p.cardsCount}
+            startLearnHandler={() => startLearnHandler(p._id)}
+          />
           <UpdateButtons
             isMyItem={isMyPack}
             editHandler={() => editPackHandler(p._id, p.name)}
