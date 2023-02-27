@@ -8,7 +8,7 @@ import { useUpdateGradeMutation } from '../../api'
 import { removePrevPlaceCard } from '../../slice'
 
 export const useUpdateCard = (randomCard: CardType, changeCard: () => void) => {
-  const [trigger] = useUpdateGradeMutation()
+  const [trigger, { isLoading }] = useUpdateGradeMutation()
   const [grade, setGrade] = useState<1 | 2 | 3 | 4 | 5>(1)
   const dispatch = useAppDispatch()
 
@@ -25,5 +25,5 @@ export const useUpdateCard = (randomCard: CardType, changeCard: () => void) => {
     }
   }
 
-  return { grade, updateCardGrade, changeGrade }
+  return { grade, updateCardGrade, changeGrade, isLoading }
 }
