@@ -24,19 +24,28 @@ export const PackListTable = ({
 }: PackListTablePropsType) => {
   const { titleForEmptyTable, onChangeTableHandler } = UseTableSort(sortType, name)
 
-  if (isLoading) return <Skeleton active paragraph={{ rows: 8 }} />
-
   if (!rows?.length) {
     return <Title style={{ margin: '30px 0', minHeight: '210px' }}>{titleForEmptyTable}</Title>
   }
+  console.log(isLoading)
 
   return (
-    <Table<CardDataType | PackListDataType>
-      columns={columns}
-      dataSource={rows}
-      pagination={false}
-      onChange={onChangeTableHandler}
-      style={{ minHeight: '300px' }}
-    />
+    <div style={{ position: 'relative' }}>
+      {isLoading && (
+        <Skeleton
+          active
+          paragraph={{ rows: 9 }}
+          title={false}
+          style={{ position: 'absolute', zIndex: '5', width: '100%' }}
+        />
+      )}
+      <Table<CardDataType | PackListDataType>
+        columns={columns}
+        dataSource={rows}
+        pagination={false}
+        onChange={onChangeTableHandler}
+        style={{ minHeight: '300px', opacity: `${isLoading ? '0' : '1'}` }}
+      />
+    </div>
   )
 }

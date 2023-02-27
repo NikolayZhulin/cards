@@ -32,6 +32,8 @@ export const UseCards = () => {
   const updateCardHandler = (id: string, answer: string, question: string) => {
     show('update-card-modal', { cardId: id, prevAnswer: answer, prevQuestion: question })
   }
+
+  console.log(response)
   let isMyPack
   const rows = response.data?.cards.map(c => {
     isMyPack = c.user_id === userId
