@@ -1,6 +1,6 @@
 import React from 'react'
 
-import NiceModal, { useModal } from '@ebay/nice-modal-react'
+import { create, useModal } from '@ebay/nice-modal-react'
 import { useNavigate } from 'react-router-dom'
 
 import { useDeletePackMutation } from '../../../features/packs'
@@ -15,16 +15,16 @@ type Props = {
   insidePack?: boolean
 }
 
-export const DeletePackModal = NiceModal.create(({ cardsPack_id, packName, insidePack }: Props) => {
+export const DeletePackModal = create(({ cardsPack_id, packName, insidePack }: Props) => {
   const modal = useModal()
   const [deletePack, { isLoading: packIsDeleting }] = useDeletePackMutation()
   const navigate = useNavigate()
 
   const deletePackHandler = async () => {
     try {
-      await deletePack(cardsPack_id as string).unwrap()
+      await deletePack(cardsPack_id as string)
       insidePack && navigate(PATH.PACKS_LIST)
-      modal.hide()
+      await modal.hide()
     } catch (e) {
       console.log(e)
     }

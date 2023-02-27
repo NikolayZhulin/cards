@@ -1,30 +1,34 @@
 import React, { useState } from 'react'
 
 import { create, useModal } from '@ebay/nice-modal-react'
-import { Input } from 'antd'
 
 import { useLazyFetchCardsQuery } from '../../../features/cards'
 import { useUpdatePackMutation } from '../../../features/packs'
 import { useAutoFocus } from '../../hooks/useAutoFocus'
+import { StyledDiv, StyledInput, StyledTitle } from '../../style/modal-styles'
 
 import { ModalFC } from './ModalFC'
 
 type Props = {
   prevName?: string
   cardsPack_id?: string
+  insidePack?: boolean
 }
 
-export const UpdatePackModal = create(({ prevName, cardsPack_id }: Props) => {
+export const UpdatePackModal = create(({ prevName, cardsPack_id, insidePack }: Props) => {
   const modal = useModal()
+  const inputTagRef = useAutoFocus()
   const [updatePack, { isLoading: packIsUpdating }] = useUpdatePackMutation()
   const [value, setValue] = useState<string | undefined>(prevName)
-  const [trigger, response] = useLazyFetchCardsQuery()
-  const inputTagRef = useAutoFocus()
+  const [trigger] = useLazyFetchCardsQuery()
   const updatePackHandler = async () => {
-    await updatePack({ cardsPack: { _id: cardsPack_id, name: value } })
-    trigger({ cardsPack_id: cardsPack_id })
-    modal.hide()
-    setValue('')
+    try {
+      await updatePack({ cardsPack: { _id: cardsPack_id, name: value } })
+      insidePack && trigger({ cardsPack_id: cardsPack_id })
+      await modal.hide()
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (
@@ -38,10 +42,10 @@ export const UpdatePackModal = create(({ prevName, cardsPack_id }: Props) => {
       afterClose={() => modal.remove()}
     >
       <div>
-        <h3>Edit pack</h3>
+        <StyledTitle>Edit pack</StyledTitle>
         <hr />
-        <div>Name pack</div>
-        <Input
+        <StyledDiv>Name pack</StyledDiv>
+        <StyledInput
           value={value}
           onChange={e => setValue(e.currentTarget.value)}
           placeholder="Enter name"
@@ -49,6 +53,7 @@ export const UpdatePackModal = create(({ prevName, cardsPack_id }: Props) => {
           autoFocus={true}
           ref={inputTagRef}
         />
+        <hr />
       </div>
     </ModalFC>
   )

@@ -1,6 +1,4 @@
-import React, { ReactNode, useState } from 'react'
-
-import { Modal } from 'antd'
+import React, { ReactNode } from 'react'
 
 import { StyledModal } from '../../style/modal-styles'
 
@@ -34,7 +32,6 @@ export const ModalFC = ({
       okText={okText}
       okButtonProps={{ danger: danger, disabled: isLoading }}
       cancelButtonProps={{ disabled: isLoading }}
-      closable={false}
       centered={true}
       afterClose={afterClose}
     >
