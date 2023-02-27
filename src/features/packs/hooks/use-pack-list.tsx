@@ -3,6 +3,8 @@ import React, { useEffect } from 'react'
 import { show } from '@ebay/nice-modal-react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
+import { DeletePackModal } from '../../../common/components/modal/DeletePackModal'
+import { UpdatePackModal } from '../../../common/components/modal/UpdatePackModal'
 import { UpdateButtons } from '../../../common/components/update-buttons/UpdateButtons'
 import { useAppSelector } from '../../../common/hooks/reduxHooks'
 import { useSearch } from '../../../common/hooks/useSearch'
@@ -34,10 +36,10 @@ export const usePackList = () => {
   }, [searchParams])
 
   const editPackHandler = (packId: string, name: string) => {
-    show('update-pack-modal', { cardsPack_id: packId, prevName: name })
+    show(UpdatePackModal, { cardsPack_id: packId, prevName: name })
   }
   const deletePackHandler = (packId: string, name: string) => {
-    show('delete-pack-modal', { cardsPack_id: packId, packName: name })
+    show(DeletePackModal, { cardsPack_id: packId, packName: name })
   }
   const startLearnHandler = (packId: string) => {
     navigate(PATH.LEARN + '?cardsPack_id=' + packId)

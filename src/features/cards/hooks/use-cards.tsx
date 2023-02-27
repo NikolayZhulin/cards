@@ -3,6 +3,8 @@ import React, { useEffect } from 'react'
 import { show } from '@ebay/nice-modal-react'
 import { Rate } from 'antd'
 
+import { DeleteCardModal } from '../../../common/components/modal/DeleteCardModal'
+import { UpdateCardModal } from '../../../common/components/modal/UpdateCardModal'
 import { UpdateButtons } from '../../../common/components/update-buttons/UpdateButtons'
 import { useAppSelector } from '../../../common/hooks/reduxHooks'
 import { useSearch } from '../../../common/hooks/useSearch'
@@ -27,10 +29,10 @@ export const UseCards = () => {
   }, [searchParams])
 
   const deleteCardHandler = (id: string, question: string) => {
-    show('delete-card-modal', { cardId: id, cardQuestion: question })
+    show(DeleteCardModal, { cardId: id, cardQuestion: question })
   }
   const updateCardHandler = (id: string, answer: string, question: string) => {
-    show('update-card-modal', { cardId: id, prevAnswer: answer, prevQuestion: question })
+    show(UpdateCardModal, { cardId: id, prevAnswer: answer, prevQuestion: question })
   }
 
   const isMyPack = response?.data?.packUserId === userId

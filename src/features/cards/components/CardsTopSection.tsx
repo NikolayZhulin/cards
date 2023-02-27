@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 import { show } from '@ebay/nice-modal-react'
 
+import { AddNewCardModal } from '../../../common/components/modal/AddNewCardModal'
 import { AddNewItemButton, FormTitle, TopSection } from '../../../common/style'
 
 import { DropDown } from './DropDown'
@@ -21,8 +22,6 @@ export const CardsTopSection = ({
   isMyPack,
   isEmptyPack,
 }: CardsTopSectionType) => {
-  useEffect(() => {}, [isMyPack])
-
   return (
     <TopSection>
       <FormTitle>
@@ -37,7 +36,7 @@ export const CardsTopSection = ({
       {isMyPack && (
         <AddNewItemButton
           type="primary"
-          onClick={() => show('add-card-modal', { cardsPack_id: cardsPackId })}
+          onClick={() => show(AddNewCardModal, { cardsPack_id: cardsPackId })}
         >
           Add new card
         </AddNewItemButton>

@@ -7,6 +7,8 @@ import { Dropdown, Space } from 'antd'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { bool } from 'yup'
 
+import { DeletePackModal } from '../../../common/components/modal/DeletePackModal'
+import { UpdatePackModal } from '../../../common/components/modal/UpdatePackModal'
 import { useAppSelector } from '../../../common/hooks/reduxHooks'
 import { PATH } from '../../../common/utils'
 
@@ -26,7 +28,7 @@ export const DropDown = ({ cardsPackId, packUserId, packName, isEmptyPack }: Pro
       key: '0',
       disabled: packUserId !== myID,
       onClick: () => {
-        show('update-pack-modal', {
+        show(UpdatePackModal, {
           cardsPack_id: cardsPackId,
           prevName: packName,
           insidePack: true,
@@ -39,7 +41,7 @@ export const DropDown = ({ cardsPackId, packUserId, packName, isEmptyPack }: Pro
       key: '1',
       disabled: packUserId !== myID,
       onClick: () => {
-        show('delete-pack-modal', {
+        show(DeletePackModal, {
           cardsPack_id: cardsPackId,
           packName: packName,
           insidePack: true,
