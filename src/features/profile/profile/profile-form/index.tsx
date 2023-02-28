@@ -6,6 +6,7 @@ import { Button } from 'antd'
 import avaIcon from '../../../../assets/pictures/avatar.jpg'
 import { EditableSpan, Preloader } from '../../../../common/components'
 import { FormTitle, FormWrapper } from '../../../../common/style'
+import { UploadFC } from '../../../packs/components/Upload'
 import { useProfile } from '../hooks/useProfile'
 
 export const ProfileForm = () => {
@@ -22,6 +23,7 @@ export const ProfileForm = () => {
           alt="photo"
           style={{ height: '100px', borderRadius: '50%' }}
         />
+        <UploadFC />
       </div>
       <EditableSpan
         value={data?.name ? data?.name : 'unknown'}

@@ -22,9 +22,9 @@ export const useProfile = () => {
   const logOutHandler = () => {
     logOut({})
   }
-
-  const onChangeHandler = async (value: string) => {
-    await changeUser({ name: value })
+  // I deleted async
+  const onChangeHandler = (value?: string, avatar?: string) => {
+    changeUser({ name: value, avatar: avatar })
   }
 
   return { data, isLoading, isLoggedIn, isSuccess, logOutHandler, onChangeHandler }

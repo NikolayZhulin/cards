@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { show } from '@ebay/nice-modal-react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
+import { LearnButton } from '../../../common/components/learn-buttons/LearnButton'
 import { UpdateButtons } from '../../../common/components/update-buttons/UpdateButtons'
 import { useAppSelector } from '../../../common/hooks/reduxHooks'
 import { useSearch } from '../../../common/hooks/useSearch'
@@ -13,8 +14,6 @@ import {
   useLazyFetchCardsPackQuery,
   useUpdatePackMutation,
 } from '../packsApi'
-
-import { LearnButton } from 'common/components/learn-buttons/LearnButton'
 
 export const usePackList = () => {
   const userId = useAppSelector(state => state.auth.userId)
