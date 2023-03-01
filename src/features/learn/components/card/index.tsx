@@ -26,7 +26,11 @@ export const Card = ({ changeCard }: Props) => {
 
   return (
     <>
-      <CardContent question={randomCard.question} shots={randomCard.shots} />
+      <CardContent
+        question={randomCard.question}
+        shots={randomCard.shots}
+        questionImg={randomCard.questionImg}
+      />
 
       {/*case doesn't need memo, because everytime randomCard is new*/}
       <GradeSection

@@ -1,4 +1,4 @@
-import { NewCard } from '../../cards'
+import { CardType } from '../../cards'
 import { slice } from '../slice'
 
 export type State = ReturnType<typeof slice.getInitialState>
@@ -13,4 +13,4 @@ export type GradedCardsIds = {
 
 export type GradesType = number[]
 
-export type CardObjType = { [key: string]: NewCard }
+export type CardObjType = { [key: string]: CardType }
