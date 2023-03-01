@@ -48,6 +48,7 @@ export const {
   useDeleteCardMutation,
   useUpdateCardMutation,
   useLazyFetchCardsQuery,
+  useFetchCardsQuery,
 } = cardsApi
 
 // request types

@@ -8,7 +8,7 @@ import styled from 'styled-components'
 export const TablePageStyle = styled.div`
   margin: 40px auto;
   width: 100%;
-  max-width: 1008px;
+  max-width: 1100px;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -31,15 +31,25 @@ export const UseCards = () => {
   const deleteCardHandler = (id: string, question: string) => {
     show(DeleteCardModal, { cardId: id, cardQuestion: question })
   }
-  const updateCardHandler = (id: string, answer: string, question: string) => {
-    show(UpdateCardModal, { cardId: id, prevAnswer: answer, prevQuestion: question })
+  const updateCardHandler = (
+    id: string,
+    answer: string,
+    question: string,
+    questionImg: string | undefined
+  ) => {
+    show(UpdateCardModal, {
+      cardId: id,
+      prevAnswer: answer,
+      prevQuestion: question,
+      prevQuestionImg: questionImg,
+    })
   }
 
   const isMyPack = response?.data?.packUserId === userId
   const rows = response.data?.cards.map(c => {
     return {
       key: c._id,
-      question: c.question,
+      question: c.questionImg ? <img src={c.questionImg} style={{ width: '100px' }} /> : c.question,
       answer: c.answer,
       updated: formatDate(c.updated),
       grade: <Rate disabled defaultValue={c.grade} style={{ fontSize: '13px' }} />,
@@ -47,7 +57,7 @@ export const UseCards = () => {
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           <UpdateButtons
             isMyItem={isMyPack}
-            editHandler={() => updateCardHandler(c._id, c.answer, c.question)}
+            editHandler={() => updateCardHandler(c._id, c.answer, c.question, c.questionImg)}
             deleteHandler={() => deleteCardHandler(c._id, c.question)}
           />
         </div>

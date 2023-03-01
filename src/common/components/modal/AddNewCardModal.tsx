@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 
 import { create, useModal } from '@ebay/nice-modal-react'
-import { Select } from 'antd'
+import { message, Select, UploadFile } from 'antd'
+import { RcFile } from 'antd/es/upload'
 
 import { useAddCardMutation } from '../../../features/cards'
 import { useAutoFocus } from '../../hooks/useAutoFocus'
 import { StyledDiv, StyledInput, StyledTextArea, StyledTitle } from '../../style/modal-styles'
+import { beforeUpload } from '../../utils/convert-to-base64'
+import { UploadField } from '../upload-field/UploadField'
 
 import { ModalFC } from './ModalFC'
 
@@ -18,16 +21,34 @@ export const AddNewCardModal = create(({ cardsPack_id }: Props) => {
   const inputTagRef = useAutoFocus()
   const [question, setQuestion] = useState<string>('')
   const [answer, setAnswer] = useState<string>('')
-  const [format, setFormat] = useState<string>('text')
+  const [format, setFormat] = useState<'text' | 'image'>('text')
   const [addCard, { isLoading: cardIsAdding }] = useAddCardMutation()
+  const [questionImg, setQuestionImg] = useState('')
+  const [fileError, setFileError] = useState(false)
 
+  console.log(fileError)
   const addNewCardHandler = async () => {
-    try {
-      format === 'text' && (await addCard({ card: { cardsPack_id, question, answer } }))
-      await modal.hide()
-    } catch (e) {
-      console.log(e)
+    if (format === 'text') {
+      try {
+        await addCard({ card: { cardsPack_id, question, answer } })
+        await modal.hide()
+      } catch (e) {
+        console.log(e)
+      }
     }
+    if (format === 'image') {
+      try {
+        await addCard({ card: { cardsPack_id, questionImg, answer } })
+        await modal.hide()
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  }
+  const imgHandler = async (file: UploadFile) => {
+    const isSuccessFile = await beforeUpload(file, setQuestionImg)
+
+    setFileError(!isSuccessFile)
   }
 
   return (
@@ -39,6 +60,7 @@ export const AddNewCardModal = create(({ cardsPack_id }: Props) => {
       handleOk={addNewCardHandler}
       handleCancel={() => modal.hide()}
       afterClose={() => modal.remove()}
+      disable={fileError}
     >
       <div>
         <StyledTitle>Add new card</StyledTitle>
@@ -54,13 +76,22 @@ export const AddNewCardModal = create(({ cardsPack_id }: Props) => {
           ]}
         />
         <StyledDiv>Question</StyledDiv>
-        <StyledInput
-          value={question}
-          onChange={e => setQuestion(e.currentTarget.value)}
-          placeholder="Enter your question"
-          bordered={false}
-          ref={inputTagRef}
-        />
+        {format === 'image' && (
+          <UploadField
+            beforeUpload={imgHandler}
+            onRemove={() => setQuestionImg('')}
+            img={questionImg}
+          />
+        )}
+        {format === 'text' && (
+          <StyledInput
+            value={question}
+            onChange={e => setQuestion(e.currentTarget.value)}
+            placeholder="Enter your question"
+            bordered={false}
+            ref={inputTagRef}
+          />
+        )}
         <hr />
         <StyledDiv>Answer</StyledDiv>
         <StyledTextArea
