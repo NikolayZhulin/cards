@@ -2,8 +2,6 @@ import { Button, Card } from 'antd'
 import Checkbox from 'antd/es/checkbox/Checkbox'
 import styled from 'styled-components'
 
-import { UpdateAvatar } from '../components/update-avatar/UpdateAvatar'
-
 export const HeaderComponent = styled.header`
   width: 100%;
   height: 60px;
