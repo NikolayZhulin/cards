@@ -6,7 +6,7 @@ import incubatorLogo from '../../../../assets/pictures/incubator-logo.png'
 import { useProfile } from '../../../../features/profile/profile/hooks/useProfile'
 import { HeaderImg, PrimaryButton } from '../../../style'
 import { PATH } from '../../../utils'
-import { UserBlockFC } from '../../user-block/UserBlock'
+import { UserBlock } from '../../user-block/UserBlock'
 import { useHeader } from '../hooks/useHeader'
 
 export const Header = () => {
@@ -18,7 +18,7 @@ export const Header = () => {
     <>
       <HeaderImg src={incubatorLogo} alt="logo" />
       {isLoggedIn ? (
-        <UserBlockFC logOut={logOut} name={data?.name} avatar={data?.avatar} />
+        <UserBlock logOut={logOut} name={data?.name} avatar={data?.avatar} />
       ) : (
         <PrimaryButton width={'100'} onClick={() => navigate(PATH.LOGIN)}>
           Sign in

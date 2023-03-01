@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const UserBlock = styled.div`
+export const StyledUserBlock = styled.div`
   width: 200px;
   display: flex;
   align-items: center;
