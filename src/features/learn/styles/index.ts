@@ -9,7 +9,8 @@ export const HiddenSection = styled.div`
   justify-content: space-between;
 `
 export const LearnCardWrapper = styled(CardWrapper)`
-  height: calc(100vh - 131px);
+  min-height: calc(100vh - 131px);
+  height: fit-content;
   justify-content: flex-start;
   margin-top: 20px;
 `
