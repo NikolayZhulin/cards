@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { CustomTable } from '../../../common/components/table/CustomTable'
 import { PaginationFC } from '../../../common/components/pagination/PaginationFC'
+import { CustomTable } from '../../../common/components/table/CustomTable'
 import { usePackList } from '../../cards/hooks'
 import { columnsForPacks } from '../helpers/data-for-packs-list'
 

@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 
 import { create, useModal } from '@ebay/nice-modal-react'
-import { message, Select, UploadFile } from 'antd'
-import { RcFile } from 'antd/es/upload'
+import { Select, UploadFile } from 'antd'
 
 import { useAddCardMutation } from '../../../features/cards'
 import { useAutoFocus } from '../../hooks/useAutoFocus'
