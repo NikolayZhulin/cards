@@ -48,7 +48,7 @@ export const learnApi = createApi({
   }),
 })
 
-export const { useFetchAllCardsQuery, useLazyFetchAllCardsQuery, useUpdateGradeMutation } = learnApi
+export const { useLazyFetchAllCardsQuery, useUpdateGradeMutation } = learnApi
 
 export type UpdateGradeRequestType = {
   grade: 1 | 2 | 3 | 4 | 5
