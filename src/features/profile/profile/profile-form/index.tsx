@@ -3,29 +3,56 @@ import React from 'react'
 import { LogoutOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 
+import { setAppErrorAC } from '../../../../app'
 import avaIcon from '../../../../assets/pictures/avatar.jpg'
 import { EditableSpan, Preloader } from '../../../../common/components'
-import { FormTitle, FormWrapper } from '../../../../common/style'
+import { UpdateAvatar } from '../../../../common/components/update-avatar/UpdateAvatar'
+import { useAppDispatch } from '../../../../common/hooks/reduxHooks'
+import { AvaContainer, FormTitle, FormWrapper } from '../../../../common/style'
 import { useProfile } from '../hooks/useProfile'
 
 export const ProfileForm = () => {
-  const { data, isLoading, logOutHandler, onChangeHandler, isSuccess } = useProfile()
+  const { data, isLoading, logOutHandler, onChangeUserHandler, userIsUpdating, isSuccess } =
+    useProfile()
+  const dispatch = useAppDispatch()
+  const imgErrorHandler = () => {
+    dispatch(setAppErrorAC({ error: 'Avatar is broken' }))
+  }
+  const imgLoadHandler = () => {
+    dispatch(setAppErrorAC({ error: null }))
+  }
+  const onErrorHandler = (error: string) => {
+    dispatch(setAppErrorAC({ error }))
+  }
 
   if (isLoading) return <Preloader />
 
   return (
     <FormWrapper>
       <FormTitle>Personal information</FormTitle>
-      <div>
-        <img
-          src={data?.avatar || avaIcon}
-          alt="photo"
-          style={{ height: '100px', borderRadius: '50%' }}
+      <AvaContainer>
+        <div>
+          {userIsUpdating ? (
+            <Preloader size={100} />
+          ) : (
+            <img
+              src={data?.avatar || avaIcon}
+              alt="photo"
+              style={{ height: '100px', borderRadius: '50%' }}
+              onError={imgErrorHandler}
+              onLoad={imgLoadHandler}
+            />
+          )}
+        </div>
+        <UpdateAvatar
+          onError={onErrorHandler}
+          onChangeUserHandler={onChangeUserHandler}
+          maxSize={100000}
         />
-      </div>
+      </AvaContainer>
       <EditableSpan
         value={data?.name ? data?.name : 'unknown'}
-        onChange={onChangeHandler}
+        onChange={onChangeUserHandler}
         isSuccess={isSuccess}
       />
       <div>{data?.email}</div>

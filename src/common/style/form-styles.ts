@@ -113,3 +113,12 @@ export const StyledCard = styled(Card)`
 export const StyledCheckBox = styled(Checkbox)`
   margin: 20px 0;
 `
+export const AvaContainer = styled.div`
+  display: flex;
+  position: relative;
+  align-items: flex-end;
+`
+export const UpdateIcon = styled.div`
+  position: absolute;
+  right: 0;
+`

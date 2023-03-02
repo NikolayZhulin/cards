@@ -30,6 +30,9 @@ const slice = createSlice({
       .addMatcher(authAPI.endpoints.login.matchRejected, (state, { payload }) => {
         state.error = errorHandler(payload)
       })
+      .addMatcher(authAPI.endpoints.changeUser.matchRejected, (state, { payload }) => {
+        state.error = errorHandler(payload)
+      })
       .addMatcher(authAPI.endpoints.me.matchFulfilled, (state, {}) => {
         state.isInitialized = true
       })

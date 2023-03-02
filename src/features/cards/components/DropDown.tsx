@@ -62,7 +62,7 @@ export const DropDown = ({ cardsPackId, packUserId, packName, isEmptyPack }: Pro
 
   return (
     <Dropdown menu={{ items }} trigger={['click']}>
-      <a onClick={e => e.preventDefault()}>
+      <a onClick={e => e.preventDefault()} style={{ cursor: 'pointer' }}>
         <Space>
           <DownCircleOutlined style={{ marginLeft: '10px' }} />
         </Space>

@@ -2,9 +2,11 @@ import React from 'react'
 
 import { LoadingOutlined } from '@ant-design/icons'
 import { Spin } from 'antd'
-
-export const Preloader = () => {
-  const antIcon = <LoadingOutlined style={{ fontSize: 150 }} spin />
+type Props = {
+  size?: number
+}
+export const Preloader = ({ size = 150 }: Props) => {
+  const antIcon = <LoadingOutlined style={{ fontSize: size }} spin />
 
   return <Spin indicator={antIcon} />
 }

@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 
 import { DeletePackModal } from '../../../common/components/modal/DeletePackModal'
 import { UpdatePackModal } from '../../../common/components/modal/UpdatePackModal'
+import { LearnButton } from '../../../common/components/learn-buttons/LearnButton'
 import { UpdateButtons } from '../../../common/components/update-buttons/UpdateButtons'
 import { useAppSelector } from '../../../common/hooks/reduxHooks'
 import { useSearch } from '../../../common/hooks/useSearch'
