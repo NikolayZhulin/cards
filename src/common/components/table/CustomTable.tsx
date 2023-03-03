@@ -4,7 +4,7 @@ import { Skeleton, Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 
 import { CardDataType, PackListDataType } from '../../../features/cards/helpers'
-import { UseTableSort } from '../../../features/cards/hooks'
+import { UseTableSort } from '../../hooks/use-table-sort'
 import { Title } from '../../style'
 
 type PackListTablePropsType = {
@@ -29,7 +29,7 @@ export const CustomTable = ({
   }
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: 'relative', width: '100%' }}>
       {isLoading && (
         <Skeleton
           active
