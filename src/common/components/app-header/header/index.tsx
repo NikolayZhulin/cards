@@ -18,7 +18,7 @@ export const Header = () => {
     <>
       <HeaderImg src={incubatorLogo} alt="logo" />
       {isLoggedIn ? (
-        <UserBlock logOut={logOut} name={data?.name} avatar={data?.avatar} />
+        <UserBlock name={data?.name} avatar={data?.avatar} />
       ) : (
         <PrimaryButton width={'100'} onClick={() => navigate(PATH.LOGIN)}>
           Sign in

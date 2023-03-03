@@ -2,7 +2,7 @@ import React from 'react'
 
 import './App.css'
 
-import { ErrorSnackBar, InitialPreloader, LinkAppBar } from '../common/components'
+import { ErrorSnackBar, InitialPreloader } from '../common/components'
 import { AppHeader } from '../common/components/app-header'
 import AppPages from '../common/components/app-pages/AppPages'
 import { useAppSelector } from '../common/hooks/reduxHooks'
@@ -20,7 +20,6 @@ export const App = () => {
     <>
       <AppHeader />
       <AppPages />
-      <LinkAppBar />
       <ErrorSnackBar />
     </>
   )

@@ -1,36 +1,34 @@
 import React from 'react'
 
-import { MutationTrigger } from '@reduxjs/toolkit/dist/query/react/buildHooks'
-import {
-  BaseQueryFn,
-  FetchArgs,
-  FetchBaseQueryError,
-  FetchBaseQueryMeta,
-  MutationDefinition,
-} from '@reduxjs/toolkit/query'
 import { Dropdown, MenuProps, Space } from 'antd'
+import { useNavigate } from 'react-router-dom'
 
 import avaIcon from '../../../assets/pictures/avatar.jpg'
 import { StyledUserBlock } from '../../style/header'
+import { PATH } from '../../utils'
+import { useHeader } from '../app-header/hooks/useHeader'
 
 type Props = {
-  logOut: MutationTrigger<
-    MutationDefinition<
-      {},
-      BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, {}, FetchBaseQueryMeta>,
-      'me',
-      void,
-      'registration/api'
-    >
-  >
   name?: string
   avatar?: string
 }
-export const UserBlock = ({ logOut, avatar, name }: Props) => {
+export const UserBlock = ({ avatar, name }: Props) => {
+  const navigate = useNavigate()
+  const { isLoggedIn, logOut } = useHeader()
   const items: MenuProps['items'] = [
     {
-      label: 'Logout',
+      label: 'Profile',
       key: '0',
+      onClick: () => navigate(PATH.PROFILE),
+    },
+    {
+      label: 'Packs',
+      key: '1',
+      onClick: () => navigate(PATH.PACKS_LIST),
+    },
+    {
+      label: 'Logout',
+      key: '2',
       onClick: () => logOut({}),
     },
   ]
